@@ -1,0 +1,27 @@
+console.log("Register.js ist verbunden!");
+
+document.getElementById("loginForm").addEventListener("submit", async (e) => {
+  // hier wird hingeschrieben was beim submit passiert
+  e.preventDefault();
+  console.log("Submit");
+
+  const email = document.getElementById("email").value.trim();
+
+  const password = document.getElementById("password").value.trim();
+
+  console.log(email + " " + password);
+
+  try {
+    const response = await fetch("api/login.php", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
+
+    const result = await response.json();
+    console.log("Result is:", result);
+  } catch (error) {
+    console.error("Error:", error);
+    alert("Error:", error);
+  }
+});

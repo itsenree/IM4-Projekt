@@ -1,28 +1,29 @@
 console.log("Register.js ist verbunden!");
 
-document.getElementById("registerForm")
-.addEventListener("submit", async (e) => {
+document
+  .getElementById("registerForm")
+  .addEventListener("submit", async (e) => {
     // hier wird hingeschrieben was beim submit passiert
     e.preventDefault();
-console.log("Submit");
+    console.log("Submit");
 
-const email = document.getElementById("email").value.trim();
+    const email = document.getElementById("email").value.trim();
 
-const password = document.getElementById("password").value.trim();
+    const password = document.getElementById("password").value.trim();
 
-console.log(email+ " " + password);
+    console.log(email + " " + password);
 
-try {
-    const response = await fetch("api/register.php", {
+    try {
+      const response = await fetch("api/register.php", {
         method: "POST",
-        headers: { "Content-Type": "application/json"}, 
-        body: JSON.stringify ({email, password}), 
-    });
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
 
-    const result = await response.json(); 
-    console.log("Result is:", result);
-} catch (error) {
-    console.error("Error:", error);
-    alert("Error:", error);
-}
-});
+      const result = await response.json();
+      console.log("Result is:", result);
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Error:", error);
+    }
+  });
