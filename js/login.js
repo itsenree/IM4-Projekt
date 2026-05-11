@@ -1,27 +1,27 @@
-console.log("Register.js ist verbunden!");
-
+// login.js
 document.getElementById("loginForm").addEventListener("submit", async (e) => {
-  // hier wird hingeschrieben was beim submit passiert
   e.preventDefault();
-  console.log("Submit");
 
   const email = document.getElementById("email").value.trim();
-
   const password = document.getElementById("password").value.trim();
-
-  console.log(email + " " + password);
 
   try {
     const response = await fetch("api/login.php", {
       method: "POST",
+      // credentials: 'include', // uncomment if front-end & back-end are on different domains
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
     });
-
     const result = await response.json();
-    console.log("Result is:", result);
+
+    if (result.status === "success") {
+      alert("Login successful!");
+      window.location.href = "protected.html";
+    } else {
+      alert(result.message || "Login failed.");
+    }
   } catch (error) {
     console.error("Error:", error);
-    alert("Error:", error);
+    alert("Something went wrong!");
   }
 });
