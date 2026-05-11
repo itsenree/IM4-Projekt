@@ -1,35 +1,143 @@
-/* style.css */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 body {
-  font-family: Arial, sans-serif;
-  margin: 20px;
-  max-width: 600px;
-  line-height: 1.5;
+  width: 100%;
+  background: #fde8f5;
 }
 
-h1 {
-  margin-bottom: 1em;
+/* Login Seite*/
+
+#login {
+  background: #fde8f5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  width: 100%;
 }
 
-form > div {
-  margin-bottom: 1em;
+#loginIcon {
+  width: 3em;
+  height: 3em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #a855f7, #ec4899);
+  border-radius: 50%;
+  font-size: 1.8em;
 }
 
-label {
-  display: inline-block;
-  width: 80px;
+#login h1 {
+  font-family: "Inter", sans-serif;
+  font-size: 2.2em;
+  color: #5b21b6;
+  text-align: center;
+  margin: 1% 0;
 }
 
-input[type="email"],
-input[type="password"] {
-  width: 200px;
-  padding: 4px;
+#login h3 {
+  font-family: "Inter", sans-serif;
+  font-size: 1.4em;
+  color: #9333ea;
+  text-align: center;
+  margin: 0 0 2% 0;
 }
 
-button {
-  padding: 8px 16px;
+#loginForm {
+  background: white;
+  border-radius: 0.8em;
+  padding: 2rem;
+  width: 60%;
+  box-shadow: 0 8px 32px rgba(10, 6, 21, 0.4);
+}
+
+#loginForm label {
+  display: block;
+  font-family: "Inter", sans-serif;
+  font-size: 1em;
+  color: #5b21b6;
+  margin-bottom: 1%;
+}
+
+#login input[type="email"],
+#login input[type="password"] {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 1.2em;
+  font-family: "Inter", sans-serif;
+  font-size: 1em;
+  background: #f3f0ff;
+  border: none;
+  border-radius: 0.8em;
+  margin-bottom: 1.2rem;
+}
+
+#login input[type="email"]::placeholder,
+#login input[type="password"]::placeholder {
+  color: #a78bfa;
+}
+
+#login input[type="email"]:focus,
+#login input[type="password"]:focus {
+  box-shadow: 0 0 0 2px #c4b5fd;
+}
+
+#login button[type="submit"] {
   cursor: pointer;
+  width: 100%;
+  padding: 1.2em;
+  border: none;
+  border-radius: 14px;
+  background: linear-gradient(90deg, #9333ea, #ec4899);
+  color: white;
+  font-family: "Inter", sans-serif;
+  font-size: 1em;
+  font-weight: 600;
+  transition: opacity 0.2s;
 }
 
-p {
-  margin-top: 1em;
+#login button[type="submit"]:hover {
+  opacity: 0.8;
+}
+
+#login p {
+  margin-top: 1rem;
+  font-family: "Inter", sans-serif;
+  font-size: 1em;
+  color: #9333ea;
+  text-align: center;
+}
+
+#login p a {
+  color: #7c3aed;
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+#login p a:hover {
+  text-decoration: underline;
+}
+
+/* Register Seite*/
+
+/* Media Queries */
+
+@media (max-width: 700px) {
+  #loginForm {
+    width: 80%;
+  }
+
+  #login h1 {
+    margin: 2% 0;
+  }
+
+  #login h3 {
+    margin: 2% 0 8% 0;
+  }
 }
