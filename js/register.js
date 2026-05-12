@@ -8,7 +8,7 @@ document
     const password = document.getElementById("password").value.trim();
 
     try {
-      const response = await fetch("api/register.php", {
+      const response = await fetch("../api/register.php", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -19,7 +19,7 @@ document
 
       if (result.status === "success") {
         alert("Registration successful! You can now log in.");
-        window.location.href = "html/login.html";
+        window.location.href = "../pages/login.html";
       } else {
         alert(result.message || "Registration failed.");
       }

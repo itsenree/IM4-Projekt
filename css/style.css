@@ -6,15 +6,14 @@
 
 body {
   width: 100%;
-  background: #fde8f5;
-  margin: 0;
-  padding: 0;
+  background: #ffd3f0;
+  font-family: "Inter", sans-serif;
 }
 
 /* Login Seite*/
 
 #login {
-  background: #fde8f5;
+  background: #ffd3f0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -35,7 +34,6 @@ body {
 }
 
 #login h1 {
-  font-family: "Inter", sans-serif;
   font-size: 2.2em;
   color: #5b21b6;
   text-align: center;
@@ -43,7 +41,6 @@ body {
 }
 
 #login h3 {
-  font-family: "Inter", sans-serif;
   font-size: 1.4em;
   color: #9333ea;
   text-align: center;
@@ -60,7 +57,6 @@ body {
 
 #loginForm label {
   display: block;
-  font-family: "Inter", sans-serif;
   font-size: 1em;
   color: #5b21b6;
   margin-bottom: 1%;
@@ -71,7 +67,6 @@ body {
   width: 100%;
   box-sizing: border-box;
   padding: 1.2em;
-  font-family: "Inter", sans-serif;
   font-size: 1em;
   background: #f3f0ff;
   border: none;
@@ -97,7 +92,6 @@ body {
   border-radius: 14px;
   background: linear-gradient(90deg, #9333ea, #ec4899);
   color: white;
-  font-family: "Inter", sans-serif;
   font-size: 1em;
   font-weight: 600;
   transition: opacity 0.2s;
@@ -109,7 +103,6 @@ body {
 
 #login p {
   margin-top: 1rem;
-  font-family: "Inter", sans-serif;
   font-size: 1em;
   color: #9333ea;
   text-align: center;
@@ -117,7 +110,6 @@ body {
 
 #login p a {
   color: #7c3aed;
-  font-family: "Inter", sans-serif;
   font-weight: 600;
   text-decoration: none;
 }
@@ -137,7 +129,6 @@ body {
 }
 
 #register h1 {
-  font-family: "Inter", sans-serif;
   font-size: 2.2em;
   color: #5b21b6;
   text-align: center;
@@ -154,7 +145,6 @@ body {
 
 #registerForm label {
   display: block;
-  font-family: "Inter", sans-serif;
   font-size: 1em;
   color: #5b21b6;
   margin-bottom: 1%;
@@ -165,7 +155,6 @@ body {
   width: 100%;
   box-sizing: border-box;
   padding: 1.2em;
-  font-family: "Inter", sans-serif;
   font-size: 1em;
   background: #f3f0ff;
   border: none;
@@ -191,7 +180,6 @@ body {
   border-radius: 14px;
   background: linear-gradient(90deg, #9333ea, #ec4899);
   color: white;
-  font-family: "Inter", sans-serif;
   font-size: 1em;
   font-weight: 600;
   transition: opacity 0.2s;
@@ -203,7 +191,6 @@ body {
 
 #register p {
   margin-top: 1rem;
-  font-family: "Inter", sans-serif;
   font-size: 1em;
   color: #9333ea;
   text-align: center;
@@ -211,7 +198,6 @@ body {
 
 #register p a {
   color: #7c3aed;
-  font-family: "Inter", sans-serif;
   font-weight: 600;
   text-decoration: none;
 }
@@ -222,9 +208,9 @@ body {
 
 /* Home */
 
-#begruessungHome {
+.begruessung {
   text-align: center;
-  font-family: "Inter", sans-serif;
+  color: #2a0081;
   margin: 2% 0;
 }
 
@@ -237,7 +223,7 @@ body {
 }
 
 #championContainer {
-  background: #f5c400;
+  background: #2a0081;
   border-radius: 1em;
   padding: 1rem 1.5rem;
   margin: 0;
@@ -248,10 +234,9 @@ body {
 }
 
 #championContainer h2 {
-  font-family: "Inter", sans-serif;
   font-size: 1.1em;
   font-weight: 700;
-  color: #7a4f00;
+  color: #b7e7fc;
   margin-bottom: 0.5rem;
 }
 
@@ -269,21 +254,19 @@ body {
 
 #championName,
 #familienStreakName {
-  font-family: "Inter", sans-serif;
   font-weight: 600;
   font-size: 1em;
-  color: #3d2600;
+  color: #b7e7fc;
 }
 
 #championScore,
 #familienStreakScore {
-  font-family: "Inter", sans-serif;
   font-size: 0.9em;
-  color: #7a4f00;
+  color: #b7e7fc;
 }
 
 .streakContainer {
-  background: #f5c400;
+  background: #2a0081;
   border-radius: 1em;
   padding: 1rem 1.5rem;
   margin: 0;
@@ -292,7 +275,6 @@ body {
 .streakContainer h1,
 .streakContainer h2 {
   text-align: center;
-  font-family: "Inter", sans-serif;
 }
 
 .streakContainer h2 {
@@ -300,12 +282,12 @@ body {
 }
 
 .streakContainer h2 {
-  color: #7a4f00;
+  color: #b7e7fc;
   font-weight: 600;
 }
 
 .streakContainer h1 {
-  color: #3d2600;
+  color: #b7e7fc;
   font-size: 3em;
   font-weight: 700;
 }
@@ -315,7 +297,6 @@ body {
 }
 
 #balkendiagramm {
-  width: 100%;
   max-width: 100%;
   display: block;
 }
@@ -332,12 +313,16 @@ footer {
   padding: 0.8em 0;
 }
 
+footer a {
+  text-decoration: none;
+}
+
 .footerIcon {
   display: flex;
   flex-direction: column;
   align-items: center;
   font-size: 1em;
-  color: #999;
+  color: #2a0081;
   background: none;
   border: none;
   cursor: pointer;
@@ -345,9 +330,53 @@ footer {
 }
 
 .footerIcon.aktiv {
-  color: #d85a30;
+  color: #ba1650;
   background: #fde8f5;
   border-radius: 1em;
+}
+
+/* Stats */
+
+#statsContainer {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  padding: 0 1rem;
+  margin-bottom: 4.5rem;
+}
+
+#statsDiagramme {
+  background-color: #2a0081;
+  border-radius: 1em;
+  padding: 1rem 1.5rem;
+  margin: 0;
+}
+
+#statsDiagramme button {
+  background-color: #f5c700;
+  color: #2a0081;
+  font-weight: 600;
+  padding: 2% 4%;
+  border-radius: 12px;
+  border: none;
+  transition: opacity 0.2s ease;
+  cursor: pointer;
+}
+
+#statsDiagramme button:hover {
+  background-color: #b7e7fc;
+  opacity: 0.8;
+}
+
+#balkendiagrammContainer div {
+  display: flex;
+  justify-content: space-evenly;
+  padding-top: 3%;
+}
+
+#areaDiagramm {
+  max-width: 100%;
+  display: block;
 }
 
 /* Media Queries */
@@ -376,10 +405,22 @@ footer {
   #register h3 {
     margin: 2% 0 8% 0;
   }
+
+  #statsDiagramme button {
+    padding: 4% 6%;
+  }
 }
 
 @media (max-width: 400px) {
   #homeContainer {
     margin: 0;
+  }
+
+  #balkendiagrammContainer div {
+    justify-content: space-between;
+  }
+
+  #statsDiagramme button {
+    padding: 6% 8%;
   }
 }
