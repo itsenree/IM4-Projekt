@@ -314,6 +314,12 @@ body {
   text-align: left;
 }
 
+#balkendiagramm {
+  width: 100%;
+  max-width: 100%;
+  display: block;
+}
+
 footer {
   position: fixed;
   bottom: 0;
