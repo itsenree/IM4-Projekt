@@ -19,7 +19,7 @@ document
 
       if (result.status === "success") {
         alert("Registration successful! You can now log in.");
-        window.location.href = "login.html";
+        window.location.href = "html/login.html";
       } else {
         alert(result.message || "Registration failed.");
       }
