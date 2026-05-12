@@ -125,6 +125,183 @@ body {
 }
 
 /* Register Seite*/
+#register {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  width: 100%;
+}
+
+#register h1 {
+  font-family: "Inter", sans-serif;
+  font-size: 2.2em;
+  color: #5b21b6;
+  text-align: center;
+  margin: 1% 0;
+}
+
+#registerForm {
+  background: white;
+  border-radius: 0.8em;
+  padding: 2rem;
+  width: 60%;
+  box-shadow: 0 8px 32px rgba(10, 6, 21, 0.4);
+}
+
+#registerForm label {
+  display: block;
+  font-family: "Inter", sans-serif;
+  font-size: 1em;
+  color: #5b21b6;
+  margin-bottom: 1%;
+}
+
+#register input[type="email"],
+#register input[type="password"] {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 1.2em;
+  font-family: "Inter", sans-serif;
+  font-size: 1em;
+  background: #f3f0ff;
+  border: none;
+  border-radius: 0.8em;
+  margin-bottom: 1.2rem;
+}
+
+#register input[type="email"]::placeholder,
+#register input[type="password"]::placeholder {
+  color: #a78bfa;
+}
+
+#register input[type="email"]:focus,
+#register input[type="password"]:focus {
+  box-shadow: 0 0 0 2px #c4b5fd;
+}
+
+#register button[type="submit"] {
+  cursor: pointer;
+  width: 100%;
+  padding: 1.2em;
+  border: none;
+  border-radius: 14px;
+  background: linear-gradient(90deg, #9333ea, #ec4899);
+  color: white;
+  font-family: "Inter", sans-serif;
+  font-size: 1em;
+  font-weight: 600;
+  transition: opacity 0.2s;
+}
+
+#register button[type="submit"]:hover {
+  opacity: 0.8;
+}
+
+#register p {
+  margin-top: 1rem;
+  font-family: "Inter", sans-serif;
+  font-size: 1em;
+  color: #9333ea;
+  text-align: center;
+}
+
+#register p a {
+  color: #7c3aed;
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+#register p a:hover {
+  text-decoration: underline;
+}
+
+/* Home */
+
+#begruessungHome {
+  text-align: center;
+  font-family: "Inter", sans-serif;
+  margin-top: 5%;
+}
+#championContainer {
+  background: #f5c400;
+  border-radius: 1em;
+  padding: 1rem 1.5rem;
+  margin: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#championContainer h2 {
+  font-family: "Inter", sans-serif;
+  font-size: 1.1em;
+  font-weight: 700;
+  color: #7a4f00;
+  margin-bottom: 0.5rem;
+}
+
+#championInfo,
+#familienStreakInfo {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+#championEmoji,
+#familienStreakEmoji {
+  font-size: 2.5em;
+}
+
+#championName,
+#familienStreakName {
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  font-size: 1em;
+  color: #3d2600;
+}
+
+#championScore,
+#familienStreakScore {
+  font-family: "Inter", sans-serif;
+  font-size: 0.9em;
+  color: #7a4f00;
+}
+
+#streakContainer {
+  background: #f5c400;
+  border-radius: 1em;
+  padding: 1rem 1.5rem;
+  margin: 1rem;
+}
+
+#streakContainer h1,
+#streakContainer h2 {
+  text-align: center;
+  font-family: "Inter", sans-serif;
+}
+
+#streakContainer h2 {
+  font-size: 1.1em;
+}
+
+#streakContainer h2 {
+  color: #7a4f00;
+  font-weight: 600;
+}
+
+#streakContainer h1 {
+  color: #3d2600;
+  font-size: 3em;
+  font-weight: 700;
+}
+
+#balkendiagrammContainer h2 {
+  text-align: left;
+}
 
 /* Media Queries */
 
@@ -138,6 +315,18 @@ body {
   }
 
   #login h3 {
+    margin: 2% 0 8% 0;
+  }
+
+  #registerForm {
+    width: 80%;
+  }
+
+  #register h1 {
+    margin: 2% 0;
+  }
+
+  #register h3 {
     margin: 2% 0 8% 0;
   }
 }
