@@ -7,6 +7,8 @@
 body {
   width: 100%;
   background: #fde8f5;
+  margin: 0;
+  padding: 0;
 }
 
 /* Login Seite*/
@@ -223,13 +225,22 @@ body {
 #begruessungHome {
   text-align: center;
   font-family: "Inter", sans-serif;
-  margin-top: 5%;
+  margin: 2% 0;
 }
+
+#homeContainer {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  padding: 0 1rem;
+  margin-bottom: 4.5rem;
+}
+
 #championContainer {
   background: #f5c400;
   border-radius: 1em;
   padding: 1rem 1.5rem;
-  margin: 1rem;
+  margin: 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -271,29 +282,29 @@ body {
   color: #7a4f00;
 }
 
-#streakContainer {
+.streakContainer {
   background: #f5c400;
   border-radius: 1em;
   padding: 1rem 1.5rem;
-  margin: 1rem;
+  margin: 0;
 }
 
-#streakContainer h1,
-#streakContainer h2 {
+.streakContainer h1,
+.streakContainer h2 {
   text-align: center;
   font-family: "Inter", sans-serif;
 }
 
-#streakContainer h2 {
+.streakContainer h2 {
   font-size: 1.1em;
 }
 
-#streakContainer h2 {
+.streakContainer h2 {
   color: #7a4f00;
   font-weight: 600;
 }
 
-#streakContainer h1 {
+.streakContainer h1 {
   color: #3d2600;
   font-size: 3em;
   font-weight: 700;
@@ -301,6 +312,36 @@ body {
 
 #balkendiagrammContainer h2 {
   text-align: left;
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background: white;
+  padding: 0.8em 0;
+}
+
+.footerIcon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 1em;
+  color: #999;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 2% 4%;
+}
+
+.footerIcon.aktiv {
+  color: #d85a30;
+  background: #fde8f5;
+  border-radius: 1em;
 }
 
 /* Media Queries */
@@ -328,5 +369,11 @@ body {
 
   #register h3 {
     margin: 2% 0 8% 0;
+  }
+}
+
+@media (max-width: 400px) {
+  #homeContainer {
+    margin: 0;
   }
 }
