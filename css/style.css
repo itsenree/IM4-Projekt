@@ -118,7 +118,7 @@ body {
   text-decoration: underline;
 }
 
-/* Register Seite*/
+/* ------------------- Register Seite ------------------- */
 #register {
   display: flex;
   flex-direction: column;
@@ -206,7 +206,7 @@ body {
   text-decoration: underline;
 }
 
-/* Home */
+/* ------------------- Home ------------------- */
 
 .begruessung {
   text-align: center;
@@ -335,7 +335,7 @@ footer a {
   border-radius: 1em;
 }
 
-/* Stats */
+/* ------------------- Stats ------------------- */
 
 #statsContainer {
   display: grid;
@@ -379,6 +379,73 @@ footer a {
   display: block;
 }
 
+/* ------------------- familie.html styles ------------------- */
+
+.hidden {
+  display: none;
+}
+
+#memberSection {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  padding: 0 1rem;
+  margin-bottom: 4.5rem;
+}
+
+#memberForm {
+  padding: 3% 0;
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+}
+
+#mitgliedParameter {
+  display: flex;
+  gap: 1rem;
+  flex: 1;
+}
+
+#addBtn {
+  background-color: #f5c700;
+  color: #2a0081;
+  font-weight: 600;
+  padding: 2% 4%;
+  border-radius: 12px;
+  border: none;
+  transition: opacity 0.2s ease;
+  cursor: pointer;
+}
+
+#addBtn:hover {
+  background-color: #b7e7fc;
+  opacity: 0.8;
+}
+
+#member_name,
+#color,
+#brush_nr {
+  flex: 1;
+  padding: 2% 4%;
+  border-radius: 12px;
+  border: none;
+}
+
+#confirmBtn {
+  padding: 2% 4%;
+  border-radius: 12px;
+  border: none;
+  background-color: #ba1650;
+  color: #ffd3f0;
+  transition: opacity 0.2s ease;
+  cursor: pointer;
+}
+
+#confirmBtn:hover {
+  background-color: #630425;
+  opacity: 0.8;
+}
+
 /* ------------------- Media Queries ------------------- */
 
 @media (max-width: 700px) {
@@ -411,6 +478,20 @@ footer a {
   }
 }
 
+@media (max-width: 700px) {
+  #memberForm {
+    align-items: stretch;
+  }
+
+  #mitgliedParameter {
+    flex-direction: column;
+  }
+
+  #confirmBtn {
+    align-self: stretch;
+  }
+}
+
 @media (max-width: 400px) {
   #homeContainer {
     margin: 0;
@@ -424,6 +505,7 @@ footer a {
     padding: 6% 8%;
   }
 }
+<<<<<<< Updated upstream
 
 /* ------------------- familie.html styles ------------------- */
 
@@ -460,3 +542,5 @@ footer a {
   font-weight: bold;
   color: #333;
 }
+=======
+>>>>>>> Stashed changes

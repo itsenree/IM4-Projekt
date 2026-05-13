@@ -18,38 +18,44 @@
   </head>
   <body id="homeBody">
     <header>
-    <div class="begruessung">
-      <h1>Deine Familie</h1>
-      <!-- WENN KEINE MITGLIEDER HINZUGEFÜGT -->
-      <h3>Füge Mitglieder hinzu!</h3>
-    </div>
+      <div class="begruessung">
+        <h1>Deine Familie</h1>
+        <!-- WENN KEINE MITGLIEDER HINZUGEFÜGT -->
+        <h3>Füge Mitglieder hinzu!</h3>
+      </div>
+    </header>
 
+<<<<<<< Updated upstream
     <div id="memberList">
       <!-- Members will be dynamically loaded here -->
     </div>
 
     <div id="addMemberSection">
+=======
+    <div id="memberSection">
+>>>>>>> Stashed changes
       <button id="addBtn">Mitglied hinzufügen</button>
 
       <div id="memberForm" class="hidden">
-        <input type="text" id="member_name" placeholder="Name">
+        <div id="mitgliedParameter">
+          <input type="text" id="member_name" placeholder="Name" />
 
-        <select id="color">
-          <option value="yellow">Yellow</option>
-          <option value="red">Red</option>
-          <option value="green">Green</option>
-          <option value="blue">Blue</option>
-          <option value="purple">Purple</option>
-          <option value="pink">Pink</option>
-        </select>
+          <select id="color">
+            <option value="yellow">Gelb</option>
+            <option value="red">Rot</option>
+            <option value="green">Grün</option>
+            <option value="blue">Blau</option>
+            <option value="purple">Violett</option>
+            <option value="pink">Pink</option>
+          </select>
 
-        <select id="brush_nr">
-          <option value="0">Keine Position</option>
-          <option value="1">Position 1</option>
-          <option value="2">Position 2</option>
-          <option value="3">Position 3</option>
-        </select>
-
+          <select id="brush_nr">
+            <option value="0">Keine Position</option>
+            <option value="1">Position 1</option>
+            <option value="2">Position 2</option>
+            <option value="3">Position 3</option>
+          </select>
+        </div>
         <button id="confirmBtn">Hinzufügen</button>
       </div>
     </div>
@@ -82,13 +88,13 @@
       </button>
     </footer>
     <script>
-
       const addBtn = document.getElementById("addBtn");
       const memberForm = document.getElementById("memberForm");
 
       addBtn.addEventListener("click", () => {
         memberForm.classList.toggle("hidden");
       });
+<<<<<<< Updated upstream
 
       async function loadMembers() {
         try {
@@ -153,6 +159,8 @@
 
       // Load members on page load
       loadMembers();
+=======
+>>>>>>> Stashed changes
     </script>
   </body>
 </html>
