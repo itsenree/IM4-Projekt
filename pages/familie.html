@@ -17,9 +17,39 @@
     <link rel="stylesheet" href="../css/style.css" />
   </head>
   <body id="homeBody">
+    <header>
     <div class="begruessung">
       <h1>Deine Familie</h1>
+      <!-- WENN KEINE MITGLIEDER HINZUGEFÜGT -->
       <h3>Füge Mitglieder hinzu!</h3>
+    </div>
+
+    <div id="memberSection">
+
+      <button id="addBtn">Mitglied hinzufügen</button>
+
+      <div id="memberForm" class="hidden">
+        <input type="text" id="member_name" placeholder="Name">
+
+        <select id="color">
+          <option value="yellow">Yellow</option>
+          <option value="red">Red</option>
+          <option value="green">Green</option>
+          <option value="blue">Blue</option>
+          <option value="purple">Purple</option>
+          <option value="pink">Pink</option>
+        </select>
+
+        <select id="brush_nr">
+          <option value="0">Keine Position</option>
+          <option value="1">Position 1</option>
+          <option value="2">Position 2</option>
+          <option value="3">Position 3</option>
+        </select>
+
+        <button id="confirmBtn">Hinzufügen</button>
+      </div>
+
     </div>
 
     <footer>
@@ -49,6 +79,15 @@
         >
       </button>
     </footer>
-    <script></script>
+    <script>
+
+      const addBtn = document.getElementById("addBtn");
+      const memberForm = document.getElementById("memberForm");
+
+      addBtn.addEventListener("click", () => {
+        memberForm.classList.toggle("hidden");
+      });
+
+    </script>
   </body>
 </html>

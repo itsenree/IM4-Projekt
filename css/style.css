@@ -10,7 +10,7 @@ body {
   font-family: "Inter", sans-serif;
 }
 
-/* Login Seite*/
+/* ------------------- Login Seite ------------------- */
 
 #login {
   background: #ffd3f0;
@@ -379,7 +379,7 @@ footer a {
   display: block;
 }
 
-/* Media Queries */
+/* ------------------- Media Queries ------------------- */
 
 @media (max-width: 700px) {
   #loginForm {
@@ -423,4 +423,22 @@ footer a {
   #statsDiagramme button {
     padding: 6% 8%;
   }
+}
+
+/* ------------------- familie.html styles ------------------- */
+
+.hidden {
+  display: none;
+}
+
+#memberSection {
+  display: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+#memberForm {
+  margin-top: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
 }
