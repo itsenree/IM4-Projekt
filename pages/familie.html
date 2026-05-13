@@ -102,11 +102,15 @@
           if (result.status === "success" && result.data.length > 0) {
             result.data.forEach((member) => {
               const memberDiv = document.createElement("div");
-              memberDiv.classList.add("member-box"); // Add a class for styling
+              memberDiv.classList.add("member-box");
 
               const nameElement = document.createElement("p");
               nameElement.textContent = member.name;
-              nameElement.classList.add("member-name"); // Add a class for styling
+              nameElement.classList.add("member-name");
+
+              if (member.color) {
+                memberDiv.classList.add(`member-color-${member.color}`);
+              }
 
               const deleteBtn = document.createElement("button");
               deleteBtn.classList.add("delete-btn");
@@ -122,7 +126,7 @@
           } else {
             const noMembersMessage = document.createElement("p");
             noMembersMessage.textContent = "No members found.";
-            noMembersMessage.classList.add("no-members-message"); // Add a class for styling
+            noMembersMessage.classList.add("no-members-message");
             memberList.appendChild(noMembersMessage);
           }
         } catch (error) {
@@ -165,9 +169,7 @@
           try {
             const response = await fetch("../api/members_save.php", {
               method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
+              headers: { "Content-Type": "application/json" },
               body: JSON.stringify(data),
             });
 
@@ -175,7 +177,7 @@
 
             if (result.status === "success") {
               alert("Member saved successfully!");
-              loadMembers(); // Reload the members list
+              loadMembers();
             } else {
               alert(`Error: ${result.message}`);
             }
@@ -185,7 +187,6 @@
           }
         });
 
-      // Load members on page load
       loadMembers();
     </script>
   </body>

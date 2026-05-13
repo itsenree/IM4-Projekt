@@ -36,7 +36,14 @@
           <canvas id="areaDiagramm"></canvas>
         </div>
       </div>
+      <div id="metrikenMitglieder">
+        <h2>Metriken deiner Familienmitglieder</h2>
+        <div id="mitgliederButtons">
+          <!-- Buttons werden dynamisch geladen -->
+        </div>
+      </div>
     </div>
+
     <footer>
       <button class="footerIcon">
         <a href="home.html">
@@ -64,5 +71,40 @@
         >
       </button>
     </footer>
+    <script>
+      async function loadMemberButtons() {
+        try {
+          const response = await fetch("../api/members_load.php");
+          const result = await response.json();
+
+          const container = document.getElementById("mitgliederButtons");
+          container.innerHTML = "";
+
+          if (result.status === "success" && result.data.length > 0) {
+            result.data.forEach((member) => {
+              const btn = document.createElement("button");
+              btn.textContent = member.name;
+              btn.addEventListener("click", () => {
+                console.log("Metriken für:", member.name, "| ID:", member.id);
+              });
+              container.appendChild(btn);
+            });
+
+            if (result.data.length > 3) {
+              container.classList.add("viele-mitglieder");
+            } else {
+              container.classList.remove("viele-mitglieder");
+            }
+          } else {
+            container.innerHTML =
+              "<p style='color:#b7e7fc'>Keine Mitglieder gefunden.</p>";
+          }
+        } catch (error) {
+          console.error("Fehler beim Laden der Mitglieder:", error);
+        }
+      }
+
+      loadMemberButtons();
+    </script>
   </body>
 </html>

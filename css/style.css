@@ -8,6 +8,9 @@ body {
   width: 100%;
   background: #ffd3f0;
   font-family: "Inter", sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 /* ------------------- Login Seite ------------------- */
@@ -23,14 +26,12 @@ body {
 }
 
 #loginIcon {
-  width: 3em;
-  height: 3em;
+  width: 6em;
+  height: 6em;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #a855f7, #ec4899);
   border-radius: 50%;
-  font-size: 1.8em;
 }
 
 #login h1 {
@@ -219,7 +220,7 @@ body {
   grid-template-columns: 1fr;
   gap: 1rem;
   padding: 0 1rem;
-  margin-bottom: 4.5rem;
+  margin-bottom: 1rem;
 }
 
 #championContainer {
@@ -302,7 +303,7 @@ body {
 }
 
 footer {
-  position: fixed;
+  position: sticky;
   bottom: 0;
   left: 0;
   right: 0;
@@ -311,6 +312,7 @@ footer {
   align-items: center;
   background: white;
   padding: 0.8em 0;
+  margin-top: auto;
 }
 
 footer a {
@@ -342,7 +344,7 @@ footer a {
   grid-template-columns: 1fr;
   gap: 1rem;
   padding: 0 1rem;
-  margin-bottom: 4.5rem;
+  margin-bottom: 1rem;
 }
 
 #statsDiagramme {
@@ -350,17 +352,6 @@ footer a {
   border-radius: 1em;
   padding: 1rem 1.5rem;
   margin: 0;
-}
-
-#statsDiagramme button {
-  background-color: #f5c700;
-  color: #2a0081;
-  font-weight: 600;
-  padding: 2% 4%;
-  border-radius: 12px;
-  border: none;
-  transition: opacity 0.2s ease;
-  cursor: pointer;
 }
 
 #statsDiagramme button:hover {
@@ -379,6 +370,47 @@ footer a {
   display: block;
 }
 
+#metrikenMitglieder {
+  background: #2a0081;
+  border-radius: 1em;
+  padding: 1rem 1.5rem;
+}
+
+#metrikenMitglieder h2 {
+  color: #b7e7fc;
+  font-weight: 600;
+  font-size: 1.1em;
+  text-align: center;
+}
+
+#statsDiagramme button,
+#metrikenMitglieder button {
+  background-color: #f5c700;
+  color: #2a0081;
+  font-weight: 600;
+  padding: 2% 4%;
+  border-radius: 12px;
+  border: none;
+  transition: opacity 0.2s ease;
+  cursor: pointer;
+}
+
+#mitgliederButtons {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  padding: 3% 0;
+}
+
+#mitgliederButtons.viele-mitglieder {
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.viele-mitglieder button {
+  margin: 2% 0;
+}
+
 /* ------------------- familie.html styles ------------------- */
 
 #memberForm.hidden {
@@ -395,7 +427,7 @@ footer a {
   grid-template-columns: 1fr;
   gap: 1rem;
   padding: 0 1rem;
-  margin-bottom: 4.5rem;
+  margin-bottom: 1rem;
 }
 
 #memberForm {
@@ -484,6 +516,29 @@ footer a {
   background: rgba(231, 76, 60, 0.1);
 }
 
+/* Farben für die neu erstellten Mitglieder*/
+.member-color-yellow {
+  background-color: #ffdd43;
+}
+.member-color-red {
+  background-color: #ec0520;
+  color: white;
+}
+.member-color-green {
+  background-color: #67ff71;
+}
+.member-color-blue {
+  background-color: #b7e7fc;
+  color: white;
+}
+.member-color-purple {
+  background-color: #d09dff;
+  color: white;
+}
+.member-color-pink {
+  background-color: #ffb3de;
+}
+
 /* ------------------- Media Queries ------------------- */
 
 @media (max-width: 700px) {
@@ -535,6 +590,31 @@ footer a {
 @media (max-width: 600px) {
   .member-box {
     margin-bottom: 1.5rem;
+  }
+
+  #metrikenMitglieder div {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+  }
+
+  #metrikenMitglieder button {
+    margin: 3% 0;
+  }
+}
+
+@media (max-width: 500px) {
+  .footerIcon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 1em;
+    color: #2a0081;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 2% 4%;
+    font-size: 0.8em;
   }
 }
 
