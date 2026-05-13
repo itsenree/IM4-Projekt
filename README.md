@@ -1,4 +1,4 @@
-# 🔑👤 Authentifizierung Minimal (Boilerplate)
+<!-- # 🔑👤 Authentifizierung Minimal (Boilerplate)
 
 ![Static Badge](https://img.shields.io/badge/Sprache-PHP-%23f7df1e)
 ![Static Badge](https://img.shields.io/badge/Kurs-MMP_IM4-blue)
@@ -70,4 +70,4 @@ Um dieses Boilerplate auf dem eigenen Web-Server zu installieren, führe folgend
 
 - Beinhaltet die Konfigurationsdatei für die Datenbankverbindung.
 - Beinhaltet die Datei `database.sql`, die die `users` Tabelle erstellt.
-- Beinhaltet die Datei `config.php`, die die Konfiguration des Backends enthält.
+- Beinhaltet die Datei `config.php`, die die Konfiguration des Backends enthält. -->
