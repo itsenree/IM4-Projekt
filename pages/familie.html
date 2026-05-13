@@ -16,7 +16,7 @@
     />
     <link rel="stylesheet" href="../css/style.css" />
   </head>
-  <body id="homeBody">
+  <body>
     <header>
       <div class="begruessung">
         <h1>Deine Familie</h1>
@@ -25,15 +25,11 @@
       </div>
     </header>
 
-<<<<<<< Updated upstream
     <div id="memberList">
       <!-- Members will be dynamically loaded here -->
     </div>
 
-    <div id="addMemberSection">
-=======
     <div id="memberSection">
->>>>>>> Stashed changes
       <button id="addBtn">Mitglied hinzufügen</button>
 
       <div id="memberForm" class="hidden">
@@ -94,73 +90,103 @@
       addBtn.addEventListener("click", () => {
         memberForm.classList.toggle("hidden");
       });
-<<<<<<< Updated upstream
 
       async function loadMembers() {
         try {
-          const response = await fetch('../api/members_load.php');
+          const response = await fetch("../api/members_load.php");
           const result = await response.json();
 
-          const memberList = document.getElementById('memberList');
-          memberList.innerHTML = '';
+          const memberList = document.getElementById("memberList");
+          memberList.innerHTML = "";
 
-          if (result.status === 'success' && result.data.length > 0) {
-            result.data.forEach(member => {
-              const memberDiv = document.createElement('div');
-              memberDiv.classList.add('member-box'); // Add a class for styling
+          if (result.status === "success" && result.data.length > 0) {
+            result.data.forEach((member) => {
+              const memberDiv = document.createElement("div");
+              memberDiv.classList.add("member-box"); // Add a class for styling
 
-              const nameElement = document.createElement('p');
+              const nameElement = document.createElement("p");
               nameElement.textContent = member.name;
-              nameElement.classList.add('member-name'); // Add a class for styling
+              nameElement.classList.add("member-name"); // Add a class for styling
+
+              const deleteBtn = document.createElement("button");
+              deleteBtn.classList.add("delete-btn");
+              deleteBtn.innerHTML = '<i class="ti ti-trash"></i>';
+              deleteBtn.addEventListener("click", () =>
+                deleteMember(member.id),
+              );
 
               memberDiv.appendChild(nameElement);
+              memberDiv.appendChild(deleteBtn);
               memberList.appendChild(memberDiv);
             });
           } else {
-            const noMembersMessage = document.createElement('p');
-            noMembersMessage.textContent = 'No members found.';
-            noMembersMessage.classList.add('no-members-message'); // Add a class for styling
+            const noMembersMessage = document.createElement("p");
+            noMembersMessage.textContent = "No members found.";
+            noMembersMessage.classList.add("no-members-message"); // Add a class for styling
             memberList.appendChild(noMembersMessage);
           }
         } catch (error) {
-          console.error('Error loading members:', error);
+          console.error("Error loading members:", error);
         }
       }
 
-      document.getElementById("confirmBtn").addEventListener("click", async () => {
-        const name = document.getElementById("member_name").value;
-        const brush_nr = document.getElementById("brush_nr").value;
-        const color = document.getElementById("color").value;
-
-        const data = { name, brush_nr, color };
+      async function deleteMember(id) {
+        if (!confirm("Mitglied wirklich entfernen?")) return;
 
         try {
-          const response = await fetch("../api/members_save.php", {
+          const response = await fetch("../api/members_delete.php", {
             method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ id }),
           });
 
           const result = await response.json();
 
           if (result.status === "success") {
-            alert("Member saved successfully!");
-            loadMembers(); // Reload the members list
+            loadMembers();
           } else {
-            alert(`Error: ${result.message}`);
+            alert(`Fehler: ${result.message}`);
           }
         } catch (error) {
-          console.error("Error saving member:", error);
-          alert("An error occurred while saving the member.");
+          console.error("Error deleting member:", error);
+          alert("Ein Fehler ist beim Löschen aufgetreten.");
         }
-      });
+      }
+
+      document
+        .getElementById("confirmBtn")
+        .addEventListener("click", async () => {
+          const name = document.getElementById("member_name").value;
+          const brush_nr = document.getElementById("brush_nr").value;
+          const color = document.getElementById("color").value;
+
+          const data = { name, brush_nr, color };
+
+          try {
+            const response = await fetch("../api/members_save.php", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(data),
+            });
+
+            const result = await response.json();
+
+            if (result.status === "success") {
+              alert("Member saved successfully!");
+              loadMembers(); // Reload the members list
+            } else {
+              alert(`Error: ${result.message}`);
+            }
+          } catch (error) {
+            console.error("Error saving member:", error);
+            alert("An error occurred while saving the member.");
+          }
+        });
 
       // Load members on page load
       loadMembers();
-=======
->>>>>>> Stashed changes
     </script>
   </body>
 </html>

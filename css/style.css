@@ -381,8 +381,13 @@ footer a {
 
 /* ------------------- familie.html styles ------------------- */
 
-.hidden {
+#memberForm.hidden {
   display: none;
+}
+
+#memberList {
+  padding: 0 1rem;
+  margin-bottom: 1rem;
 }
 
 #memberSection {
@@ -446,6 +451,39 @@ footer a {
   opacity: 0.8;
 }
 
+/* Styling for whole member box */
+.member-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2% 4%;
+  border-radius: 12px;
+  margin-bottom: 2.5rem;
+  background-color: white;
+}
+
+/* Styling for member names */
+.member-name {
+  font-weight: 600;
+  font-size: 0.8em;
+  margin: 0;
+}
+
+.delete-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #e74c3c;
+  font-size: 1.1rem;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+
+.delete-btn:hover {
+  background: rgba(231, 76, 60, 0.1);
+}
+
 /* ------------------- Media Queries ------------------- */
 
 @media (max-width: 700px) {
@@ -476,9 +514,11 @@ footer a {
   #statsDiagramme button {
     padding: 4% 6%;
   }
-}
 
-@media (max-width: 700px) {
+  .member-box {
+    margin-bottom: 2rem;
+  }
+
   #memberForm {
     align-items: stretch;
   }
@@ -489,6 +529,12 @@ footer a {
 
   #confirmBtn {
     align-self: stretch;
+  }
+}
+
+@media (max-width: 600px) {
+  .member-box {
+    margin-bottom: 1.5rem;
   }
 }
 
@@ -505,42 +551,3 @@ footer a {
     padding: 6% 8%;
   }
 }
-<<<<<<< Updated upstream
-
-/* ------------------- familie.html styles ------------------- */
-
-.hidden {
-  display: none;
-}
-
-#memberSection {
-  display: center;
-  align-items: center;
-  gap: 1rem;
-}
-
-#memberForm {
-  margin-top: 10px;
-  padding: 10px;
-  border: 1px solid #ccc;
-}
-
-/* Styling for member boxes */
-.member-box {
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 10px;
-  margin: 10px 0;
-  background-color: #f9f9f9;
-  display: flex;
-  align-items: center;
-}
-
-/* Styling for member names */
-.member-name {
-  font-size: 16px;
-  font-weight: bold;
-  color: #333;
-}
-=======
->>>>>>> Stashed changes
