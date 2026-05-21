@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css"
+    />
+    <link rel="stylesheet" href="../css/style.css" />
+  </head>
+  <body>
+    <div class="begruessung">
+      <h1>Metriken von <span>dir</span></h1>
+      <h3>Eine kleine Übersicht</h3>
+    </div>
+    <div id="statsContainer">
+      <div class="streakContainer">
+        <h2>Dein Streak</h2>
+        <h1>12🔥</h1>
+        <h2>Tage in Folge</h2>
+      </div>
+      <div id="statsDiagramme">
+        <div id="balkendiagrammContainer">
+          <div>
+            <button>Deine Woche</button>
+            <button>Dein Monat</button>
+          </div>
+          <canvas id="areaDiagramm"></canvas>
+        </div>
+      </div>
+      <div id="metrikenMitglieder">
+        <h2>Metriken deiner Familienmitglieder</h2>
+        <div id="mitgliederButtons">
+          <!-- Buttons werden dynamisch geladen -->
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <button class="footerIcon">
+        <a href="home.html">
+          <i class="ti ti-home"></i>
+          Home</a
+        >
+      </button>
+      <button class="footerIcon aktiv">
+        <a href="stats.html">
+          <i class="ti ti-chart-bar"></i>
+          Stats</a
+        >
+      </button>
+      <button class="footerIcon">
+        <a href="familie.html">
+          <i class="ti ti-users"></i>
+          Familie</a
+        >
+      </button>
+
+      <button class="footerIcon">
+        <a href="settings.html">
+          <i class="ti ti-settings"></i>
+          Einstellungen</a
+        >
+      </button>
+    </footer>
+    <script>
+      async function loadMemberButtons() {
+        try {
+          const response = await fetch("../api/members_load.php");
+          const result = await response.json();
+
+          const container = document.getElementById("mitgliederButtons");
+          container.innerHTML = "";
+
+          if (result.status === "success" && result.data.length > 0) {
+            result.data.forEach((member) => {
+              const btn = document.createElement("button");
+              btn.textContent = member.name;
+              btn.addEventListener("click", () => {
+                console.log("Metriken für:", member.name, "| ID:", member.id);
+              });
+              container.appendChild(btn);
+            });
+
+            if (result.data.length > 3) {
+              container.classList.add("viele-mitglieder");
+            } else {
+              container.classList.remove("viele-mitglieder");
+            }
+          } else {
+            container.innerHTML =
+              "<p style='color:#b7e7fc'>Keine Mitglieder gefunden.</p>";
+          }
+        } catch (error) {
+          console.error("Fehler beim Laden der Mitglieder:", error);
+        }
+      }
+
+      loadMemberButtons();
+    </script>
+  </body>
+</html>

@@ -23,3 +23,4 @@ document.getElementById("logoutBtn").addEventListener("click", async (e) => {
     alert("Something went wrong during logout!");
   }
 });
+
