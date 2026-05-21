@@ -19,6 +19,14 @@ async function loadMembers() {
           memberDiv.classList.add(`member-color-${member.color}`);
         }
 
+        const positionElement = document.createElement("p");
+        positionElement.textContent = member.brush_nr === 0 ? "Keine Position" : `Position: ${member.brush_nr}`;
+        positionElement.classList.add("member-position");
+        positionElement.dataset.brushNr = member.brush_nr; // Set data-brushNr attribute
+
+        const buttonContainer = document.createElement("div");
+        buttonContainer.classList.add("button-container");
+
         const editBtn = document.createElement("button");
         editBtn.classList.add("edit-btn");
         editBtn.innerHTML = '<i class="ti ti-pencil"></i>';
@@ -29,9 +37,12 @@ async function loadMembers() {
         deleteBtn.innerHTML = '<i class="ti ti-trash"></i>';
         deleteBtn.addEventListener("click", () => deleteMember(member.id));
 
+        buttonContainer.appendChild(editBtn);
+        buttonContainer.appendChild(deleteBtn);
+
         memberDiv.appendChild(nameElement);
-        memberDiv.appendChild(editBtn);
-        memberDiv.appendChild(deleteBtn);
+        memberDiv.appendChild(positionElement);
+        memberDiv.appendChild(buttonContainer);
         memberList.appendChild(memberDiv);
       });
     } else {
@@ -64,17 +75,40 @@ function editMember(member, memberDiv) {
   });
 
   const brushSelect = document.createElement("select");
-  [
+  const positions = [
     { value: 0, label: "Keine Position" },
     { value: 1, label: "Position 1" },
     { value: 2, label: "Position 2" },
     { value: 3, label: "Position 3" },
-  ].forEach((brush) => {
+  ];
+
+  positions.forEach((brush) => {
     const option = document.createElement("option");
     option.value = brush.value;
     option.textContent = brush.label;
     if (member.brush_nr === brush.value) option.selected = true;
     brushSelect.appendChild(option);
+  });
+
+  brushSelect.addEventListener("change", () => {
+    const selectedPosition = parseInt(brushSelect.value, 10);
+
+    if (selectedPosition !== 0) {
+      const allMembers = document.querySelectorAll(".member-box");
+      let positionTaken = false;
+
+      allMembers.forEach((memberBox) => {
+        const positionElement = memberBox.querySelector(".member-position");
+        if (positionElement && parseInt(positionElement.dataset.brushNr, 10) === selectedPosition) {
+          positionTaken = true;
+        }
+      });
+
+      if (positionTaken) {
+        alert("Diese Position ist schon vergeben!");
+        brushSelect.value = member.brush_nr; // Revert to the previous value
+      }
+    }
   });
 
   const saveBtn = document.createElement("button");
@@ -100,7 +134,6 @@ function editMember(member, memberDiv) {
       const result = await response.json();
 
       if (result.success) {
-        alert("Member updated successfully!");
         loadMembers();
       } else {
         console.error("SQL Error:", result.error);
@@ -149,4 +182,68 @@ async function deleteMember(id) {
 
 document.addEventListener("DOMContentLoaded", () => {
   loadMembers();
+
+  const addBtn = document.getElementById("addBtn");
+  const memberForm = document.getElementById("memberForm");
+
+  addBtn.addEventListener("click", () => {
+    memberForm.classList.toggle("hidden");
+  });
+
+  const brushSelect = document.getElementById("brush_nr");
+  brushSelect.addEventListener("change", () => {
+    const selectedPosition = parseInt(brushSelect.value, 10);
+
+    if (selectedPosition !== 0) {
+      const allMembers = document.querySelectorAll(".member-box");
+      let positionTaken = false;
+
+      allMembers.forEach((memberBox) => {
+        const positionElement = memberBox.querySelector(".member-position");
+        if (positionElement && parseInt(positionElement.dataset.brushNr, 10) === selectedPosition) {
+          positionTaken = true;
+        }
+      });
+
+      if (positionTaken) {
+        alert("Diese Position ist schon vergeben!");
+        brushSelect.value = 0; // Revert to 'Keine Position'
+      }
+    }
+  });
+
+  const confirmBtn = document.getElementById("confirmBtn");
+  confirmBtn.addEventListener("click", async () => {
+    const nameInput = document.getElementById("member_name");
+    const colorSelect = document.getElementById("color");
+
+    const newMember = {
+      name: nameInput.value,
+      color: colorSelect.value,
+      brush_nr: parseInt(brushSelect.value, 10),
+    };
+
+    try {
+      const response = await fetch("../api/members_save.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newMember),
+      });
+
+      const result = await response.json();
+
+      if (result.status === "success") {
+        loadMembers();
+        memberForm.classList.add("hidden");
+        nameInput.value = "";
+        colorSelect.value = "yellow";
+        brushSelect.value = 0;
+      } else {
+        alert(`Fehler: ${result.message}`);
+      }
+    } catch (error) {
+      console.error("Error adding member:", error);
+      alert("Ein Fehler ist beim Hinzufügen aufgetreten.");
+    }
+  });
 });
