@@ -365,22 +365,19 @@ footer a {
   padding-top: 3%;
 }
 
-#areaDiagramm {
-  max-width: 100%;
-  display: block;
-}
-
 #metrikenMitglieder {
-  background: #2a0081;
   border-radius: 1em;
   padding: 1rem 1.5rem;
 }
 
-#metrikenMitglieder h2 {
-  color: #b7e7fc;
-  font-weight: 600;
-  font-size: 1.1em;
-  text-align: center;
+#metrikenMitglieder button:hover {
+  background-color: #b7e7fc;
+  color: #2a0081;
+}
+
+#metrikenMitglieder button.aktiv-member {
+  background-color: #2a0081;
+  color: #f5c700;
 }
 
 #statsDiagramme button,
