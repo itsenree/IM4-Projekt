@@ -9,11 +9,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $data = json_decode(file_get_contents("php://input"), true);
 
+    $username = trim($data['username'] ?? '');
     $email    = trim($data['email'] ?? '');
     $password = trim($data['password'] ?? '');
 
-    if (!$email || !$password) {
-        echo json_encode(["status" => "error", "message" => "Email and password are required"]);
+    if (!$username || !$email || !$password) {
+        echo json_encode(["status" => "error", "message" => "Username, email and password are required"]);
+        exit;
+    }
+
+    if (mb_strlen($username) > 20) {
+        echo json_encode(["status" => "error", "message" => "Der nutzername darf nicht mehr als 20 Zeichen lang sein"]);
         exit;
     }
 
@@ -29,8 +35,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
     // Insert the new user
-    $insert = $pdo->prepare("INSERT INTO users (email, password) VALUES (:email, :pass)");
+    $insert = $pdo->prepare("INSERT INTO users (username, email, password) VALUES (:username, :email, :pass)");
     $insert->execute([
+        ':username' => $username,
         ':email' => $email,
         ':pass'  => $hashedPassword
     ]);

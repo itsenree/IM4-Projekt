@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login</title>
+    <title>Einstellungen</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -16,10 +16,26 @@
     />
     <link rel="stylesheet" href="../css/style.css" />
   </head>
-  <body id="homeBody">
-    <div class="begruessung">
-      <h1>Einstellungen</h1>
-      <h3>Mache hier deine Anpassungen</h3>
+  <body>
+    <div id="settingsPage">
+      <div class="begruessung">
+        <h1>Einstellungen</h1>
+        <h3>Verwalte dein Konto</h3>
+      </div>
+
+      <main id="settingsContainer">
+        <section id="settingsCard" aria-labelledby="settingsTitle">
+          <h2 id="settingsTitle">Kontodaten</h2>
+          <p id="settingsMessage" class="settings-message" aria-live="polite"></p>
+          <div id="settingsFields"></div>
+        </section>
+      </main>
+
+      <div id="settingsLogoutContainer">
+        <button id="logoutBtn" class="setting-button primary settings-logout-btn" type="button">
+          Ausloggen
+        </button>
+      </div>
     </div>
 
     <footer>
@@ -49,6 +65,6 @@
         >
       </button>
     </footer>
-    <script></script>
+    <script src="../js/settings.js" defer></script>
   </body>
 </html>

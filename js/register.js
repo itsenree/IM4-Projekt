@@ -4,8 +4,14 @@ document
   .addEventListener("submit", async (e) => {
     e.preventDefault();
 
+    const username = document.getElementById("username").value.trim();
     const email = document.getElementById("email").value.trim();
     const password = document.getElementById("password").value.trim();
+
+    if (username.length > 20) {
+      alert("Der nutzername darf nicht mehr als 20 Zeichen lang sein");
+      return;
+    }
 
     try {
       const response = await fetch("../api/register.php", {
@@ -13,7 +19,7 @@ document
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ username, email, password }),
       });
       const result = await response.json();
 

@@ -151,6 +151,7 @@ body {
   margin-bottom: 1%;
 }
 
+#register input[type="text"],
 #register input[type="email"],
 #register input[type="password"] {
   width: 100%;
@@ -163,11 +164,13 @@ body {
   margin-bottom: 1.2rem;
 }
 
+#register input[type="text"]::placeholder,
 #register input[type="email"]::placeholder,
 #register input[type="password"]::placeholder {
   color: #a78bfa;
 }
 
+#register input[type="text"]:focus,
 #register input[type="email"]:focus,
 #register input[type="password"]:focus {
   box-shadow: 0 0 0 2px #c4b5fd;
@@ -205,6 +208,145 @@ body {
 
 #register p a:hover {
   text-decoration: underline;
+}
+
+/* ------------------- Settings ------------------- */
+
+#settingsPage {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+#settingsContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 0 1rem 1.5rem;
+}
+
+#settingsCard {
+  width: min(760px, 100%);
+  background: white;
+  border-radius: 0.8em;
+  padding: 2rem;
+  box-shadow: 0 8px 32px rgba(10, 6, 21, 0.4);
+}
+
+#settingsCard h2 {
+  color: #5b21b6;
+  font-size: 1.4em;
+  margin-bottom: 0.5rem;
+}
+
+.settings-message {
+  min-height: 1.4rem;
+  margin-bottom: 1rem;
+  color: #9333ea;
+}
+
+.setting-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 0;
+  border-top: 1px solid #ece7ff;
+}
+
+.setting-row:first-of-type {
+  border-top: none;
+  padding-top: 0.25rem;
+}
+
+.setting-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.setting-label {
+  display: block;
+  color: #5b21b6;
+  font-weight: 700;
+  margin-bottom: 0.35rem;
+}
+
+.setting-value {
+  color: #2a0081;
+  word-break: break-word;
+}
+
+.setting-edit-form {
+  width: 100%;
+}
+
+.setting-input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 1.1em 1.2em;
+  font-size: 1em;
+  background: #f3f0ff;
+  border: none;
+  border-radius: 0.8em;
+}
+
+.setting-input:focus {
+  box-shadow: 0 0 0 2px #c4b5fd;
+}
+
+.setting-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-shrink: 0;
+}
+
+.setting-button {
+  cursor: pointer;
+  border: none;
+  border-radius: 14px;
+  padding: 0.9em 1.1em;
+  font-size: 0.95em;
+  font-weight: 600;
+}
+
+.setting-button.primary {
+  background: linear-gradient(90deg, #9333ea, #ec4899);
+  color: white;
+}
+
+.setting-button.secondary {
+  background: #ede9fe;
+  color: #5b21b6;
+}
+
+.setting-button:hover {
+  opacity: 0.88;
+}
+
+#settingsLogoutContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 0 1rem 1.5rem;
+}
+
+.settings-logout-btn {
+  min-width: 180px;
+}
+
+@media (max-width: 700px) {
+  .setting-row {
+    flex-direction: column;
+  }
+
+  .setting-actions {
+    width: 100%;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
 }
 
 /* ------------------- Home ------------------- */
