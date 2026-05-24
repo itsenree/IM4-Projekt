@@ -16,7 +16,7 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
 
     if (result.status === "success") {
       alert("Login successful!");
-      window.location.href = "/pages/protected.html";
+      window.location.href = "home.html";
     } else {
       alert(result.message || "Login failed.");
     }

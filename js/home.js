@@ -1,4 +1,23 @@
-// ---------------- To do: STREAK LOGIC ----------------
+document.addEventListener("DOMContentLoaded", async () => {
+  try {
+    const response = await fetch("../api/protected.php", {
+      credentials: "include",
+    });
+
+    if (response.status === 401) {
+      window.location.href = "login.html";
+      return;
+    }
+
+    const result = await response.json();
+
+    if (result.status === "success" && result.username) {
+      document.getElementById("homeUsername").textContent = result.username;
+    }
+  } catch (error) {
+    console.error("Error loading home user data:", error);
+  }
+});// ---------------- To do: STREAK LOGIC ----------------
 
 // 1. Für jedes Familienmitglied: Hole alle gespeicherten Sessions
 //    --> Jede Session hat ein Datum und eine Dauer (in Sekunden)
