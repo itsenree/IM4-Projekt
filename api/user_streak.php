@@ -7,17 +7,31 @@ header('Content-Type: application/json');
 
 require_once("../system/config.php");
 
-$members_id = $_GET['members_id'] ?? null;
-
-if (!$members_id) {
-    echo json_encode(["status" => "error", "message" => "Missing parameters"]);
+if (!isset($_SESSION['user_id'])) {
+    echo json_encode(["status" => "error", "message" => "Not logged in"]);
     exit;
 }
 
+$users_id = $_SESSION['user_id'];
+
 try {
 
-    // Alle Tage laden, an denen mindestens 1 Eintrag existiert
+    // Member des eingeloggten Users laden
     $stmt = $pdo->prepare("
+        SELECT id FROM members WHERE users_id = :users_id LIMIT 1
+    ");
+    $stmt->execute([':users_id' => $users_id]);
+    $member = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if (!$member) {
+        echo json_encode(["status" => "error", "message" => "No member found"]);
+        exit;
+    }
+
+    $members_id = $member['id'];
+
+    // Streak berechnen (gleiche Logik wie brush_streak.php)
+    $stmt2 = $pdo->prepare("
         SELECT DATE(bd.datetime) AS tag
         FROM brush_data bd
         JOIN members m ON m.id = :members_id
@@ -27,14 +41,13 @@ try {
         ORDER BY DATE(bd.datetime) DESC
     ");
 
-    $stmt->execute([':members_id' => $members_id]);
-    $rows = $stmt->fetchAll(PDO::FETCH_COLUMN);
+    $stmt2->execute([':members_id' => $members_id]);
+    $tage = $stmt2->fetchAll(PDO::FETCH_COLUMN);
 
-    // Streak zählen: von heute rückwärts lückenlos
     $streak = 0;
     $check = new DateTime('today');
 
-    foreach ($rows as $tag) {
+    foreach ($tage as $tag) {
         $tagDate = new DateTime($tag);
         if ($tagDate == $check) {
             $streak++;

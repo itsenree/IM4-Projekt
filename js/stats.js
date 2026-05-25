@@ -167,7 +167,10 @@ function waitForDateAndLoad(memberId) {
   const interval = setInterval(() => {
     if (aktiveDateFrom && aktiveDateTo) {
       clearInterval(interval);
-      loadChartData(memberId, aktiveDateFrom, aktiveDateTo);
+      // Nur laden, wenn dieser Member noch aktiv ist
+      if (aktiveMemberId === memberId) {
+        loadChartData(memberId, aktiveDateFrom, aktiveDateTo);
+      }
     }
   }, 50);
 }

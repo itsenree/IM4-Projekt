@@ -42,6 +42,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ':pass'  => $hashedPassword
     ]);
 
+    // Automatisch Member mit Position 1 erstellen
+    $memberInsert = $pdo->prepare("INSERT INTO members (name, brush_nr, color) VALUES (:name, 1, 'green')");
+    $memberInsert->execute([
+    ':name' => $username,
+    ]);
+
     echo json_encode(["status" => "success"]);
 } else {
     echo json_encode(["status" => "error", "message" => "Invalid request method"]);
