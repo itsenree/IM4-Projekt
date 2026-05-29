@@ -2,9 +2,9 @@
 
 * **Modul:** Interaktive Medien 4 an der Fachhochschule Graubünden (FS26)  
 * **Themenfeld:** IoT-Applikation zum Thema Eltern mit kleinen Kindern  
-* **Name des Projekts:** \[*Name*\]   
-* **Team Physical Computing:** \[*Namen*\]   
-* **Team WebApp:** \[*Namen*\]
+* **Name des Projekts:** ZämeFägts: Zahnfee Tracker  
+* **Team Physical Computing:** Laura Feldmann & Stella Bollinger
+* **Team WebApp:** Chiara Rubin & Enrico Fusaro
  
  
 * Welches Problem im Alltag von Eltern mit kleinen Kindern wird gelöst? 
@@ -24,7 +24,7 @@
 
 ### Setup
 
-* **WebApp:** [Link zur Website](http://link.zur.website)  
+* **WebApp:** [Link zur Website](https://im4.enrico-fusaro.ch/)  
 * **Video-Dokumentation:** [Link zum Video auf Youtube](http://link.zum.video) 
 
 #### Installationsanleitung WebApp
