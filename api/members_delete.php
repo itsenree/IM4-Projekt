@@ -3,6 +3,7 @@ header('Content-Type: application/json');
 
 require_once '../system/config.php';
 
+// ID aus dem Request-Body lesen
 $data = json_decode(file_get_contents('php://input'), true);
 $id = intval($data['id']);
 
@@ -11,6 +12,7 @@ try {
     $pdo = new PDO($dsn, $user, $pass);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
+    // Member anhand der ID löschen
     $stmt = $pdo->prepare("DELETE FROM members WHERE id = ?");
     $stmt->execute([$id]);
 

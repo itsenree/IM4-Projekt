@@ -11,10 +11,12 @@ require_once("../system/config.php");
 // PARAMETER EMPFANGEN
 // =====================================================
 
+// members_id und Datumsbereich aus GET-Parametern lesen
 $members_id = $_GET['members_id'] ?? null;
 $date_from  = $_GET['date_from']  ?? null;
 $date_to    = $_GET['date_to']    ?? null;
 
+// Abbrechen, falls ein Parameter fehlt
 if (!$members_id || !$date_from || !$date_to) {
     echo json_encode([
         "status"  => "error",
@@ -25,11 +27,11 @@ if (!$members_id || !$date_from || !$date_to) {
 
 // =====================================================
 // DATEN LADEN
-// brush_data wird mit bd abgekürzt
+// (brush_data wird mit bd abgekürzt)
 // =====================================================
 
 try {
-
+    // Punkte pro Tag laden -> maximal 6 Punkte pro Tag
     $stmt = $pdo->prepare("
         SELECT
             DATE(bd.datetime) AS tag,

@@ -8,22 +8,24 @@ header('Content-Type: application/json');
 require_once '../system/config.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Login-Daten aus dem Request-Body lesen
     $data = json_decode(file_get_contents("php://input"), true);
 
     $email    = trim($data['email'] ?? '');
     $password = trim($data['password'] ?? '');
 
+    // Abbrechen, falls Email oder Passwort fehlt
     if (!$email || !$password) {
         echo json_encode(["status" => "error", "message" => "Email and password are required"]);
         exit;
     }
 
-    // Check user in DB
+    // User anhand der Email in der Datenbank suchen
     $stmt = $pdo->prepare("SELECT id, username, password FROM users WHERE email = :email");
     $stmt->execute([':email' => $email]);
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    // Verify password
+    // Passwort prüfen und bei Erfolg Session setzen
     if ($user && password_verify($password, $user['password'])) {
         session_regenerate_id(true);
         $_SESSION['user_id'] = $user['id'];

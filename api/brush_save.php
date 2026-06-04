@@ -29,6 +29,7 @@ $fulfilled  = $input["fulfilled"] ?? null;
 // =====================================================
 // PRÜFEN
 // =====================================================
+// Abbrechen, falls ein Wert fehlt
 
 if (
     $position === null ||
@@ -51,7 +52,7 @@ if (
 // =====================================================
 
 try {
-
+    // Member anhand der Glasposition (brush_nr) identifizieren
     $stmt = $pdo->prepare("
         SELECT id
         FROM members
@@ -85,7 +86,7 @@ try {
     // ================================================
     // INSERT
     // ================================================
-
+    // Putzdaten in die Datenbank speichern
     $stmt = $pdo->prepare("
         INSERT INTO brush_data
         (

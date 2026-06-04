@@ -9,7 +9,8 @@ require_once("../system/config.php");
 
 try {
 
-    // Champion laden
+    // Member mit den meisten Gesamtpunkten laden (Champion)
+    // Tagespunkte werden auf max. 6 gedeckelt, dann summiert
     $stmt = $pdo->prepare("
         SELECT
             m.id,
@@ -39,7 +40,7 @@ try {
         exit;
     }
 
-    // Punkte aller Members laden
+    // Gesamtpunkte aller Members laden (für Vergleichsansicht im Frontend)
     $stmt2 = $pdo->query("
         SELECT
             m.name,
@@ -61,7 +62,7 @@ try {
 
     $allePunkte = $stmt2->fetchAll(PDO::FETCH_ASSOC);
 
-    // Alles in einem einzigen echo ausgeben
+    // Champion und alle Punktestände zusammen zurückgeben
     echo json_encode([
         "status"     => "success",
         "name"       => $champion['name'],
