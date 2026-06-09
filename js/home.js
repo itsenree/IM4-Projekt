@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // Champion und Familien-Chart laden
   loadHomeData();
-  loadUserStreak();
+    // loadUserStreak(); // Streak loading removed
 });
 
 async function loadHomeData() {
@@ -105,15 +105,3 @@ async function loadHomeData() {
   }
 }
 
-async function loadUserStreak() {
-  try {
-    const response = await fetch("../api/user_streak.php");
-    const result = await response.json();
-
-    if (result.status === "success") {
-      document.getElementById("userStreak").textContent = result.streak;
-    }
-  } catch (error) {
-    console.error("Fehler beim Laden des Streaks:", error);
-  }
-}

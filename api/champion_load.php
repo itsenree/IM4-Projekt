@@ -23,8 +23,6 @@ try {
                 DATE(bd.datetime) AS tag,
                 SUM(bd.fulfilled) AS punkte
             FROM brush_data bd
-            JOIN members m2 ON m2.id = bd.members_id
-            WHERE bd.position = m2.brush_nr
             GROUP BY bd.members_id, DATE(bd.datetime)
         ) AS tages_punkte ON tages_punkte.members_id = m.id
         GROUP BY m.id, m.name
@@ -52,8 +50,6 @@ try {
                 DATE(bd.datetime) AS tag,
                 SUM(bd.fulfilled) AS punkte
             FROM brush_data bd
-            JOIN members m2 ON m2.id = bd.members_id
-            WHERE bd.position = m2.brush_nr
             GROUP BY bd.members_id, DATE(bd.datetime)
         ) AS tages_punkte ON tages_punkte.members_id = m.id
         GROUP BY m.id, m.name
