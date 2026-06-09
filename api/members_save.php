@@ -37,9 +37,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         exit;
     }
 
-    $brush_nr = (int)$brush_nr_raw;
+    $requested_brush_nr = (int)$brush_nr_raw;
+    $brush_nr = $requested_brush_nr;
 
     try {
+        if ($requested_brush_nr !== 0) {
+            $positionCheck = $pdo->prepare("SELECT COUNT(*) FROM members WHERE brush_nr = :brush_nr");
+
+            $positionCheck->execute([':brush_nr' => $requested_brush_nr]);
+            if ((int)$positionCheck->fetchColumn() > 0) {
+                $brush_nr = 0;
+
+                for ($position = 1; $position <= 3; $position++) {
+                    $positionCheck->execute([':brush_nr' => $position]);
+
+                    if ((int)$positionCheck->fetchColumn() === 0) {
+                        $brush_nr = $position;
+                        break;
+                    }
+                }
+            }
+        }
+
         // Neuen Member in die Datenbank einfügen
         $stmt = $pdo->prepare("INSERT INTO members (name, brush_nr, color) VALUES (:name, :brush_nr, :color)");
         $stmt->execute([

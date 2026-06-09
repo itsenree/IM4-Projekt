@@ -42,10 +42,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ':pass'  => $hashedPassword
     ]);
 
-    // Automatisch Member mit Position 1 erstellen
-    $memberInsert = $pdo->prepare("INSERT INTO members (name, brush_nr, color) VALUES (:name, 1, 'green')");
+    // Automatisch Member mit der ersten freien Position 1-3 erstellen
+    $memberBrushNr = 0;
+    $positionCheck = $pdo->prepare("SELECT COUNT(*) FROM members WHERE brush_nr = :brush_nr");
+
+    for ($position = 1; $position <= 3; $position++) {
+        $positionCheck->execute([':brush_nr' => $position]);
+
+        if ((int)$positionCheck->fetchColumn() === 0) {
+            $memberBrushNr = $position;
+            break;
+        }
+    }
+
+    $memberInsert = $pdo->prepare("INSERT INTO members (name, brush_nr, color) VALUES (:name, :brush_nr, 'green')");
     $memberInsert->execute([
     ':name' => $username,
+    ':brush_nr' => $memberBrushNr,
     ]);
 
     echo json_encode(["status" => "success"]);
