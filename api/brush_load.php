@@ -37,9 +37,7 @@ try {
             DATE(bd.datetime) AS tag,
             LEAST(SUM(bd.fulfilled), 6) AS punkte
         FROM brush_data bd
-        JOIN members m ON m.id = :members_id
-        WHERE bd.members_id = :members_id
-            AND bd.position = m.brush_nr
+            WHERE bd.members_id = :members_id
             AND DATE(bd.datetime) BETWEEN :date_from AND :date_to
         GROUP BY DATE(bd.datetime)
         ORDER BY DATE(bd.datetime) ASC

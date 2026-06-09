@@ -7,6 +7,18 @@ let aktiveMemberId = null;
 let aktiveDateFrom = null;
 let aktiveDateTo = null;
 
+function getCurrentWeekRange() {
+  const today = new Date();
+  const mondayOffset = (today.getDay() + 6) % 7;
+  const start = new Date(today);
+  start.setDate(today.getDate() - mondayOffset);
+
+  return {
+    start,
+    end: today,
+  };
+}
+
 // =====================================================
 // HILFSFUNKTIONEN
 // =====================================================
@@ -45,6 +57,10 @@ async function loadStreak(memberId) {
 flatpickr("#dateRange01", {
   mode: "range",
   dateFormat: "Y-m-d",
+  defaultDate: (() => {
+    const range = getCurrentWeekRange();
+    return [range.start, range.end];
+  })(),
   locale: {
     rangeSeparator: " → ",
     weekdays: {
@@ -89,6 +105,16 @@ flatpickr("#dateRange01", {
         "Dezember",
       ],
     },
+  },
+  onReady(selectedDates, dateStr, instance) {
+    if (selectedDates.length === 2) {
+      aktiveDateFrom = instance.formatDate(selectedDates[0], "Y-m-d");
+      aktiveDateTo = instance.formatDate(selectedDates[1], "Y-m-d");
+
+      if (aktiveMemberId) {
+        loadChartData(aktiveMemberId, aktiveDateFrom, aktiveDateTo);
+      }
+    }
   },
   onChange(selectedDates, dateStr, instance) {
     if (selectedDates.length === 2) {
@@ -144,7 +170,9 @@ async function loadMemberButtons() {
           aktiveMemberId = member.id;
           setActiveName(member.name);
           loadStreak(member.id);
-          waitForDateAndLoad(member.id);
+          if (aktiveDateFrom && aktiveDateTo) {
+            loadChartData(member.id, aktiveDateFrom, aktiveDateTo);
+          }
         }
       });
 
@@ -160,19 +188,6 @@ async function loadMemberButtons() {
   } catch (error) {
     console.error("Fehler beim Laden der Mitglieder:", error);
   }
-}
-
-// Wartet kurz, bis Flatpickr die Daten gesetzt hat
-function waitForDateAndLoad(memberId) {
-  const interval = setInterval(() => {
-    if (aktiveDateFrom && aktiveDateTo) {
-      clearInterval(interval);
-      // Nur laden, wenn dieser Member noch aktiv ist
-      if (aktiveMemberId === memberId) {
-        loadChartData(memberId, aktiveDateFrom, aktiveDateTo);
-      }
-    }
-  }, 50);
 }
 
 // =====================================================

@@ -35,9 +35,7 @@ try {
     $stmt2 = $pdo->prepare("
         SELECT DATE(bd.datetime) AS tag
         FROM brush_data bd
-        JOIN members m ON m.id = :members_id
         WHERE bd.members_id = :members_id
-            AND bd.position = m.brush_nr
         GROUP BY DATE(bd.datetime)
         HAVING LEAST(SUM(bd.fulfilled), 6) >= 6
         ORDER BY DATE(bd.datetime) DESC
