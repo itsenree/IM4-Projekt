@@ -27,14 +27,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $data = json_decode(file_get_contents('php://input'), true);
 
     $name = trim($data['name'] ?? '');
-    $brush_nr = trim($data['brush_nr'] ?? '');
+    $brush_nr_raw = $data['brush_nr'] ?? null;
     $color = trim($data['color'] ?? '');
+    $valid_brush_positions = [0, 1, 2, 3];
 
     // Abbrechen, falls ein Feld fehlt
-    if (!$name || !$brush_nr || !$color) {
+    if ($name === '' || $color === '' || $brush_nr_raw === null || $brush_nr_raw === '' || !in_array((int)$brush_nr_raw, $valid_brush_positions, true)) {
         echo json_encode(["status" => "error", "message" => "All fields are required."]);
         exit;
     }
+
+    $brush_nr = (int)$brush_nr_raw;
 
     try {
         // Neuen Member in die Datenbank einfügen
