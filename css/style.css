@@ -416,7 +416,8 @@ body {
 }
 
 .streakContainer h1,
-.streakContainer h2 {
+.streakContainer h2,
+.streakContainer p {
   text-align: center;
 }
 
@@ -433,6 +434,11 @@ body {
   color: #b7e7fc;
   font-size: 3em;
   font-weight: 700;
+}
+
+.streakContainer p {
+  color: #b7e7fc;
+  font-weight: 200;
 }
 
 #balkendiagrammContainer h2 {
@@ -680,6 +686,24 @@ footer a {
 }
 .member-color-pink {
   background-color: #ffb3de;
+}
+
+.ti-pencil {
+  display: inline-block;
+  border-radius: 0;
+  border: none;
+}
+
+.member-box select,
+.member-box button {
+  background-color: #ffd3f000;
+  border: none;
+}
+
+.member-box input {
+  background-color: #ffd3f000;
+  border-radius: 25px;
+  padding: 0 1%;
 }
 
 /* ------------------- Media Queries ------------------- */

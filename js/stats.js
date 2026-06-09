@@ -32,7 +32,7 @@ function setActiveName(name) {
 }
 
 // =====================================================
-// Funktion für den Streak, die beim Wechsel des aktiven Members aufgerufen wird
+// STREAK LADEN
 // =====================================================
 
 async function loadStreak(memberId) {
@@ -147,16 +147,15 @@ async function loadMemberButtons() {
         btn.dataset.id = member.id;
 
         btn.addEventListener("click", () => {
-          // Aktiven Button hervorheben
           container
             .querySelectorAll("button")
             .forEach((b) => b.classList.remove("aktiv-member"));
           btn.classList.add("aktiv-member");
 
-          // Name im Streak-Titel aktualisieren
           setActiveName(member.name);
           aktiveMemberId = member.id;
           loadStreak(member.id);
+
           if (aktiveDateFrom && aktiveDateTo) {
             loadChartData(aktiveMemberId, aktiveDateFrom, aktiveDateTo);
           }
@@ -164,12 +163,12 @@ async function loadMemberButtons() {
 
         container.appendChild(btn);
 
-        // Ersten Member standardmässig auswählen
         if (index === 0) {
           btn.classList.add("aktiv-member");
           aktiveMemberId = member.id;
           setActiveName(member.name);
           loadStreak(member.id);
+
           if (aktiveDateFrom && aktiveDateTo) {
             loadChartData(member.id, aktiveDateFrom, aktiveDateTo);
           }
@@ -205,16 +204,13 @@ async function loadChartData(memberId, dateFrom, dateTo) {
       return;
     }
 
-    // Alle Tage im Zeitraum auffüllen (auch Tage ohne Eintrag = 0 Punkte)
     const alleDaten = fillDateRange(dateFrom, dateTo, result.data);
-
     drawChart(alleDaten);
   } catch (error) {
     console.error("Fehler beim Laden der Chart-Daten:", error);
   }
 }
 
-// Füllt fehlende Tage mit 0 auf
 function fillDateRange(dateFrom, dateTo, data) {
   const map = {};
   data.forEach((row) => {
@@ -251,7 +247,7 @@ function drawChart(daten) {
   });
 
   const punkte = daten.map((d) => d.punkte);
-  const maxPunkte = Math.max(...punkte, 6); // mindestens 6, sonst dynamisch
+  const maxPunkte = Math.max(...punkte, 6);
 
   const ctx = document.getElementById("balkenChart").getContext("2d");
 
@@ -269,10 +265,10 @@ function drawChart(daten) {
           data: punkte,
           backgroundColor: punkte.map((p) => {
             const ratio = maxPunkte > 0 ? p / maxPunkte : 0;
-            if (ratio >= 0.8) return "rgba(180, 231, 252, 0.85)"; // fast voll: hellblau
-            if (ratio >= 0.4) return "rgba(245, 199, 0, 0.85)"; // mittel: gelb
-            if (p > 0) return "rgba(255, 150, 100, 0.85)"; // wenig: orange
-            return "rgba(255, 255, 255, 0.15)"; // nichts: transparent
+            if (ratio >= 0.8) return "rgba(180, 231, 252, 0.85)";
+            if (ratio >= 0.4) return "rgba(245, 199, 0, 0.85)";
+            if (p > 0) return "rgba(255, 150, 100, 0.85)";
+            return "rgba(255, 255, 255, 0.15)";
           }),
           borderRadius: 8,
           borderSkipped: false,
