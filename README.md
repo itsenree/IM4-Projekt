@@ -13,13 +13,18 @@ Sobald der Countdown fertig ist, beginnt die eigentliche Zahnputz Zeit. Dabei gi
 
 1. Die Person Putzt 2 Minuten lang durch: Es erscheint ein «End Bildschirm». In der Datenbank werden 2 Punkte gespeichert.
 
-2. Die Person bricht das Zähneputzen frühzeitig ab und stellt die Zahnbürste zurück ins Glas, ein trauriger Smiley erscheint und die Person hat 15 Sekunden Zeit, um das Zähneputzen wieder fortzusetzten. Die Person setzt das Zähneputzen fort und beendet die 2 Minuten doch noch. In der Datenbank wird 1 Punkt gespeichert.
+2. Die Person bricht das Zähneputzen frühzeitig ab und stellt die Zahnbürste zurück ins Glas, ein trauriger Smiley erscheint und die Person hat 15 Sekunden Zeit, um das Zähneputzen wieder fortzusetzten. Die Person setzt das Zähneputzen fort und beendet die 2 Minuten doch noch. In der Datenbank werden trotzdem 2 Punkte gespeichert. 
+
+3. Die Person putzt nicht 2 Minuten die Zähne, jedoch über eine Minute: Es wird 1 Punkt in der Datenbank gespeichert. 
 
 3. Die Person beginnt mit dem Zähneputzen, bricht aber früher ab und lässt die 15 Sekunden verstreichen ohne weiter zu putzen. In der Datenbank werden 0 Punkte gespeichert.
 
-- Welches Problem im Alltag von Eltern mit kleinen Kindern wird gelöst?
-- Was ist der „Sinn und Zweck“ des Systems?
+Auf der WebApp wird dann eine Statsistik erstellt wann und wie Lange Zähnegeputzt wurde. Dies kann dann in verschiedenen Ansichten im Haushalt verglichen werden. 
 
+- Welches Problem im Alltag von Eltern mit kleinen Kindern wird gelöst?
+Unser WebApp zusammen mit dem Physical Computing Teil soll die Kinder dazu motivieren selbständig Zähneputzen zu wollen oder immerhin das motivieren dazu einfacher zu gestalten. 
+- Was ist der „Sinn und Zweck“ des Systems?
+Das Zähneputzen und desssen Dauer zu dokumentieren und so in einem Haushalt vergleichbar zu machen, was die Gamification erhöht. 
 
 
 \[_Bilder / GIFs (optional)_\]
