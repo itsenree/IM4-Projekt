@@ -541,6 +541,13 @@ footer a {
   padding: 1%;
 }
 
+#balkendiagrammContainer input {
+  padding: 0.5% 1%;
+  margin: 1% 0;
+  border-radius: 15px;
+  border-style: none;
+}
+
 /* ------------------- familie.html styles ------------------- */
 
 #memberForm.hidden {
@@ -763,6 +770,11 @@ footer a {
     cursor: pointer;
     padding: 2% 4%;
     font-size: 0.8em;
+  }
+
+  #balkendiagrammContainer input {
+    padding: 1% 2%;
+    margin: 3% 0%;
   }
 }
 
