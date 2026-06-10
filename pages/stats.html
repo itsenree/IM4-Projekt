@@ -26,30 +26,26 @@
     <div class="begruessung">
       <h1>Statistiken</h1>
       <div id="metrikenMitglieder">
-        <div id="mitgliederButtons">
-          <!-- Buttons werden dynamisch geladen -->
-        </div>
+        <select id="mitgliederDropdown">
+          <!-- Optionen werden dynamisch geladen -->
+        </select>
       </div>
       <h3>Eine Übersicht von <span></span>s Metriken</h3>
     </div>
     <div id="statsContainer">
       <div class="streakContainer">
         <h2><span></span>s Streak</h2>
-        <p>Tagesziel: 6 Punkte → +1 Streak-Tag</p>
         <h1><span id="anzahlTageStreak"></span>🔥</h1>
         <h2>Tage in Folge</h2>
       </div>
       <div id="statsDiagramme">
         <section id="balkendiagrammContainer">
-          <!-- Eingabefeld für die Zeitraumauswahl -->
           <input
             type="text"
             id="dateRange01"
-            placeholder="Wähle einen Zeitraum"
+            placeholder="Wähle deinen Zeitraum"
             style="text-align: center"
           />
-
-          <!-- Canvas-Element für das Chart.js Diagramm -->
           <canvas id="balkenChart"></canvas>
         </section>
       </div>

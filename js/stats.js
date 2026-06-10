@@ -4,24 +4,30 @@
 
 let balkenChart = null;
 let aktiveMemberId = null;
-let aktiveDateFrom = null;
-let aktiveDateTo = null;
-
-function getCurrentWeekRange() {
-  const today = new Date();
-  const mondayOffset = (today.getDay() + 6) % 7;
-  const start = new Date(today);
-  start.setDate(today.getDate() - mondayOffset);
-
-  return {
-    start,
-    end: today,
-  };
-}
 
 // =====================================================
 // HILFSFUNKTIONEN
 // =====================================================
+
+function formatDate(date) {
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, "0");
+  const d = String(date.getDate()).padStart(2, "0");
+  return `${y}-${m}-${d}`;
+}
+
+function getCurrentWeekRange() {
+  const today = new Date();
+  const mondayOffset = (today.getDay() + 6) % 7;
+
+  const start = new Date(today);
+  start.setDate(today.getDate() - mondayOffset);
+
+  const end = new Date(start);
+  end.setDate(start.getDate() + 6);
+
+  return { start, end };
+}
 
 function setActiveName(name) {
   document
@@ -30,6 +36,12 @@ function setActiveName(name) {
       span.textContent = name;
     });
 }
+
+// Aktuelle Woche direkt setzen (lokal, kein UTC-Bug)
+const currentRange = getCurrentWeekRange();
+
+let aktiveDateFrom = formatDate(currentRange.start);
+let aktiveDateTo = formatDate(currentRange.end);
 
 // =====================================================
 // STREAK LADEN
@@ -40,6 +52,7 @@ async function loadStreak(memberId) {
     const response = await fetch(
       `../api/brush_streak.php?members_id=${encodeURIComponent(memberId)}`,
     );
+
     const result = await response.json();
 
     if (result.status === "success") {
@@ -51,16 +64,15 @@ async function loadStreak(memberId) {
 }
 
 // =====================================================
-// FLATPICKR DAYPICKER INITIALISIEREN
+// FLATPICKR INITIALISIEREN
 // =====================================================
 
 flatpickr("#dateRange01", {
   mode: "range",
   dateFormat: "Y-m-d",
-  defaultDate: (() => {
-    const range = getCurrentWeekRange();
-    return [range.start, range.end];
-  })(),
+
+  defaultDate: [currentRange.start, currentRange.end],
+
   locale: {
     rangeSeparator: " → ",
     weekdays: {
@@ -106,16 +118,7 @@ flatpickr("#dateRange01", {
       ],
     },
   },
-  onReady(selectedDates, dateStr, instance) {
-    if (selectedDates.length === 2) {
-      aktiveDateFrom = instance.formatDate(selectedDates[0], "Y-m-d");
-      aktiveDateTo = instance.formatDate(selectedDates[1], "Y-m-d");
 
-      if (aktiveMemberId) {
-        loadChartData(aktiveMemberId, aktiveDateFrom, aktiveDateTo);
-      }
-    }
-  },
   onChange(selectedDates, dateStr, instance) {
     if (selectedDates.length === 2) {
       aktiveDateFrom = instance.formatDate(selectedDates[0], "Y-m-d");
@@ -129,7 +132,7 @@ flatpickr("#dateRange01", {
 });
 
 // =====================================================
-// MEMBER-BUTTONS LADEN
+// MEMBER-DROPDOWN LADEN
 // =====================================================
 
 async function loadMemberButtons() {
@@ -137,52 +140,45 @@ async function loadMemberButtons() {
     const response = await fetch("../api/members_load.php");
     const result = await response.json();
 
-    const container = document.getElementById("mitgliederButtons");
-    container.innerHTML = "";
+    const select = document.getElementById("mitgliederDropdown");
+
+    select.innerHTML = "";
 
     if (result.status === "success" && result.data.length > 0) {
       result.data.forEach((member, index) => {
-        const btn = document.createElement("button");
-        btn.textContent = member.name;
-        btn.dataset.id = member.id;
+        const option = document.createElement("option");
 
-        btn.addEventListener("click", () => {
-          container
-            .querySelectorAll("button")
-            .forEach((b) => b.classList.remove("aktiv-member"));
-          btn.classList.add("aktiv-member");
+        option.value = member.id;
+        option.textContent = member.name;
 
-          setActiveName(member.name);
-          aktiveMemberId = member.id;
-          loadStreak(member.id);
-
-          if (aktiveDateFrom && aktiveDateTo) {
-            loadChartData(aktiveMemberId, aktiveDateFrom, aktiveDateTo);
-          }
-        });
-
-        container.appendChild(btn);
+        select.appendChild(option);
 
         if (index === 0) {
-          btn.classList.add("aktiv-member");
           aktiveMemberId = member.id;
+
           setActiveName(member.name);
           loadStreak(member.id);
-
-          if (aktiveDateFrom && aktiveDateTo) {
-            loadChartData(member.id, aktiveDateFrom, aktiveDateTo);
-          }
+          loadChartData(member.id, aktiveDateFrom, aktiveDateTo);
         }
       });
 
-      if (result.data.length > 3) {
-        container.classList.add("viele-mitglieder");
-      } else {
-        container.classList.remove("viele-mitglieder");
-      }
+      select.addEventListener("change", () => {
+        const selectedId = select.value;
+        const selectedName = select.options[select.selectedIndex].textContent;
+
+        aktiveMemberId = selectedId;
+
+        setActiveName(selectedName);
+        loadStreak(selectedId);
+        loadChartData(selectedId, aktiveDateFrom, aktiveDateTo);
+      });
     } else {
-      container.innerHTML =
-        "<p style='color:#b7e7fc'>Keine Mitglieder gefunden.</p>";
+      const option = document.createElement("option");
+
+      option.textContent = "Keine Mitglieder gefunden";
+      option.disabled = true;
+
+      select.appendChild(option);
     }
   } catch (error) {
     console.error("Fehler beim Laden der Mitglieder:", error);
@@ -190,12 +186,16 @@ async function loadMemberButtons() {
 }
 
 // =====================================================
-// CHART DATEN LADEN & ZEICHNEN
+// CHART DATEN LADEN
 // =====================================================
 
 async function loadChartData(memberId, dateFrom, dateTo) {
   try {
-    const url = `../api/brush_load.php?members_id=${encodeURIComponent(memberId)}&date_from=${encodeURIComponent(dateFrom)}&date_to=${encodeURIComponent(dateTo)}`;
+    const url =
+      `../api/brush_load.php?members_id=${encodeURIComponent(memberId)}` +
+      `&date_from=${encodeURIComponent(dateFrom)}` +
+      `&date_to=${encodeURIComponent(dateTo)}`;
+
     const response = await fetch(url);
     const result = await response.json();
 
@@ -205,6 +205,7 @@ async function loadChartData(memberId, dateFrom, dateTo) {
     }
 
     const alleDaten = fillDateRange(dateFrom, dateTo, result.data);
+
     drawChart(alleDaten);
   } catch (error) {
     console.error("Fehler beim Laden der Chart-Daten:", error);
@@ -213,20 +214,24 @@ async function loadChartData(memberId, dateFrom, dateTo) {
 
 function fillDateRange(dateFrom, dateTo, data) {
   const map = {};
+
   data.forEach((row) => {
     map[row.tag] = parseInt(row.punkte, 10);
   });
 
   const result = [];
+
   const current = new Date(dateFrom);
   const end = new Date(dateTo);
 
   while (current <= end) {
-    const key = current.toISOString().split("T")[0];
+    const key = formatDate(current); // lokal statt UTC
+
     result.push({
       tag: key,
       punkte: map[key] ?? 0,
     });
+
     current.setDate(current.getDate() + 1);
   }
 
@@ -240,6 +245,7 @@ function fillDateRange(dateFrom, dateTo, data) {
 function drawChart(daten) {
   const labels = daten.map((d) => {
     const date = new Date(d.tag);
+
     return date.toLocaleDateString("de-DE", {
       day: "2-digit",
       month: "2-digit",
@@ -247,6 +253,7 @@ function drawChart(daten) {
   });
 
   const punkte = daten.map((d) => d.punkte);
+
   const maxPunkte = Math.max(...punkte, 6);
 
   const ctx = document.getElementById("balkenChart").getContext("2d");
@@ -257,28 +264,40 @@ function drawChart(daten) {
 
   balkenChart = new Chart(ctx, {
     type: "bar",
+
     data: {
       labels,
+
       datasets: [
         {
           label: "Punkte",
+
           data: punkte,
+
           backgroundColor: punkte.map((p) => {
             const ratio = maxPunkte > 0 ? p / maxPunkte : 0;
+
             if (ratio >= 0.8) return "rgba(180, 231, 252, 0.85)";
             if (ratio >= 0.4) return "rgba(245, 199, 0, 0.85)";
             if (p > 0) return "rgba(255, 150, 100, 0.85)";
+
             return "rgba(255, 255, 255, 0.15)";
           }),
+
           borderRadius: 8,
           borderSkipped: false,
         },
       ],
     },
+
     options: {
       responsive: true,
+
       plugins: {
-        legend: { display: false },
+        legend: {
+          display: false,
+        },
+
         tooltip: {
           callbacks: {
             label: (ctx) =>
@@ -286,25 +305,37 @@ function drawChart(daten) {
           },
         },
       },
+
       scales: {
         y: {
           min: 0,
           max: 6,
+
           title: {
             display: true,
             text: "Erreichte Punkte",
             color: "#b7e7fc",
           },
+
           ticks: {
             stepSize: 1,
             color: "#b7e7fc",
-            callback: (val) => val,
           },
-          grid: { color: "rgba(183, 231, 252, 0.15)" },
+
+          grid: {
+            color: "rgba(183, 231, 252, 0.15)",
+          },
         },
+
         x: {
-          ticks: { color: "#b7e7fc", maxRotation: 45 },
-          grid: { display: false },
+          ticks: {
+            color: "#b7e7fc",
+            maxRotation: 45,
+          },
+
+          grid: {
+            display: false,
+          },
         },
       },
     },

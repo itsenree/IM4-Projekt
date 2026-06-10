@@ -522,18 +522,7 @@ footer a {
   padding: 1rem 1.5rem;
 }
 
-#metrikenMitglieder button:hover {
-  background-color: #b7e7fc;
-  color: #2a0081;
-}
-
-#metrikenMitglieder button.aktiv-member {
-  background-color: #2a0081;
-  color: #f5c700;
-}
-
-#statsDiagramme button,
-#metrikenMitglieder button {
+#statsDiagramme button {
   background-color: #f5c700;
   color: #2a0081;
   font-weight: 600;
@@ -544,20 +533,12 @@ footer a {
   cursor: pointer;
 }
 
-#mitgliederButtons {
-  display: flex;
-  justify-content: space-evenly;
-  flex-wrap: wrap;
-  padding: 3% 0;
-}
-
-#mitgliederButtons.viele-mitglieder {
-  flex-direction: column;
-  justify-content: space-around;
-}
-
-.viele-mitglieder button {
-  margin: 2% 0;
+#mitgliederDropdown {
+  width: 60%;
+  background-color: #ffffff;
+  border-style: none;
+  border-radius: 15px;
+  padding: 1%;
 }
 
 /* ------------------- familie.html styles ------------------- */
