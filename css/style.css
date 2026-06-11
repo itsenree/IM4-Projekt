@@ -256,6 +256,10 @@ body {
   border-top: 1px solid #ece7ff;
 }
 
+.setting-row.editing {
+  align-items: center;
+}
+
 .setting-row:first-of-type {
   border-top: none;
   padding-top: 0.25rem;
@@ -301,6 +305,10 @@ body {
   align-items: center;
   gap: 0.75rem;
   flex-shrink: 0;
+}
+
+.setting-row.editing .setting-actions {
+  align-self: center;
 }
 
 .setting-button {

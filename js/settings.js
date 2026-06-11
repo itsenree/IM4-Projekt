@@ -82,6 +82,7 @@ function createRow(field, label, value, inputType, isSecret = false) {
   editButton.textContent = "Bearbeiten";
 
   const renderDisplay = () => {
+    row.classList.remove("editing");
     row.innerHTML = "";
     info.innerHTML = "";
     actions.innerHTML = "";
@@ -95,6 +96,7 @@ function createRow(field, label, value, inputType, isSecret = false) {
   };
 
   const renderEdit = () => {
+    row.classList.add("editing");
     row.innerHTML = "";
     info.innerHTML = "";
     actions.innerHTML = "";
