@@ -1,13 +1,16 @@
+// Settings page script: elements and current user
 const settingsMessage = document.getElementById("settingsMessage");
 const settingsFields = document.getElementById("settingsFields");
 
 let currentUser = null;
 
+// show a short message in the settings area
 function setMessage(text, isError = false) {
   settingsMessage.textContent = text;
   settingsMessage.style.color = isError ? "#b91c1c" : "#9333ea";
 }
 
+// load current user settings from server
 async function loadSettings() {
   try {
     const response = await fetch("../api/settings.php", {
@@ -34,6 +37,7 @@ async function loadSettings() {
   }
 }
 
+// send a single setting update to the server
 async function updateSetting(field, value) {
   const response = await fetch("../api/settings.php", {
     method: "POST",
@@ -58,6 +62,7 @@ async function updateSetting(field, value) {
   return true;
 }
 
+// create a settings row with display and edit modes
 function createRow(field, label, value, inputType, isSecret = false) {
   const row = document.createElement("div");
   row.className = "setting-row";
@@ -184,6 +189,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const logoutBtn = document.getElementById("logoutBtn");
 
+  // logout button wiring
   logoutBtn.addEventListener("click", async () => {
     try {
       const response = await fetch("../api/logout.php", {

@@ -10,6 +10,7 @@ function setAuthMessage(text, isError = false) {
   authMessage.classList.toggle("success", !isError);
 }
 
+// register form: create account and auto-add member
 document
   .getElementById("registerForm")
   .addEventListener("submit", async (e) => {

@@ -10,6 +10,7 @@ function setAuthMessage(text, isError = false) {
   authMessage.classList.toggle("success", !isError);
 }
 
+// login form: authenticate and redirect
 document.getElementById("loginForm").addEventListener("submit", async (e) => {
   e.preventDefault();
   clearTimeout(redirectTimer);

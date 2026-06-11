@@ -1,3 +1,4 @@
+// Home page: load user and champion data on DOM ready
 document.addEventListener("DOMContentLoaded", async () => {
   try {
     const response = await fetch("../api/protected.php", {
@@ -21,6 +22,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   loadHomeData();
 });
 
+// fetch champion and family scores, then draw chart
 async function loadHomeData() {
   try {
     const response = await fetch("../api/champion_load.php");
@@ -36,6 +38,7 @@ async function loadHomeData() {
 
     const max = Math.max(...punkte, 1);
 
+    // draw family chart
     const ctx = document.getElementById("familienChart").getContext("2d");
 
     new Chart(ctx, {

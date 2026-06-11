@@ -13,7 +13,7 @@ body {
   flex-direction: column;
 }
 
-/* ------------------- Login Seite ------------------- */
+/* ------------------- Login Page ------------------- */
 
 #login {
   background: #ffd3f0;
@@ -136,7 +136,7 @@ body {
   text-decoration: underline;
 }
 
-/* ------------------- Register Seite ------------------- */
+/* ------------------- Register Page ------------------- */
 #register {
   display: flex;
   flex-direction: column;
@@ -232,6 +232,7 @@ body {
 }
 
 /* ------------------- Settings ------------------- */
+/* Main settings layout and buttons */
 
 #settingsPage {
   width: 100%;
@@ -519,6 +520,7 @@ footer a {
 }
 
 /* ------------------- Stats ------------------- */
+/* Stats layout: streak, chart and controls */
 
 #statsContainer {
   display: flex;
@@ -557,6 +559,7 @@ footer a {
   padding: 1rem 1.5rem;
 }
 
+/* Member dropdown (centered text) */
 #mitgliederDropdown {
   width: 60%;
   background-color: #ffffff;
@@ -588,6 +591,7 @@ footer a {
   border-style: none;
 }
 
+/* Chart canvas sizing (smaller charts) */
 #balkenChart {
   display: block;
   width: 100% !important;

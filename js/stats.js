@@ -1,7 +1,7 @@
 // =====================================================
-// GLOBALE VARIABLEN
+// Global variables
 // =====================================================
-
+// chart instance, selected member and current user
 let balkenChart = null;
 let aktiveMemberId = null;
 let aktuellerBenutzername = null;
@@ -11,6 +11,7 @@ let flatpickrInstance = null;
 // HILFSFUNKTIONEN
 // =====================================================
 
+// format a Date object as YYYY-MM-DD
 function formatDate(date) {
   const y = date.getFullYear();
   const m = String(date.getMonth() + 1).padStart(2, "0");
@@ -18,6 +19,7 @@ function formatDate(date) {
   return `${y}-${m}-${d}`;
 }
 
+// return Monday..Sunday range for the current week
 function getCurrentWeekRange() {
   const today = new Date();
   const mondayOffset = (today.getDay() + 6) % 7;
@@ -31,6 +33,7 @@ function getCurrentWeekRange() {
   return { start, end };
 }
 
+// update displayed active member name in headings
 function setActiveName(name) {
   document
     .querySelectorAll(".streakContainer span, .begruessung span")
@@ -73,6 +76,7 @@ let aktiveDateTo = formatDate(currentRange.end);
 // STREAK LADEN
 // =====================================================
 
+// load streak info for a member and show status
 async function loadStreak(memberId) {
   try {
     const response = await fetch(
@@ -96,7 +100,7 @@ async function loadStreak(memberId) {
 }
 
 // =====================================================
-// FLATPICKR INITIALISIEREN
+// Flatpickr initialization (date range picker)
 // =====================================================
 
 flatpickrInstance = flatpickr("#dateRange01", {
@@ -170,7 +174,7 @@ flatpickrInstance = flatpickr("#dateRange01", {
 });
 
 // =====================================================
-// MEMBER-DROPDOWN LADEN
+// Load members and populate dropdown
 // =====================================================
 
 async function loadMemberButtons() {
@@ -228,7 +232,7 @@ async function loadMemberButtons() {
 }
 
 // =====================================================
-// CHART DATEN LADEN
+// Load chart data for the selected member and date range
 // =====================================================
 
 async function loadChartData(memberId, dateFrom, dateTo) {
@@ -284,6 +288,7 @@ function fillDateRange(dateFrom, dateTo, data) {
 // CHART ZEICHNEN
 // =====================================================
 
+// draw the bar chart and highlight today's label
 function drawChart(daten) {
   const labels = daten.map((d) => {
     const date = new Date(d.tag);
