@@ -4,6 +4,7 @@
 
 let balkenChart = null;
 let aktiveMemberId = null;
+let aktuellerBenutzername = null;
 
 // =====================================================
 // HILFSFUNKTIONEN
@@ -35,6 +36,30 @@ function setActiveName(name) {
     .forEach((span) => {
       span.textContent = name;
     });
+}
+
+async function loadCurrentUser() {
+  try {
+    const response = await fetch("../api/protected.php", {
+      credentials: "include",
+    });
+
+    if (response.status === 401) {
+      window.location.href = "login.html";
+      return null;
+    }
+
+    const result = await response.json();
+
+    if (result.status === "success") {
+      return result.username || null;
+    }
+
+    return null;
+  } catch (error) {
+    console.error("Fehler beim Laden des aktuellen Benutzers:", error);
+    return null;
+  }
 }
 
 // Aktuelle Woche direkt setzen (lokal, kein UTC-Bug)
@@ -137,7 +162,9 @@ flatpickr("#dateRange01", {
 
 async function loadMemberButtons() {
   try {
-    const response = await fetch("../api/members_load.php");
+    const response = await fetch("../api/members_load.php", {
+      credentials: "include",
+    });
     const result = await response.json();
 
     const select = document.getElementById("mitgliederDropdown");
@@ -145,6 +172,10 @@ async function loadMemberButtons() {
     select.innerHTML = "";
 
     if (result.status === "success" && result.data.length > 0) {
+      const bevorzugtesMitglied =
+        result.data.find((member) => member.name === aktuellerBenutzername) ||
+        result.data[0];
+
       result.data.forEach((member, index) => {
         const option = document.createElement("option");
 
@@ -152,15 +183,13 @@ async function loadMemberButtons() {
         option.textContent = member.name;
 
         select.appendChild(option);
-
-        if (index === 0) {
-          aktiveMemberId = member.id;
-
-          setActiveName(member.name);
-          loadStreak(member.id);
-          loadChartData(member.id, aktiveDateFrom, aktiveDateTo);
-        }
       });
+
+      select.value = String(bevorzugtesMitglied.id);
+      aktiveMemberId = bevorzugtesMitglied.id;
+      setActiveName(bevorzugtesMitglied.name);
+      loadStreak(bevorzugtesMitglied.id);
+      loadChartData(bevorzugtesMitglied.id, aktiveDateFrom, aktiveDateTo);
 
       select.addEventListener("change", () => {
         const selectedId = select.value;
@@ -345,5 +374,7 @@ function drawChart(daten) {
 // =====================================================
 // START
 // =====================================================
-
-loadMemberButtons();
+document.addEventListener("DOMContentLoaded", async () => {
+  aktuellerBenutzername = await loadCurrentUser();
+  await loadMemberButtons();
+});
