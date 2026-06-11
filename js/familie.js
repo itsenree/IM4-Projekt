@@ -1,4 +1,3 @@
-// Toggle the "add member" form visibility when the add button is clicked
 const addBtn = document.getElementById("addBtn");
 const memberForm = document.getElementById("memberForm");
 
@@ -6,14 +5,13 @@ addBtn.addEventListener("click", () => {
   memberForm.classList.toggle("hidden");
 });
 
-// Fetches all members from the API and renders them into the member list
 async function loadMembers() {
   try {
     const response = await fetch("../api/members_load.php");
     const result = await response.json();
 
     const memberList = document.getElementById("memberList");
-    memberList.innerHTML = ""; // Clear current list before re-rendering
+    memberList.innerHTML = "";
 
     if (result.status === "success" && result.data.length > 0) {
       result.data.forEach((member) => {
@@ -24,12 +22,10 @@ async function loadMembers() {
         nameElement.textContent = member.name;
         nameElement.classList.add("member-name");
 
-        // Apply a color-specific CSS class if the member has a color assigned
         if (member.color) {
           memberDiv.classList.add(`member-color-${member.color}`);
         }
 
-        // Delete button — triggers deleteMember() with this member's ID
         const deleteBtn = document.createElement("button");
         deleteBtn.classList.add("delete-btn");
         deleteBtn.innerHTML = '<i class="ti ti-trash"></i>';
@@ -40,7 +36,6 @@ async function loadMembers() {
         memberList.appendChild(memberDiv);
       });
     } else {
-      // No members returned — show a fallback message
       const noMembersMessage = document.createElement("p");
       noMembersMessage.textContent = "No members found.";
       noMembersMessage.classList.add("no-members-message");
@@ -51,7 +46,6 @@ async function loadMembers() {
   }
 }
 
-// Asks for confirmation, then sends a delete request for the given member ID
 async function deleteMember(id) {
   if (!confirm("Mitglied wirklich entfernen? Alle zugehörigen Daten gehen verloren.")) return;
 
@@ -65,7 +59,7 @@ async function deleteMember(id) {
     const result = await response.json();
 
     if (result.status === "success") {
-      loadMembers(); // Refresh the list after deletion
+      loadMembers();
     } else {
       alert(`Fehler: ${result.message}`);
     }
@@ -75,7 +69,6 @@ async function deleteMember(id) {
   }
 }
 
-// Reads form inputs and POSTs a new member to the API on confirm
 document.getElementById("confirmBtn").addEventListener("click", async () => {
   const name = document.getElementById("member_name").value;
   const brush_nr = document.getElementById("brush_nr").value;
@@ -94,7 +87,7 @@ document.getElementById("confirmBtn").addEventListener("click", async () => {
 
     if (result.status === "success") {
       alert("Member saved successfully!");
-      loadMembers(); // Refresh the list to include the new member
+      loadMembers();
     } else {
       alert(`Error: ${result.message}`);
     }
@@ -104,5 +97,4 @@ document.getElementById("confirmBtn").addEventListener("click", async () => {
   }
 });
 
-// Initial load on page ready
 loadMembers();
