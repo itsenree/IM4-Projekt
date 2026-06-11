@@ -1,10 +1,11 @@
+// Fetches all members from the API and renders them into the member list
 async function loadMembers() {
   try {
     const response = await fetch("../api/members_load.php");
     const result = await response.json();
 
     const memberList = document.getElementById("memberList");
-    memberList.innerHTML = "";
+    memberList.innerHTML = ""; // Clear current list before re-rendering
 
     if (result.status === "success" && result.data.length > 0) {
       result.data.forEach((member) => {
@@ -15,23 +16,30 @@ async function loadMembers() {
         nameElement.textContent = member.name;
         nameElement.classList.add("member-name");
 
+        // Apply a color-specific CSS class if the member has a color assigned
         if (member.color) {
           memberDiv.classList.add(`member-color-${member.color}`);
         }
 
+        // Show position label, or "Keine Position" if brush_nr is 0
         const positionElement = document.createElement("p");
-        positionElement.textContent = member.brush_nr === 0 ? "Keine Position" : `Position: ${member.brush_nr}`;
+        positionElement.textContent =
+          member.brush_nr === 0
+            ? "Keine Position"
+            : `Position: ${member.brush_nr}`;
         positionElement.classList.add("member-position");
-        positionElement.dataset.brushNr = member.brush_nr; // Set data-brushNr attribute
+        positionElement.dataset.brushNr = member.brush_nr; // Store brush_nr for conflict checks
 
         const buttonContainer = document.createElement("div");
         buttonContainer.classList.add("button-container");
 
+        // Edit button — switches the card into edit mode
         const editBtn = document.createElement("button");
         editBtn.classList.add("edit-btn");
         editBtn.innerHTML = '<i class="ti ti-pencil"></i>';
         editBtn.addEventListener("click", () => editMember(member, memberDiv));
 
+        // Delete button — removes the member after confirmation
         const deleteBtn = document.createElement("button");
         deleteBtn.classList.add("delete-btn");
         deleteBtn.innerHTML = '<i class="ti ti-trash"></i>';
@@ -46,6 +54,7 @@ async function loadMembers() {
         memberList.appendChild(memberDiv);
       });
     } else {
+      // No members returned — show a fallback message
       const noMembersMessage = document.createElement("p");
       noMembersMessage.textContent = "No members found.";
       noMembersMessage.classList.add("no-members-message");
@@ -56,15 +65,17 @@ async function loadMembers() {
   }
 }
 
+// Replaces a member card with inline edit inputs (name, color, position)
 function editMember(member, memberDiv) {
-  // Clear the memberDiv and replace with editable fields
   memberDiv.innerHTML = "";
+  memberDiv.classList.add("member-box-editing");
 
   const nameInput = document.createElement("input");
   nameInput.type = "text";
   nameInput.value = member.name;
   nameInput.classList.add("edit-name-input");
 
+  // Color dropdown — pre-selects the member's current color
   const colorSelect = document.createElement("select");
   ["yellow", "red", "green", "blue", "purple", "pink"].forEach((color) => {
     const option = document.createElement("option");
@@ -74,6 +85,7 @@ function editMember(member, memberDiv) {
     colorSelect.appendChild(option);
   });
 
+  // Position dropdown — pre-selects the member's current brush position
   const brushSelect = document.createElement("select");
   const positions = [
     { value: 0, label: "Keine Position" },
@@ -90,6 +102,7 @@ function editMember(member, memberDiv) {
     brushSelect.appendChild(option);
   });
 
+  // Prevent selecting a position already taken by another member
   brushSelect.addEventListener("change", () => {
     const selectedPosition = parseInt(brushSelect.value, 10);
 
@@ -99,30 +112,34 @@ function editMember(member, memberDiv) {
 
       allMembers.forEach((memberBox) => {
         const positionElement = memberBox.querySelector(".member-position");
-        if (positionElement && parseInt(positionElement.dataset.brushNr, 10) === selectedPosition) {
+        if (
+          positionElement &&
+          parseInt(positionElement.dataset.brushNr, 10) === selectedPosition
+        ) {
           positionTaken = true;
         }
       });
 
       if (positionTaken) {
         alert("Diese Position ist schon vergeben!");
-        brushSelect.value = member.brush_nr; // Revert to the previous value
+        brushSelect.value = member.brush_nr; // Revert to original value
       }
     }
   });
 
+  // POSTs the updated member data to the API, then refreshes the list
   const saveBtn = document.createElement("button");
   saveBtn.textContent = "Save";
   saveBtn.classList.add("save-btn");
   saveBtn.addEventListener("click", async () => {
     const updatedMember = {
-      member_id: member.id, // Ensure the member ID is included
+      member_id: member.id,
       name: nameInput.value,
       color: colorSelect.value,
       brush_nr: parseInt(brushSelect.value, 10),
     };
 
-    console.log("Sending updated member data:", updatedMember); // Log the data being sent
+    console.log("Sending updated member data:", updatedMember);
 
     try {
       const response = await fetch("../api/members_update.php", {
@@ -134,7 +151,7 @@ function editMember(member, memberDiv) {
       const result = await response.json();
 
       if (result.success) {
-        loadMembers();
+        loadMembers(); // Refresh list to reflect changes
       } else {
         console.error("SQL Error:", result.error);
         alert(`Error: ${result.error}`);
@@ -145,6 +162,7 @@ function editMember(member, memberDiv) {
     }
   });
 
+  // Cancel discards changes and reloads the original list
   const cancelBtn = document.createElement("button");
   cancelBtn.textContent = "Cancel";
   cancelBtn.classList.add("cancel-btn");
@@ -157,6 +175,7 @@ function editMember(member, memberDiv) {
   memberDiv.appendChild(cancelBtn);
 }
 
+// Asks for confirmation, then sends a delete request for the given member ID
 async function deleteMember(id) {
   if (!confirm("Mitglied wirklich entfernen?")) return;
 
@@ -170,7 +189,7 @@ async function deleteMember(id) {
     const result = await response.json();
 
     if (result.status === "success") {
-      loadMembers();
+      loadMembers(); // Refresh list after deletion
     } else {
       alert(`Fehler: ${result.message}`);
     }
@@ -181,16 +200,18 @@ async function deleteMember(id) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  loadMembers();
+  loadMembers(); // Initial render on page load
 
+  // Toggle the "add member" form visibility
   const addBtn = document.getElementById("addBtn");
   const memberForm = document.getElementById("memberForm");
-
   addBtn.addEventListener("click", () => {
     memberForm.classList.toggle("hidden");
   });
 
   const brushSelect = document.getElementById("brush_nr");
+
+  // Prevent selecting an already-taken position in the "add member" form
   brushSelect.addEventListener("change", () => {
     const selectedPosition = parseInt(brushSelect.value, 10);
 
@@ -200,18 +221,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
       allMembers.forEach((memberBox) => {
         const positionElement = memberBox.querySelector(".member-position");
-        if (positionElement && parseInt(positionElement.dataset.brushNr, 10) === selectedPosition) {
+        if (
+          positionElement &&
+          parseInt(positionElement.dataset.brushNr, 10) === selectedPosition
+        ) {
           positionTaken = true;
         }
       });
 
       if (positionTaken) {
         alert("Diese Position ist schon vergeben!");
-        brushSelect.value = 0; // Revert to 'Keine Position'
+        brushSelect.value = 0; // Revert to "Keine Position"
       }
     }
   });
 
+  // Reads form inputs and POSTs a new member to the API, then resets the form
   const confirmBtn = document.getElementById("confirmBtn");
   confirmBtn.addEventListener("click", async () => {
     const nameInput = document.getElementById("member_name");
@@ -234,7 +259,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (result.status === "success") {
         loadMembers();
-        memberForm.classList.add("hidden");
+        memberForm.classList.add("hidden"); // Hide form after successful save
+        // Reset form fields to defaults
         nameInput.value = "";
         colorSelect.value = "yellow";
         brushSelect.value = 0;
