@@ -47,7 +47,7 @@ async function loadMembers() {
 }
 
 async function deleteMember(id) {
-  if (!confirm("Mitglied wirklich entfernen?")) return;
+  if (!confirm("Mitglied wirklich entfernen? Alle zugehörigen Daten gehen verloren.")) return;
 
   try {
     const response = await fetch("../api/members_delete.php", {
