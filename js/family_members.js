@@ -1,5 +1,4 @@
-// THIS CODE DOES NOT WORK YET
-
+// Family members helper: toggles add form and posts new member
 const addBtn = document.getElementById("addBtn");
 const memberForm = document.getElementById("memberForm");
 
