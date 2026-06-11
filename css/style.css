@@ -594,6 +594,13 @@ footer a {
   height: 220px !important;
 }
 
+/* Make the home family chart the same smaller height as stats */
+#familienChart {
+  display: block;
+  width: 100% !important;
+  height: 280px !important;
+}
+
 .streak-status {
   margin-top: 0.4rem;
   margin-bottom: 0.4rem;
