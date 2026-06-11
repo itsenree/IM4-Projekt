@@ -45,6 +45,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Automatisch Member mit der ersten freien Position 1-3 erstellen
     $memberBrushNr = 0;
     $positionCheck = $pdo->prepare("SELECT COUNT(*) FROM members WHERE brush_nr = :brush_nr");
+    $memberColors = ['yellow', 'red', 'purple', 'green', 'blue', 'pink'];
+    $memberColor = $memberColors[array_rand($memberColors)];
 
     for ($position = 1; $position <= 3; $position++) {
         $positionCheck->execute([':brush_nr' => $position]);
@@ -55,10 +57,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    $memberInsert = $pdo->prepare("INSERT INTO members (name, brush_nr, color) VALUES (:name, :brush_nr, 'green')");
+    $memberInsert = $pdo->prepare("INSERT INTO members (name, brush_nr, color) VALUES (:name, :brush_nr, :color)");
     $memberInsert->execute([
     ':name' => $username,
     ':brush_nr' => $memberBrushNr,
+    ':color' => $memberColor,
     ]);
 
     echo json_encode(["status" => "success"]);

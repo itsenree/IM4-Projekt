@@ -48,6 +48,23 @@ body {
   margin: 0 0 2% 0;
 }
 
+.auth-message {
+  width: 60%;
+  min-height: 1.4rem;
+  margin: 0 0 1rem;
+  text-align: center;
+  font-weight: 600;
+  color: #9333ea;
+}
+
+.auth-message.success {
+  color: #15803d;
+}
+
+.auth-message.error {
+  color: #b91c1c;
+}
+
 #loginForm {
   background: white;
   border-radius: 0.8em;
@@ -134,6 +151,10 @@ body {
   color: #5b21b6;
   text-align: center;
   margin: 1% 0;
+}
+
+#register .auth-message {
+  width: 60%;
 }
 
 #registerForm {
