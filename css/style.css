@@ -535,6 +535,12 @@ footer a {
   margin: 0;
 }
 
+#balkendiagrammContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
 #statsDiagramme button:hover {
   background-color: #b7e7fc;
   opacity: 0.8;
@@ -551,6 +557,19 @@ footer a {
   padding: 1rem 1.5rem;
 }
 
+#mitgliederDropdown {
+  width: 60%;
+  background-color: #ffffff;
+  border-style: none;
+  border-radius: 15px;
+  padding: 1%;
+  font-size: 1.05rem;
+  font-weight: 600;
+  text-align: center;
+  text-align-last: center;
+  -moz-text-align-last: center;
+}
+
 #statsDiagramme button {
   background-color: #f5c700;
   color: #2a0081;
@@ -562,19 +581,47 @@ footer a {
   cursor: pointer;
 }
 
-#mitgliederDropdown {
-  width: 60%;
-  background-color: #ffffff;
-  border-style: none;
-  border-radius: 15px;
-  padding: 1%;
-}
-
 #balkendiagrammContainer input {
   padding: 0.5% 1%;
   margin: 1% 0;
   border-radius: 15px;
   border-style: none;
+}
+
+#balkenChart {
+  display: block;
+  width: 100% !important;
+  height: 220px !important;
+}
+
+.streak-status {
+  margin-top: 0.4rem;
+  margin-bottom: 0.4rem;
+  color: #b7e7fc;
+  font-size: 0.98rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.begruessung h3 span,
+.streakContainer h2 span {
+  font-size: 1.12em;
+  font-weight: 700;
+}
+
+.flatpickr-calendar .flatpickr-day.today,
+.flatpickr-calendar .flatpickr-day.stats-today {
+  background: #2a0081 !important;
+  border-color: #2a0081 !important;
+  color: #ffffff !important;
+  font-weight: 700;
+}
+
+.flatpickr-calendar .flatpickr-day.today:hover,
+.flatpickr-calendar .flatpickr-day.stats-today:hover {
+  background: #1b1f5e !important;
+  border-color: #1b1f5e !important;
+  color: #ffffff !important;
 }
 
 /* ------------------- familie.html styles ------------------- */

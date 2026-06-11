@@ -29,22 +29,38 @@ try {
 
     $stmt->execute([':members_id' => $members_id]);
     $rows = $stmt->fetchAll(PDO::FETCH_COLUMN);
+    $completedDays = array_fill_keys($rows, true);
 
-    // Streak zählen: von heute rückwärts, solange keine Lücke auftritt
-    $streak = 0;
-    $check = new DateTime('today');
+    $countStreakFrom = function (DateTime $startDate) use ($completedDays) {
+        $streak = 0;
+        $check = clone $startDate;
 
-    foreach ($rows as $tag) {
-        $tagDate = new DateTime($tag);
-        if ($tagDate == $check) {
+        while (isset($completedDays[$check->format('Y-m-d')])) {
             $streak++;
             $check->modify('-1 day');
-        } else {
-            break;  // Lücke gefunden – Streak ist zu Ende
         }
+
+        return $streak;
+    };
+
+    $today = new DateTime('today');
+    $todayKey = $today->format('Y-m-d');
+    $todayReached = isset($completedDays[$todayKey]);
+
+    if ($todayReached) {
+        $streak = $countStreakFrom($today);
+        $message = '';
+    } else {
+        $streak = $countStreakFrom(new DateTime('yesterday'));
+        $message = 'Heute wurde der Streak noch nicht erreicht (6 Punkte nötig!)';
     }
 
-    echo json_encode(["status" => "success", "streak" => $streak]);
+    echo json_encode([
+        "status" => "success",
+        "streak" => $streak,
+        "todayReached" => $todayReached,
+        "message" => $message,
+    ]);
 
 } catch (PDOException $e) {
     echo json_encode(["status" => "error", "message" => $e->getMessage()]);
