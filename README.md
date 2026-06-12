@@ -1,10 +1,10 @@
 ## Kurzbeschreibung des Projekts
 
-- **Modul:** Interaktive Medien 4 an der Fachhochschule Graubünden (FS26)
-- **Themenfeld:** IoT-Applikation zum Thema Eltern mit kleinen Kindern
-- **Name des Projekts:** ZämeFägts: Zahnfee Tracker
-- **Team Physical Computing:** Laura Feldmann & Stella Bollinger
-- **Team WebApp:** Chiara Rubin & Enrico Fusaro
+**Modul:** Interaktive Medien 4 an der Fachhochschule Graubünden (FS26)
+**Themenfeld:** IoT-Applikation zum Thema Eltern mit kleinen Kindern
+**Name des Projekts:** ZämeFägts: Zahnfee Tracker
+**Team Physical Computing:** Laura Feldmann & Stella Bollinger
+**Team WebApp:** Chiara Rubin & Enrico Fusaro
 
 Wir haben ein Zahnglas gemacht, welches mit einem kleinen Oled Screen verbunden ist, welcher der Zähne putzenden Person ein visuelles Feedback gibt. Die Applikation funktioniert wie folgt:
 Die Person nimmt ihre Zahnbürste aus dem ihr zugewiesenen Zahnglas.
@@ -21,21 +21,35 @@ Sobald der Countdown fertig ist, beginnt die eigentliche Zahnputz Zeit. Dabei gi
 
 Auf der WebApp wird dann eine Statsistik erstellt wann und wie Lange Zähnegeputzt wurde. Dies kann dann in verschiedenen Ansichten im Haushalt verglichen werden.
 
-- Welches Problem im Alltag von Eltern mit kleinen Kindern wird gelöst?
-  Unsere WebApp zusammen mit dem Physical Computing Teil soll die Kinder dazu motivieren, selbständig Zähneputzen zu wollen oder immerhin das Motivieren dazu einfacher zu gestalten.
-- Was ist der „Sinn und Zweck“ des Systems?
-  Das Zähneputzen und dessen Dauer zu dokumentieren und im Haushalt vergleichbar zu machen. Durch Gamification-Elemente wie Punkte und Streaks wird das Zähneputzen für die ganze Familie zu einem spielerischen Wettbewerb.
-  \[_Bilder / GIFs (optional)_\]
+##### Welches Problem im Alltag von Eltern mit kleinen Kindern wird gelöst?
+
+Unsere WebApp zusammen mit dem Physical Computing Teil soll die Kinder dazu motivieren, selbständig Zähneputzen zu wollen oder immerhin das Motivieren dazu einfacher zu gestalten.
+
+##### Was ist der „Sinn und Zweck“ des Systems?
+
+Das Zähneputzen und dessen Dauer zu dokumentieren und im Haushalt vergleichbar zu machen. Durch Gamification-Elemente wie Punkte und Streaks wird das Zähneputzen für die ganze Familie zu einem spielerischen Wettbewerb.
+\[_Bilder / GIFs (optional)_\]
 
 ### UX & Konzeption
 
 _In diesem Teil werden die gemeinsamen Schritte aus der UX-Abgabe dokumentiert, damit sich hier alles vollständig an einem Ort befindet (betrifft WebApp und Physical Computing)_
 
-- **Figma:** https://www.figma.com/design/7dbtS998A0MZJLCGunPM8A/IM4-Z%C3%A4hne-F%C3%A4gts?node-id=0-1&t=xPEeGgmB7Mtl2nYQ-1
+**Figma:** https://www.figma.com/design/7dbtS998A0MZJLCGunPM8A/IM4-Z%C3%A4hne-F%C3%A4gts?node-id=0-1&t=xPEeGgmB7Mtl2nYQ-1
+
 - **User Flow \+ Screen Flow** (Screenshot aus Figma)
 - ggf. weitere Ergänzungen
-- _Welche Features waren angedacht?_
-- _Welche Features wurden nicht umgesetzt? (Warum)_
+
+##### Welche Features waren angedacht?
+
+##### Welche Features wurden nicht umgesetzt? (Warum)
+
+Angedacht waren verschiedene Funktionen, um die Motivation und Benutzerfreundlichkeit der App zu erhöhen. Dazu gehörten ein Streak-System, das die Nutzer:innen dazu motivieren soll, ihre Zähne möglichst regelmässig und korrekt zu putzen, sowie eine Champion-Anzeige, in der ersichtlich ist, welches Familienmitglied die meisten Punkte gesammelt hat.
+
+Ausserdem war geplant, die Verwaltung von Familienmitgliedern zu ermöglichen. Nutzer:innen sollten weitere Familienmitglieder hinzufügen sowie bestehende Mitglieder hinsichtlich Name, Farbe und Position anpassen können. Ebenfalls sollte die Möglichkeit bestehen, persönliche Kontodaten wie Benutzername, E-Mail-Adresse und Passwort zu ändern.
+
+Diese Funktionen konnten erfolgreich umgesetzt und in die Anwendung integriert werden.
+
+Ein weiteres angedachtes Feature war ein zusätzliches Feld, in dem Nutzer:innen nachträglich eintragen können, wenn sie sich auswärts die Zähne geputzt haben, damit ihr Streak nicht verloren geht. Dieses Feature wurde schlussendlich jedoch nicht umgesetzt. Einerseits hatten andere Funktionen eine höhere Priorität, weshalb im Rahmen der verfügbaren Zeit auf die Kernfunktionalität fokussiert wurde. Andererseits kamen wir nach weiterer Überlegung zum Schluss, dass ein solches Feature dem eigentlichen Grundgedanken widerspricht: Ein Streak soll dazu motivieren, die Zähne regelmässig zu Hause zu putzen, und nicht eine Möglichkeit bieten, einen verpassten Eintrag nachträglich auszugleichen.
 
 ### Setup
 
