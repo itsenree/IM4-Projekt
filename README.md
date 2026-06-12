@@ -29,7 +29,7 @@ Unsere WebApp zusammen mit dem Physical Computing Teil soll die Kinder dazu moti
 
 Das Zähneputzen und dessen Dauer zu dokumentieren und im Haushalt vergleichbar zu machen. Durch Gamification-Elemente wie Punkte und Streaks wird das Zähneputzen für die ganze Familie zu einem spielerischen Wettbewerb.
 
-![Bild des Zahnputzgeräts](resources/assets/Bild_05.png) 
+![Bild des Zahnputzgeräts](resources/assets/Bild_05.jpeg) 
 
 
 ### UX & Konzeption
@@ -43,23 +43,28 @@ _In diesem Teil werden die gemeinsamen Schritte aus der UX-Abgabe dokumentiert, 
 ![Bild vom Figma](resources/assets/Bild_02.jpeg) 
 ![Bild vom Figma](resources/assets/Bild_03.jpeg) 
 
-- ggf. weitere Ergänzungen
 
 ### Welche Features waren angedacht?
 
-WebApp:
+#### WebApp: <br>
 Angedacht waren verschiedene Funktionen, um die Motivation und Benutzerfreundlichkeit der App zu erhöhen. Dazu gehörten ein Streak-System, das die Nutzer:innen dazu motivieren soll, ihre Zähne möglichst regelmässig und korrekt zu putzen, sowie eine Champion-Anzeige, in der ersichtlich ist, welches Familienmitglied die meisten Punkte gesammelt hat.
 
 Ausserdem war geplant, die Verwaltung von Familienmitgliedern zu ermöglichen. Nutzer:innen sollten weitere Familienmitglieder hinzufügen sowie bestehende Mitglieder hinsichtlich Name, Farbe und Position anpassen können. Ebenfalls sollte die Möglichkeit bestehen, persönliche Kontodaten wie Benutzername, E-Mail-Adresse und Passwort zu ändern.
 
 Diese Funktionen konnten erfolgreich umgesetzt und in die Anwendung integriert werden.
 
+#### Physical Computing: <br>
+????
+
 ### Welche Features wurden nicht umgesetzt? (Warum)
 
-WebApp:
+#### WebApp: <br>
 Wir wollten anfangs die Funktion hinzufügen, dass jeder User eine separate Familie haben kann. Doch haben wir diese Funktion weggelassen, da sie zu einem Komplexerren DB aufbau geführt hätte und für einen Prototypen mit einem Gerät nicht wirklich sinn macht.
 
 Ein weiteres angedachtes Feature war ein zusätzliches Feld, in dem Nutzer:innen nachträglich eintragen können, wenn sie sich auswärts die Zähne geputzt haben, damit ihr Streak nicht verloren geht. Dieses Feature wurde schlussendlich jedoch nicht umgesetzt, da die Idee vom Projekt darin besteht, das Gerät zu benutzen. Andererseits könnte man so auch schummeln.
+
+#### Physical Computing: <br>
+????
 
 ### Setup
 
@@ -82,7 +87,7 @@ Der Client benötigt ein moderner Browser.
 - PHP (mit PDO und PDO_MySQL Extension aktiviert)
 - MariaDB
 
-Bereits im Code via CDN geladen (nichts installieren nötig):
+Bereits im Code via CDN geladen (nichts zum Installieren nötig):
 - Chart.js
 - Flatpickr
 - Tabler Icons
@@ -96,6 +101,7 @@ Bereits im Code via CDN geladen (nichts installieren nötig):
 - Oben auf "Importieren" klicken
 - Datei auswählen → deine .sql Datei
 - Unten auf "OK" klicken
+
 4. _Wo muss ich die DB-Credentials eintragen?_
 - Im config.php File. Dieses ist absichtlich nicht im Repository. Im config.php sollten folgende Werte eingetragen werden: 
 
@@ -105,13 +111,14 @@ define('DB_NAME', 'dein_datenbankname');
 define('DB_USER', 'dein_benutzer');
 define('DB_PASS', 'dein_passwort');
 
-5. _…_
+5. _Wie Rufe ich die Webapp auf?_
+- Browser öffnen, HTTP Adresse eingeben
+- Sich auf der Register-Seite registrieren 
+- Sich einloggen
+- Familienmitglieder hinzufügen
+
 6. _Wie nehme ich das physische Artefakt in Betrieb?_
-- Lade dir einen FTP-Client herunter, z.B. FileZilla (kostenlos)
--Verbinde dich mit deinem Infomaniak-Server: Host: dein FTP-Hostname (im Infomaniak-Dashboard unter FTP/SSH), Benutzername + Passwort: FTP-Zugangsdaten von Infomaniak, Port: 21 (FTP) oder 22 (SFTP)
-- Navigiere auf dem Server in den Web-Root-Ordner (meist web/ oder public_html/)
-- Lade den gesamten Projektordner dort hoch
-- Öffne die Website im Browser und teste ob alles funktioniert
+  ? wie man den Arduino-Code aufspielt und das Gerät startet.
 
 #### Bauanleitung Physical Computing
 
@@ -133,35 +140,13 @@ define('DB_PASS', 'dein_passwort');
   * *die Programme (mit Dateinamen)*  
   * *die Kommunikationswege*  
 
-## technische Details
+## Technische Details
 
 // Hier sollte das Verständnis ersichtlich sein / Wie stehen die Dateien in Beziehung zueinander, Wie reden Die Dateien miteinander, Wie ist der Weg der Daten
 
 - **Projektstruktur / Code-Struktur:** \[_Hinweis: Der Code selbst muss im Repository liegen und im Kopfbereich jeder Datei eine kurze Zusammenfassung enthalten._\]
 
-IM4-Projekt/
-
-├── api/          # PHP-Endpunkte (brush_save.php, members_load.php, ...)
-
-├── css/          # Stylesheets (style.css)
-
-├── html/         # Alle HTML-Seiten (home, stats, familie, settings, ...)
-
-├── js/           # JavaScript-Dateien (stats.js, family_edit.js, ...)
-
-├── pages/        # Weitere Seiten
-
-├── resources/
-
-│   ├── assets/   # Bilder und Icons
-
-│   └── sql/      # Datenbankschema (.sql Datei)
-
-├── system/       # Konfiguration (config.php mit DB-Credentials)
-
-├── index.html    # Einstiegspunkt
-
-└── sender.html   # Arduino-Datenschnittstelle
+IM4-Projekt: Die Codes inklusive Verlinkungen sind auf dem GitHub Repository einsehbar.
 - **Datenschnittstelle: \[\***zwischen WebApp und Physical Computing\*\]
 WebApp ↔ Physical Computing
 
