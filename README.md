@@ -69,7 +69,7 @@ Ein weiteres angedachtes Feature war ein zusätzliches Feld, in dem Nutzer:innen
 ### Setup
 
 - **WebApp:** [Link zur Website](https://im4.enrico-fusaro.ch/)
-- **Video-Dokumentation:** [Link zum Video auf Youtube](http://link.zum.video)
+- **Video-Dokumentation:** [Link zum Video auf Youtube](https://youtu.be/RG0_8JYxM0Y)
 
 #### Installationsanleitung WebApp
 
