@@ -1,11 +1,19 @@
+/* ============================================================
+   GLOBAL RESET
+   Removes default browser margin/padding and sets box-sizing
+   so padding/border don't affect element dimensions.
+   ============================================================ */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-/* Base styles and typography */
-
+/* ============================================================
+   BODY
+   Pink background, Inter font, full-height flex column layout
+   so the footer always sticks to the bottom.
+   ============================================================ */
 body {
   width: 100%;
   background: #ffd3f0;
@@ -15,7 +23,12 @@ body {
   flex-direction: column;
 }
 
-/* ------------------- Login Page ------------------- */
+/* ============================================================
+   LOGIN PAGE (#login)
+   Centered column layout with purple headings and a white
+   card form. Inputs use a light purple background (#f3f0ff).
+   Submit button has a purple-to-pink gradient.
+   ============================================================ */
 
 #login {
   background: #ffd3f0;
@@ -50,6 +63,7 @@ body {
   margin: 0 0 2% 0;
 }
 
+/* Feedback message shown above the login form (success/error) */
 .auth-message {
   width: 60%;
   min-height: 1.4rem;
@@ -138,7 +152,11 @@ body {
   text-decoration: underline;
 }
 
-/* ------------------- Register Page ------------------- */
+/* ============================================================
+   REGISTER PAGE (#register)
+   Same layout and styling as the login page.
+   Includes an extra text input for the username.
+   ============================================================ */
 #register {
   display: flex;
   flex-direction: column;
@@ -233,8 +251,13 @@ body {
   text-decoration: underline;
 }
 
-/* ------------------- Settings ------------------- */
-/* Main settings layout and buttons */
+/* ============================================================
+   SETTINGS PAGE (#settingsPage)
+   Full-height flex column. Settings are displayed in a white
+   card (#settingsCard). Each setting is a row with a label,
+   current value, and edit/save/cancel buttons.
+   Rows turn into columns on mobile (≤700px).
+   ============================================================ */
 
 #settingsPage {
   width: 100%;
@@ -271,6 +294,7 @@ body {
   color: #9333ea;
 }
 
+/* Individual setting row: label + value on the left, buttons on the right */
 .setting-row {
   display: flex;
   align-items: flex-start;
@@ -335,6 +359,7 @@ body {
   align-self: center;
 }
 
+/* Shared button base style for settings */
 .setting-button {
   cursor: pointer;
   border: none;
@@ -344,11 +369,13 @@ body {
   font-weight: 600;
 }
 
+/* Primary: gradient purple-to-pink (e.g. Save) */
 .setting-button.primary {
   background: linear-gradient(90deg, #9333ea, #ec4899);
   color: white;
 }
 
+/* Secondary: light purple (e.g. Edit, Cancel) */
 .setting-button.secondary {
   background: #ede9fe;
   color: #5b21b6;
@@ -381,7 +408,13 @@ body {
   }
 }
 
-/* ------------------- Home ------------------- */
+/* ============================================================
+   HOME PAGE
+   .begruessung: centered greeting text at the top.
+   #homeContainer: single-column grid for cards.
+   #championContainer: dark blue card showing the top scorer.
+   .streakContainer: dark blue card showing streak info.
+   ============================================================ */
 
 .begruessung {
   text-align: center;
@@ -486,6 +519,11 @@ body {
   width: 100%;
 }
 
+/* ============================================================
+   FOOTER
+   Sticky bottom navigation bar with four icon-buttons.
+   .aktiv highlights the current page in pink/rose.
+   ============================================================ */
 footer {
   position: sticky;
   bottom: 0;
@@ -515,14 +553,19 @@ footer a {
   padding: 2% 4%;
 }
 
+/* Active state: highlights current page tab */
 .footerIcon.aktiv {
   color: #ba1650;
   background: #fde8f5;
   border-radius: 1em;
 }
 
-/* ------------------- Stats ------------------- */
-/* Stats layout: streak, chart and controls */
+/* ============================================================
+   STATS PAGE
+   #statsDiagramme: dark blue card containing charts and
+   filter buttons (yellow, turn light blue on hover).
+   #metrikenMitglieder: member metrics section.
+   ============================================================ */
 
 #statsContainer {
   display: flex;
@@ -537,12 +580,6 @@ footer a {
   border-radius: 1em;
   padding: 1rem 1.5rem;
   margin: 0;
-}
-
-#balkendiagrammContainer {
-  display: flex;
-  flex-direction: column;
-  gap: 0.9rem;
 }
 
 #statsDiagramme button:hover {
@@ -561,20 +598,6 @@ footer a {
   padding: 1rem 1.5rem;
 }
 
-/* Member dropdown (centered text) */
-#mitgliederDropdown {
-  width: 60%;
-  background-color: #ffffff;
-  border-style: none;
-  border-radius: 15px;
-  padding: 1%;
-  font-size: 1.05rem;
-  font-weight: 600;
-  text-align: center;
-  text-align-last: center;
-  -moz-text-align-last: center;
-}
-
 #statsDiagramme button {
   background-color: #f5c700;
   color: #2a0081;
@@ -586,6 +609,14 @@ footer a {
   cursor: pointer;
 }
 
+#mitgliederDropdown {
+  width: 60%;
+  background-color: #ffffff;
+  border-style: none;
+  border-radius: 15px;
+  padding: 1%;
+}
+
 #balkendiagrammContainer input {
   padding: 0.5% 1%;
   margin: 1% 0;
@@ -593,52 +624,15 @@ footer a {
   border-style: none;
 }
 
-/* Chart canvas sizing (smaller charts) */
-#balkenChart {
-  display: block;
-  width: 100% !important;
-  height: 220px !important;
-}
+/* ============================================================
+   FAMILY PAGE (familie.html)
+   Members are listed as colored boxes (.member-box).
+   A hidden form (#memberForm) appears when "Add member" is
+   clicked. Each member box shows name, position, and
+   edit/delete icon buttons.
+   ============================================================ */
 
-/* Make the home family chart the same smaller height as stats */
-#familienChart {
-  display: block;
-  width: 100% !important;
-  height: 280px !important;
-}
-
-.streak-status {
-  margin-top: 0.4rem;
-  margin-bottom: 0.4rem;
-  color: #b7e7fc;
-  font-size: 0.98rem;
-  font-weight: 600;
-  text-align: center;
-}
-
-.begruessung h3 span,
-.streakContainer h2 span {
-  font-size: 1.12em;
-  font-weight: 700;
-}
-
-.flatpickr-calendar .flatpickr-day.today,
-.flatpickr-calendar .flatpickr-day.stats-today {
-  background: #2a0081 !important;
-  border-color: #2a0081 !important;
-  color: #ffffff !important;
-  font-weight: 700;
-}
-
-.flatpickr-calendar .flatpickr-day.today:hover,
-.flatpickr-calendar .flatpickr-day.stats-today:hover {
-  background: #1b1f5e !important;
-  border-color: #1b1f5e !important;
-  color: #ffffff !important;
-}
-
-/* ------------------- familie.html styles ------------------- */
-
+/* Hidden by default; toggled via JS */
 #memberForm.hidden {
   display: none;
 }
@@ -669,6 +663,7 @@ footer a {
   flex: 1;
 }
 
+/* "Add member" toggle button — yellow, turns light blue on hover */
 #addBtn {
   background-color: #f5c700;
   color: #2a0081;
@@ -694,6 +689,7 @@ footer a {
   border: none;
 }
 
+/* Confirm button for adding a new member — dark pink */
 #confirmBtn {
   padding: 2% 4%;
   border-radius: 12px;
@@ -709,24 +705,28 @@ footer a {
   opacity: 0.8;
 }
 
-/* Styling for whole member box */
+/* Each member is displayed as a flex row with evenly spaced content */
 .member-box {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 2% 4%;
+  padding: 2% 2%;
   border-radius: 12px;
   margin-bottom: 2.5rem;
   background-color: white;
 }
 
-/* Styling for member names */
 .member-name {
   font-weight: 600;
   font-size: 0.8em;
   margin: 0;
 }
 
+.member-position {
+  font-size: 0.8em;
+}
+
+/* Delete button — red icon, subtle red background on hover */
 .delete-btn {
   background: none;
   border: none;
@@ -742,23 +742,104 @@ footer a {
   background: rgba(231, 76, 60, 0.1);
 }
 
+/* ============================================================
+   INLINE MEMBER EDITING
+   When the pencil icon is clicked, the member box switches
+   to edit mode: name input + color/position dropdowns +
+   save/cancel buttons appear inline.
+   ============================================================ */
+
+/* Edit (pencil) button — same style as delete but purple hover */
+.edit-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #e74c3c;
+  font-size: 1.1rem;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+
+.edit-btn:hover {
+  background: rgba(124, 58, 237, 0.1);
+}
+
+/* Slightly larger icons for both edit and delete buttons */
+.edit-btn i,
+.delete-btn i {
+  font-size: 1.3rem;
+}
+
+/* Text input for editing the member name */
+.edit-name-input {
+  padding: 0.6em 0.9em;
+  font-size: 1em;
+  border: none;
+  border-radius: 10px;
+  background: #f3f0ff;
+}
+
+.edit-name-input:focus {
+  box-shadow: 0 0 0 2px #c4b5fd;
+  outline: none;
+}
+
+/* Color and position dropdowns shown during edit mode */
+.member-box select {
+  padding: 0.6em 0.9em;
+  font-size: 1em;
+  border: none;
+  border-radius: 10px;
+  background: #f3f0ff;
+  cursor: pointer;
+}
+
+/* Shared styles for Save and Cancel buttons */
+.save-btn,
+.cancel-btn {
+  padding: 0.3em 0.9em;
+  font-size: 1em;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.save-btn {
+  background: #ffd3f0;
+  color: #e74c3c;
+}
+
+.cancel-btn {
+  background: #ffd3f0;
+  color: #e74c3c;
+}
+
+.save-btn:hover,
+.cancel-btn:hover {
+  opacity: 0.8;
+}
+
+/* ============================================================
+   MEMBER COLOR VARIANTS
+   Applied dynamically via JS based on the member's color value.
+   ============================================================ */
 .member-color-yellow {
   background-color: #ffdd43;
 }
 .member-color-red {
   background-color: #ec0520;
-  color: white;
 }
 .member-color-green {
   background-color: #67ff71;
 }
 .member-color-blue {
   background-color: #b7e7fc;
-  color: white;
 }
 .member-color-purple {
   background-color: #d09dff;
-  color: white;
 }
 .member-color-pink {
   background-color: #ffb3de;
@@ -770,8 +851,14 @@ footer a {
   border: none;
 }
 
+/*
+  Resets background for any OTHER buttons/selects inside .member-box
+  (e.g. the old inline selects in non-edit mode).
+  The :not() excludes all styled buttons so they keep their own background.
+*/
 .member-box select,
-.member-box button {
+.member-box
+  button:not(.save-btn):not(.cancel-btn):not(.edit-btn):not(.delete-btn) {
   background-color: #ffd3f000;
   border: none;
 }
@@ -782,8 +869,12 @@ footer a {
   padding: 0 1%;
 }
 
-/* ------------------- Media Queries ------------------- */
+/* ============================================================
+   MEDIA QUERIES
+   ============================================================ */
 
+/* ---- ≤700px: Login/Register forms narrower, member text
+   slightly smaller, edit elements shrink a bit ------------- */
 @media (max-width: 700px) {
   #loginForm {
     width: 80%;
@@ -821,6 +912,7 @@ footer a {
     align-items: stretch;
   }
 
+  /* Add-member form inputs stack vertically */
   #mitgliedParameter {
     flex-direction: column;
   }
@@ -828,8 +920,27 @@ footer a {
   #confirmBtn {
     align-self: stretch;
   }
+
+  .member-name,
+  .member-position {
+    font-size: 0.75em;
+  }
+
+  .edit-name-input,
+  .member-box select,
+  .save-btn,
+  .cancel-btn {
+    font-size: 0.8em;
+    padding: 0.4em 0.6em;
+  }
+
+  .edit-btn i,
+  .delete-btn i {
+    font-size: 1rem;
+  }
 }
 
+/* ---- ≤600px: Member boxes closer together, metrics column -- */
 @media (max-width: 600px) {
   .member-box {
     margin-bottom: 1.5rem;
@@ -846,18 +957,71 @@ footer a {
   }
 }
 
+/* ---- ≤550px: Edit mode wraps onto two lines.
+   Name input takes full width on its own row.
+   Dropdowns and buttons share the second row. -------------- */
+@media (max-width: 550px) {
+  .member-name,
+  .member-position {
+    font-size: 0.65em;
+  }
+
+  .edit-btn i,
+  .delete-btn i {
+    font-size: 0.9rem;
+  }
+
+  .member-box {
+    gap: 0.3rem;
+  }
+
+  /* Edit mode: wrap elements and center them */
+  .member-box-editing {
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    justify-content: center;
+  }
+
+  /* Name input fills the entire first row */
+  .edit-name-input {
+    width: 100%;
+    flex: 1 1 100%;
+    font-size: 0.7em;
+    padding: 0.3em 0.5em;
+    text-align: center;
+  }
+
+  /* Dropdowns share the second row equally */
+  .member-box select {
+    flex: 1;
+    font-size: 0.7em;
+    padding: 0.3em 0.5em;
+    min-width: 70px;
+  }
+
+  /* Save/Cancel share the second row equally */
+  .save-btn,
+  .cancel-btn {
+    flex: 1;
+    font-size: 0.7em;
+    padding: 0.4em 0.5em;
+    border-radius: 8px;
+    text-align: center;
+  }
+}
+
+/* ---- ≤500px: Footer icons smaller, chart input adjustments - */
 @media (max-width: 500px) {
   .footerIcon {
     display: flex;
     flex-direction: column;
     align-items: center;
-    font-size: 1em;
+    font-size: 0.8em;
     color: #2a0081;
     background: none;
     border: none;
     cursor: pointer;
     padding: 2% 4%;
-    font-size: 0.8em;
   }
 
   #balkendiagrammContainer input {
@@ -866,6 +1030,13 @@ footer a {
   }
 }
 
+@media (max-width: 450px) {
+  .member-box select {
+    min-width: 100px;
+  }
+}
+
+/* ---- ≤400px: Home grid no margin, chart buttons bigger ----- */
 @media (max-width: 400px) {
   #homeContainer {
     margin: 0;
