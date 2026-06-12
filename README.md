@@ -41,7 +41,7 @@ _In diesem Teil werden die gemeinsamen Schritte aus der UX-Abgabe dokumentiert, 
 - **User Flow \+ Screen Flow** (Screenshot aus Figma)
 ![Bild vom Figma](resources/assets/Bild_01.jpg) 
 ![Bild vom Figma](resources/assets/Bild_02.jpg) 
-![Bild des Zahnputzgeräts](resources/assets/Bild_03.jpg) 
+![Bild vom Figma](resources/assets/Bild_03.jpg) 
 
 - ggf. weitere Ergänzungen
 
