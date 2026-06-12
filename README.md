@@ -145,14 +145,14 @@ define('DB_PASS', 'dein_passwort');<br>
 
 - **Projektstruktur / Code-Struktur:** \[_Hinweis: Der Code selbst muss im Repository liegen und im Kopfbereich jeder Datei eine kurze Zusammenfassung enthalten._\]
 
-IM4-Projekt: Die Codes inklusive Verlinkungen sind auf dem GitHub Repository einsehbar.
+IM4-Projekt: Die Codes inklusive Verlinkungen kann man auf dem GitHub Repository sehen.
+
 - **Datenschnittstelle: \[\***zwischen WebApp und Physical Computing\*\]
 WebApp ↔ Physical Computing
 
 Der Arduino misst die Putzdauer und sendet die Daten per HTTP-Request 
 an `brush_save.php`. Dort werden sie validiert und in der Tabelle 
-`brush_data` gespeichert. Die WebApp liest diese Daten anschliessend 
-aus und berechnet Punkte und Streak pro Mitglied.
+`brush_data` gespeichert. 
 
 Arduino → HTTP POST → brush_save.php → brush_data (DB) → WebApp
 
@@ -175,37 +175,31 @@ eine Session gesetzt. Alle geschützten API-Endpunkte prüfen via
 `protected.php` ob eine gültige Session vorhanden ist — andernfalls 
 wird der Benutzer auf `login.html` weitergeleitet. Passwörter werden 
 mit `bcrypt` gehasht gespeichert.
-- **Authentifizierung:** \[_Erklärung_\]
 
-## Known bugs
+## Known Bugs
 
-- Was funktioniert noch nicht einwandfrei?
-Grunsätzlich sind uns keine grossen Bugs im Endprodukt aufgefallen. Die grössten Probleme konnten wir im verlaufe der Entwicklung lösen.
-- Was ist uns aufgefallen bei der Entwicklung?
-Das wir viele Funktionen auslassen mussten, damit wir zu einem guten Endresultat kamen. Bei der Planung hatten wir viele Ideen, doch im verlaufe der Realisation mussten wir einige Ideen verfallen lassen. Dies aus komplexität und zeitlichen gründen.
-- Was könnte noch verbessert werden?
-Es gibt noch viele Dinge die man machen könnte. Zum Beispiel könnte das Design überarbeitet werden, damit es ein bisschen Übersichtlicher wirkt. Auch könnte man mehr Funktionen bei den Statistiken einbauen, damit man genauere Informationen über das Zähneputzen erhält. Auch ein 'Reward' System könnte Implementiert werden, wie wir in unseren ersten Konzepten angedacht hatten. Somit könnte man mit den gesammelten Punkten neue Features freischalten.
+### Was funktioniert noch nicht einwandfrei?
+Grunsätzlich sind uns keine grossen Bugs im Endprodukt aufgefallen. Die grössten Probleme konnten wir im Verlaufe der Entwicklung lösen.
+### Was ist uns aufgefallen bei der Entwicklung?
+Das wir viele Funktionen auslassen mussten, damit wir zu einem guten Endresultat kamen. Bei der Planung hatten wir viele Ideen, doch im Verlaufe der Realisation mussten wir einige Ideen verwerfen. Dies aus Komplexität und zeitlichen Gründen.
+### Was könnte noch verbessert werden?
+Es gibt noch viele Dinge die man machen könnte. Zum Beispiel könnte das Design überarbeitet werden, damit es ein bisschen übersichtlicher wirkt. Auch könnte man mehr Funktionen bei den Statistiken einbauen, damit man genauere Informationen über das Zähneputzen erhält. Auch ein 'Reward' System könnte implementiert werden, wie wir in unseren ersten Konzepten angedacht hatten. Somit könnte man mit den gesammelten Punkten neue Features freischalten.
 
 ## Umsetzungsprozess
 
-- **Reflexion / Erfahrung / Lernfortschritt:** _Was haben wir gelernt? Würden wir es nochmal genauso machen? Was war gut, was war schlecht?_
-Wir haben gelernt wie man ein benutzerfreundliches Gerät baut, welches selbst funktioniert, Informationen sammelt und weiterleitet. Somit kann das Gerät als API Schnittstelle genutzt werden, wessen daten in einer Datenbank gesammelt und Systematisch angezeigt werden.
-Gut gelaufen ist der ganze Prozess der Umsetzung. Wir konnten schon früh entscheiden welche Funktionen wir wie implementieren wollten wodurch wir grosse probleme verhindern konnten. Schlechtes haben wir nicht wirklich etwas grosses erlebt.
-- **Herausforderungen & Lösungen:** \[_Verworfene Ansätze, Fehler, Umplanungen_\]
--- WEB --
-Herausforderungen:
-Kleinigkeiten beim Layout und bei der anzeige der gesammelten Daten.
-
-Lösungen:
-Wir fanden meistens eine verbesserung oder änderten das Layout um, damit es mehr sinn ergab. Auch bei der Anzeige der Daten fanden wir einige workarounds.
-
--- PHYSICAL --
-Herausforderungen:
-
-Lösungen:
+- **Reflexion / Erfahrung / Lernfortschritt:** _Was haben wir gelernt? Würden wir es nochmal genauso machen? Was war gut, was war schlecht?_ <br>
+Wir haben gelernt, wie man ein benutzerfreundliches Gerät baut, welches selbst funktioniert, Informationen sammelt und weiterleitet. Somit kann das Gerät als API Schnittstelle genutzt werden, wessen Daten in einer Datenbank gesammelt und systematisch angezeigt werden.
+Gut gelaufen ist der ganze Prozess der Umsetzung. Wir konnten schon früh entscheiden, welche Funktionen wir wie implementieren wollten, wodurch wir grosse Probleme verhindern konnten. Schlechtes haben wir nicht wirklich gross erlebt.
+- **Herausforderungen & Lösungen:** \[_Verworfene Ansätze, Fehler, Umplanungen_\]<br>
+**WebApp Herausforderungen**:
+Kleinigkeiten beim Layout und bei der Anzeige der gesammelten Daten.<br>
+**WebApp Lösungen**:
+Wir fanden meistens eine Verbesserung oder änderten das Layout um, damit es mehr Sinn ergab. Auch bei der Anzeige der Daten fanden wir einige Workarounds. <br>
+**Physical Computing Herausforderungen** : <br>
+**Physical Computing Lösungen**:
 
 - **KI-Einsatz:** _Dokumentation der verwendeten KI-Tools und deren Nutzen (KI ist nicht verboten)_
-KI wurde verwendet um Verständnisfragen und Probleme zu lösen. Beim erarbeiten des Codes wurde KI auch spezifische Funktionen zu erweitern und zu verfeinern.
+KI wurde verwendet, um Verständnisfragen und Probleme zu lösen. Beim Erarbeiten des Codes wurde KI auch für spezifische Funktionen zum Erweitern und Verfeinern verwendet.
 
 - **Fazit:** …
-Insgesammt sind wir sehr zufrieden mit dem Prototyp für ZämeFägts. Die wichtigsten Funktionen wie das sammeln der Daten, das Punkte System, die Webseite fürs die Übersicht der Einträge und zum verwalten der Members und aller wichtigen Daten.
+Insgesammt sind wir sehr zufrieden mit dem Prototyp für ZämeFägts. Die wichtigsten Funktionen wie das Sammeln der Daten, das Punktesystem, die Webseite für die Übersicht der Einträge und das Verwalten der Members sowie alle wichtigen Daten konnten wir erfolgreich implementieren.
