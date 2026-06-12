@@ -28,11 +28,13 @@ async function loadMembers() {
         buttonContainer.classList.add("button-container");
 
         const editBtn = document.createElement("button");
+        editBtn.type = "button";
         editBtn.classList.add("edit-btn");
         editBtn.innerHTML = '<i class="ti ti-pencil"></i>';
         editBtn.addEventListener("click", () => editMember(member, memberDiv));
 
         const deleteBtn = document.createElement("button");
+        deleteBtn.type = "button";
         deleteBtn.classList.add("delete-btn");
         deleteBtn.innerHTML = '<i class="ti ti-trash"></i>';
         deleteBtn.addEventListener("click", () => deleteMember(member.id));
@@ -59,6 +61,7 @@ async function loadMembers() {
 function editMember(member, memberDiv) {
   // Clear the memberDiv and replace with editable fields
   memberDiv.innerHTML = "";
+  memberDiv.classList.add("editing");
 
   const nameInput = document.createElement("input");
   nameInput.type = "text";
@@ -66,6 +69,7 @@ function editMember(member, memberDiv) {
   nameInput.classList.add("edit-name-input");
 
   const colorSelect = document.createElement("select");
+  colorSelect.classList.add("edit-name-input");
   ["yellow", "red", "green", "blue", "purple", "pink"].forEach((color) => {
     const option = document.createElement("option");
     option.value = color;
@@ -89,6 +93,7 @@ function editMember(member, memberDiv) {
     if (member.brush_nr === brush.value) option.selected = true;
     brushSelect.appendChild(option);
   });
+  brushSelect.classList.add("edit-name-input");
 
   brushSelect.addEventListener("change", () => {
     const selectedPosition = parseInt(brushSelect.value, 10);
@@ -114,6 +119,7 @@ function editMember(member, memberDiv) {
   const saveBtn = document.createElement("button");
   saveBtn.textContent = "Save";
   saveBtn.classList.add("save-btn");
+  saveBtn.type = "button";
   saveBtn.addEventListener("click", async () => {
     const updatedMember = {
       member_id: member.id, // Ensure the member ID is included
@@ -148,6 +154,7 @@ function editMember(member, memberDiv) {
   const cancelBtn = document.createElement("button");
   cancelBtn.textContent = "Cancel";
   cancelBtn.classList.add("cancel-btn");
+  cancelBtn.type = "button";
   cancelBtn.addEventListener("click", () => loadMembers());
 
   memberDiv.appendChild(nameInput);

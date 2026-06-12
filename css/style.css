@@ -1,10 +1,19 @@
+/* ============================================================
+   GLOBAL RESET
+   Removes default browser margin and padding, and keeps box sizing
+   predictable so spacing stays consistent across the app.
+   ============================================================ */
+
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-/* Base styles and typography */
+/* ============================================================
+   BASE STYLES
+   Sets the page background, font, and main column layout.
+   ============================================================ */
 
 body {
   width: 100%;
@@ -15,7 +24,10 @@ body {
   flex-direction: column;
 }
 
-/* ------------------- Login Page ------------------- */
+/* ============================================================
+  LOGIN PAGE
+  Styles the login screen, form, and message area.
+  ============================================================ */
 
 #login {
   background: #ffd3f0;
@@ -138,7 +150,10 @@ body {
   text-decoration: underline;
 }
 
-/* ------------------- Register Page ------------------- */
+/* ============================================================
+  REGISTER PAGE
+  Styles the register screen and its form fields.
+  ============================================================ */
 #register {
   display: flex;
   flex-direction: column;
@@ -233,8 +248,10 @@ body {
   text-decoration: underline;
 }
 
-/* ------------------- Settings ------------------- */
-/* Main settings layout and buttons */
+/* ============================================================
+  SETTINGS PAGE
+  Handles the account card, edit rows, and logout button.
+  ============================================================ */
 
 #settingsPage {
   width: 100%;
@@ -381,7 +398,10 @@ body {
   }
 }
 
-/* ------------------- Home ------------------- */
+/* ============================================================
+  HOME PAGE
+  Styles the champion box, family chart, and page footer.
+  ============================================================ */
 
 .begruessung {
   text-align: center;
@@ -521,8 +541,10 @@ footer a {
   border-radius: 1em;
 }
 
-/* ------------------- Stats ------------------- */
-/* Stats layout: streak, chart and controls */
+/* ============================================================
+  STATS PAGE
+  Styles the member selector, streak card, and chart area.
+  ============================================================ */
 
 #statsContainer {
   display: flex;
@@ -561,7 +583,7 @@ footer a {
   padding: 1rem 1.5rem;
 }
 
-/* Member dropdown (centered text) */
+/* Member dropdown */
 #mitgliederDropdown {
   width: 60%;
   background-color: #ffffff;
@@ -593,14 +615,14 @@ footer a {
   border-style: none;
 }
 
-/* Chart canvas sizing (smaller charts) */
+/* Chart canvas sizing */
 #balkenChart {
   display: block;
   width: 100% !important;
   height: 220px !important;
 }
 
-/* Make the home family chart the same smaller height as stats */
+/* Home chart sizing */
 #familienChart {
   display: block;
   width: 100% !important;
@@ -637,7 +659,10 @@ footer a {
   color: #ffffff !important;
 }
 
-/* ------------------- familie.html styles ------------------- */
+/* ============================================================
+  FAMILY PAGE
+  Styles the member cards, edit mode, and add-member form.
+  ============================================================ */
 
 #memberForm.hidden {
   display: none;
@@ -709,37 +734,156 @@ footer a {
   opacity: 0.8;
 }
 
-/* Styling for whole member box */
 .member-box {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 2% 4%;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
   border-radius: 12px;
   margin-bottom: 2.5rem;
   background-color: white;
+  box-shadow: 0 6px 18px rgba(10, 6, 21, 0.08);
 }
 
-/* Styling for member names */
+.member-box.editing {
+  align-items: stretch;
+}
+
 .member-name {
   font-weight: 600;
-  font-size: 0.8em;
+  font-size: 1rem;
   margin: 0;
+  color: #2a0081;
+}
+
+.member-position {
+  font-size: 0.95rem;
+  color: #5b21b6;
+  margin-top: 0.3rem;
+}
+
+.button-container {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  flex-shrink: 0;
+}
+
+.edit-btn,
+.delete-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.45rem;
+  min-height: 2.45rem;
+  padding: 0.45rem;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition:
+    transform 0.15s ease,
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.edit-btn {
+  background: rgba(124, 58, 237, 0.1);
+  color: #7c3aed;
+}
+
+.edit-btn:hover {
+  background: rgba(124, 58, 237, 0.18);
+  transform: translateY(-1px);
+}
+
+.delete-btn {
+  background: rgba(231, 76, 60, 0.08);
+  color: #e74c3c;
+}
+
+.delete-btn:hover {
+  background: rgba(231, 76, 60, 0.14);
+  transform: translateY(-1px);
+}
+
+.edit-btn i,
+.delete-btn i {
+  font-size: 1.3rem;
+}
+
+.ti-pencil {
+  display: inline-block;
+  border-radius: 0;
+  border: none;
+}
+
+.edit-name-input,
+.member-box select {
+  width: 100%;
+  padding: 0.75rem 0.9rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 10px;
+  background: #f3f0ff;
+  color: #2a0081;
+}
+
+.edit-name-input:focus,
+.member-box select:focus {
+  box-shadow: 0 0 0 2px #c4b5fd;
+  outline: none;
+}
+
+.member-box input:not(.edit-name-input) {
+  background-color: #ffd3f000;
+  border-radius: 10px;
+  padding: 0.75rem 0.9rem;
+}
+
+.member-box .save-btn,
+.member-box .cancel-btn {
+  padding: 0.65rem 1rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition:
+    transform 0.15s ease,
+    opacity 0.2s ease;
+}
+
+.member-box .save-btn {
+  background: linear-gradient(90deg, #9333ea, #ec4899);
+  color: white;
+}
+
+.member-box .cancel-btn {
+  background: #ede9fe;
+  color: #5b21b6;
+}
+
+.member-box .save-btn:hover,
+.member-box .cancel-btn:hover {
+  transform: translateY(-1px);
+  opacity: 0.9;
+}
+
+.member-box .save-btn:focus,
+.member-box .cancel-btn:focus,
+.edit-btn:focus,
+.delete-btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(196, 181, 253, 0.8);
 }
 
 .delete-btn {
   background: none;
-  border: none;
-  cursor: pointer;
-  color: #e74c3c;
-  font-size: 1.1rem;
-  padding: 4px 8px;
-  border-radius: 6px;
-  transition: background 0.2s;
 }
 
 .delete-btn:hover {
-  background: rgba(231, 76, 60, 0.1);
+  background: rgba(231, 76, 60, 0.14);
 }
 
 .member-color-yellow {
@@ -764,22 +908,14 @@ footer a {
   background-color: #ffb3de;
 }
 
-.ti-pencil {
-  display: inline-block;
-  border-radius: 0;
-  border: none;
-}
-
 .member-box select,
-.member-box button {
+.member-box button:not(.save-btn):not(.cancel-btn):not(.edit-btn):not(.delete-btn) {
   background-color: #ffd3f000;
   border: none;
 }
 
-.member-box input {
-  background-color: #ffd3f000;
-  border-radius: 25px;
-  padding: 0 1%;
+.member-box.editing {
+  box-shadow: 0 10px 24px rgba(10, 6, 21, 0.12);
 }
 
 /* ------------------- Media Queries ------------------- */
@@ -817,6 +953,41 @@ footer a {
     margin-bottom: 2rem;
   }
 
+  .member-box,
+  .member-box.editing {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 1rem;
+    gap: 0.85rem;
+  }
+
+  .member-name {
+    font-size: 1.05rem;
+  }
+
+  .member-position {
+    margin-top: 0;
+  }
+
+  .button-container {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .edit-btn,
+  .delete-btn {
+    min-width: 2.8rem;
+    min-height: 2.8rem;
+  }
+
+  .member-box input:not(.edit-name-input),
+  .edit-name-input,
+  .member-box select,
+  .member-box .save-btn,
+  .member-box .cancel-btn {
+    width: 100%;
+  }
+
   #memberForm {
     align-items: stretch;
   }
@@ -833,6 +1004,15 @@ footer a {
 @media (max-width: 600px) {
   .member-box {
     margin-bottom: 1.5rem;
+  }
+
+  .button-container {
+    flex-wrap: wrap;
+  }
+
+  .edit-btn,
+  .delete-btn {
+    flex: 1 1 48%;
   }
 
   #metrikenMitglieder div {
