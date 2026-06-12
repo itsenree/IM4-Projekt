@@ -315,62 +315,6 @@ function drawChart(daten) {
   balkenChart = new Chart(ctx, {
     type: "bar",
 
-    plugins: [
-      {
-        id: "todayLabelHighlight",
-        beforeDraw(chart) {
-          if (todayIndex < 0) {
-            return;
-          }
-
-          const { ctx, chartArea, scales } = chart;
-          const xScale = scales.x;
-          const label = labels[todayIndex];
-
-          if (!xScale || !label) {
-            return;
-          }
-
-          const x = xScale.getPixelForTick(todayIndex);
-          const y = chartArea.bottom + 18;
-
-          ctx.save();
-          ctx.font = "600 13px Inter, sans-serif";
-          const textWidth = ctx.measureText(label).width;
-          const boxWidth = textWidth + 18;
-          const boxHeight = 18;
-          const boxX = x - boxWidth / 2;
-          const boxY = y - boxHeight / 2;
-
-          ctx.fillStyle = "#2a0081";
-          ctx.strokeStyle = "rgba(183, 231, 252, 0.55)";
-          ctx.lineWidth = 1;
-
-          const radius = 8;
-          ctx.beginPath();
-          ctx.moveTo(boxX + radius, boxY);
-          ctx.lineTo(boxX + boxWidth - radius, boxY);
-          ctx.quadraticCurveTo(boxX + boxWidth, boxY, boxX + boxWidth, boxY + radius);
-          ctx.lineTo(boxX + boxWidth, boxY + boxHeight - radius);
-          ctx.quadraticCurveTo(
-            boxX + boxWidth,
-            boxY + boxHeight,
-            boxX + boxWidth - radius,
-            boxY + boxHeight,
-          );
-          ctx.lineTo(boxX + radius, boxY + boxHeight);
-          ctx.quadraticCurveTo(boxX, boxY + boxHeight, boxX, boxY + boxHeight - radius);
-          ctx.lineTo(boxX, boxY + radius);
-          ctx.quadraticCurveTo(boxX, boxY, boxX + radius, boxY);
-          ctx.closePath();
-          ctx.fill();
-          ctx.stroke();
-
-          ctx.restore();
-        },
-      },
-    ],
-
     data: {
       labels,
 
@@ -444,6 +388,11 @@ function drawChart(daten) {
             color: (context) =>
               context.tick.label === labels[todayIndex] ? "#ffffff" : "#b7e7fc",
             maxRotation: 45,
+            font: (context) => ({
+              family: "Inter, sans-serif",
+              size: 12,
+              weight: context.tick.label === labels[todayIndex] ? "700" : "400",
+            }),
           },
 
           grid: {
