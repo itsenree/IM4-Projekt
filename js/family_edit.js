@@ -20,10 +20,7 @@ async function loadMembers() {
         }
 
         const positionElement = document.createElement("p");
-        positionElement.textContent =
-          member.brush_nr === 0
-            ? "Keine Position"
-            : `Position: ${member.brush_nr}`;
+        positionElement.textContent = member.brush_nr === 0 ? "Keine Position" : `Position: ${member.brush_nr}`;
         positionElement.classList.add("member-position");
         positionElement.dataset.brushNr = member.brush_nr; // Set data-brushNr attribute
 
@@ -60,9 +57,8 @@ async function loadMembers() {
 }
 
 function editMember(member, memberDiv) {
+  // Clear the memberDiv and replace with editable fields
   memberDiv.innerHTML = "";
-  memberDiv.style.display = "flex";
-  memberDiv.classList.add("member-box-editing");
 
   const nameInput = document.createElement("input");
   nameInput.type = "text";
@@ -103,10 +99,7 @@ function editMember(member, memberDiv) {
 
       allMembers.forEach((memberBox) => {
         const positionElement = memberBox.querySelector(".member-position");
-        if (
-          positionElement &&
-          parseInt(positionElement.dataset.brushNr, 10) === selectedPosition
-        ) {
+        if (positionElement && parseInt(positionElement.dataset.brushNr, 10) === selectedPosition) {
           positionTaken = true;
         }
       });
@@ -207,10 +200,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       allMembers.forEach((memberBox) => {
         const positionElement = memberBox.querySelector(".member-position");
-        if (
-          positionElement &&
-          parseInt(positionElement.dataset.brushNr, 10) === selectedPosition
-        ) {
+        if (positionElement && parseInt(positionElement.dataset.brushNr, 10) === selectedPosition) {
           positionTaken = true;
         }
       });
