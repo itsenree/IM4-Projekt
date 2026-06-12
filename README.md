@@ -105,11 +105,10 @@ Bereits im Code via CDN geladen (nichts zum Installieren nötig):
 4. _Wo muss ich die DB-Credentials eintragen?_
 - Im config.php File. Dieses ist absichtlich nicht im Repository. Im config.php sollten folgende Werte eingetragen werden: 
 
-<?php
-define('DB_HOST', 'localhost');
-define('DB_NAME', 'dein_datenbankname');
-define('DB_USER', 'dein_benutzer');
-define('DB_PASS', 'dein_passwort');
+define('DB_HOST', 'localhost'); <br>
+define('DB_NAME', 'dein_datenbankname'); <br>
+define('DB_USER', 'dein_benutzer');<br>
+define('DB_PASS', 'dein_passwort');<br>
 
 5. _Wie Rufe ich die Webapp auf?_
 - Browser öffnen, HTTP Adresse eingeben
