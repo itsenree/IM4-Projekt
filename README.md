@@ -1,33 +1,36 @@
 ## Kurzbeschreibung des Projekts
 
-**Modul:** Interaktive Medien 4 an der Fachhochschule Graubünden (FS26)
-**Themenfeld:** IoT-Applikation zum Thema Eltern mit kleinen Kindern
-**Name des Projekts:** ZämeFägts: Zahnfee Tracker
-**Team Physical Computing:** Laura Feldmann & Stella Bollinger
+**Modul:** Interaktive Medien 4 an der Fachhochschule Graubünden (FS26) <br>
+**Themenfeld:** IoT-Applikation zum Thema Eltern mit kleinen Kindern <br>
+**Name des Projekts:** ZämeFägts: Zahnfee Tracker <br>
+**Team Physical Computing:** Laura Feldmann & Stella Bollinger <br>
 **Team WebApp:** Chiara Rubin & Enrico Fusaro
 
-Wir haben ein Zahnglas gemacht, welches mit einem kleinen Oled Screen verbunden ist, welcher der Zähne putzenden Person ein visuelles Feedback gibt. Die Applikation funktioniert wie folgt:
+Wir haben ein Zahnglas gemacht, welches mit einem kleinen Oled Screen verbunden ist, welcher der zähneputzenden Person ein visuelles Feedback gibt. Die Applikation funktioniert wie folgt:
 Die Person nimmt ihre Zahnbürste aus dem ihr zugewiesenen Zahnglas.
 Ein Countdown beginnt auf dem Screen runterzuzählen. Währenddessen hat die Person Zeit, Zahnpasta auf die Zahnbürste zu tun (ohne Zahlen, damit Kinder die noch keine Zahlen lesen können ebenfalls verstehen, wie viel Zeit ihnen noch bleibt).
 Sobald der Countdown fertig ist, beginnt die eigentliche Zahnputz Zeit. Dabei gibt es die folgenden Zustände:
 
 1. Die Person Putzt 2 Minuten lang durch: Es erscheint ein «End Bildschirm». In der Datenbank werden 2 Punkte gespeichert.
 
-2. Die Person bricht das Zähneputzen frühzeitig ab und stellt die Zahnbürste zurück ins Glas, ein trauriger Smiley erscheint und die Person hat 15 Sekunden Zeit, um das Zähneputzen wieder fortzusetzten. Die Person setzt das Zähneputzen fort und beendet die 2 Minuten doch noch. In der Datenbank werden trotzdem 2 Punkte gespeichert.
+2. Die Person bricht das Zähneputzen frühzeitig ab und stellt die Zahnbürste zurück ins Glas, ein trauriger Smiley erscheint und die Person hat 15 Sekunden Zeit, um das Zähneputzen wieder fortzusetzen. Die Person setzt das Zähneputzen fort und beendet die 2 Minuten doch noch. In der Datenbank werden trotzdem 2 Punkte gespeichert.
 
 3. Die Person putzt nicht 2 Minuten die Zähne, jedoch über eine Minute: Es wird 1 Punkt in der Datenbank gespeichert.
 
 4. Die Person beginnt mit dem Zähneputzen, bricht aber früher ab und lässt die 15 Sekunden verstreichen ohne weiter zu putzen. In der Datenbank werden 0 Punkte gespeichert.
 
-Auf der WebApp wird dann eine Statsistik erstellt wann und wie Lange Zähnegeputzt wurde. Dies kann dann in verschiedenen Ansichten im Haushalt verglichen werden.
+Auf der WebApp wird dann eine Statsistik erstellt, wann und wie lange Zähnegeputzt wurde. Auf der Homepage gibt es eine Punkteübersicht, die vergleicht wer von der Familie am meisten Punkte hat. Individuell kann man auf der Stats-Seite den Zahnputzverlauf und die gesammelten Punkte verfolgen.
 
 ### Welches Problem im Alltag von Eltern mit kleinen Kindern wird gelöst?
 
-Unsere WebApp zusammen mit dem Physical Computing Teil soll die Kinder dazu motivieren, selbständig Zähneputzen zu wollen oder immerhin das Motivieren dazu einfacher zu gestalten.
+Unsere WebApp zusammen mit dem Physical Computing Teil soll die Kinder dazu motivieren, selbständig Zähneputzen zu wollen oder immerhin das Motivieren dazu einfacher zu gestalten. Dies wird erreicht, indem man durch das korrekte und regelmässige Zähneputzen Punkte sammeln kann. Auch gibt es dazu Streaks und den Familienvergleich, welches zusätzlich motiviert.
 
 ### Was ist der „Sinn und Zweck“ des Systems?
 
 Das Zähneputzen und dessen Dauer zu dokumentieren und im Haushalt vergleichbar zu machen. Durch Gamification-Elemente wie Punkte und Streaks wird das Zähneputzen für die ganze Familie zu einem spielerischen Wettbewerb.
+
+![Bild des Zahnputzgeräts](resources/assets/Bild_05.png)
+
 \[_Bilder / GIFs (optional)_\]
 
 ### UX & Konzeption
