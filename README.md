@@ -11,7 +11,7 @@ Die Person nimmt ihre Zahnbürste aus dem ihr zugewiesenen Zahnglas.
 Ein Countdown beginnt auf dem Screen runterzuzählen. Währenddessen hat die Person Zeit, Zahnpasta auf die Zahnbürste zu tun (ohne Zahlen, damit Kinder die noch keine Zahlen lesen können ebenfalls verstehen, wie viel Zeit ihnen noch bleibt).
 Sobald der Countdown fertig ist, beginnt die eigentliche Zahnputz Zeit. Dabei gibt es die folgenden Zustände:
 
-1. Die Person Putzt 2 Minuten lang durch: Es erscheint ein «End Bildschirm». In der Datenbank werden 2 Punkte gespeichert.
+1. Die Person putzt 2 Minuten lang durch: Es erscheint ein «End Bildschirm». In der Datenbank werden 2 Punkte gespeichert.
 
 2. Die Person bricht das Zähneputzen frühzeitig ab und stellt die Zahnbürste zurück ins Glas, ein trauriger Smiley erscheint und die Person hat 15 Sekunden Zeit, um das Zähneputzen wieder fortzusetzen. Die Person setzt das Zähneputzen fort und beendet die 2 Minuten doch noch. In der Datenbank werden trotzdem 2 Punkte gespeichert.
 
