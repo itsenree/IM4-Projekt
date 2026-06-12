@@ -21,11 +21,11 @@ Sobald der Countdown fertig ist, beginnt die eigentliche Zahnputz Zeit. Dabei gi
 
 Auf der WebApp wird dann eine Statsistik erstellt wann und wie Lange Zähnegeputzt wurde. Dies kann dann in verschiedenen Ansichten im Haushalt verglichen werden.
 
-##### Welches Problem im Alltag von Eltern mit kleinen Kindern wird gelöst?
+### Welches Problem im Alltag von Eltern mit kleinen Kindern wird gelöst?
 
 Unsere WebApp zusammen mit dem Physical Computing Teil soll die Kinder dazu motivieren, selbständig Zähneputzen zu wollen oder immerhin das Motivieren dazu einfacher zu gestalten.
 
-##### Was ist der „Sinn und Zweck“ des Systems?
+### Was ist der „Sinn und Zweck“ des Systems?
 
 Das Zähneputzen und dessen Dauer zu dokumentieren und im Haushalt vergleichbar zu machen. Durch Gamification-Elemente wie Punkte und Streaks wird das Zähneputzen für die ganze Familie zu einem spielerischen Wettbewerb.
 \[_Bilder / GIFs (optional)_\]
@@ -39,17 +39,21 @@ _In diesem Teil werden die gemeinsamen Schritte aus der UX-Abgabe dokumentiert, 
 - **User Flow \+ Screen Flow** (Screenshot aus Figma)
 - ggf. weitere Ergänzungen
 
-##### Welche Features waren angedacht?
+### Welche Features waren angedacht?
 
-##### Welche Features wurden nicht umgesetzt? (Warum)
-
+WebApp:
 Angedacht waren verschiedene Funktionen, um die Motivation und Benutzerfreundlichkeit der App zu erhöhen. Dazu gehörten ein Streak-System, das die Nutzer:innen dazu motivieren soll, ihre Zähne möglichst regelmässig und korrekt zu putzen, sowie eine Champion-Anzeige, in der ersichtlich ist, welches Familienmitglied die meisten Punkte gesammelt hat.
 
 Ausserdem war geplant, die Verwaltung von Familienmitgliedern zu ermöglichen. Nutzer:innen sollten weitere Familienmitglieder hinzufügen sowie bestehende Mitglieder hinsichtlich Name, Farbe und Position anpassen können. Ebenfalls sollte die Möglichkeit bestehen, persönliche Kontodaten wie Benutzername, E-Mail-Adresse und Passwort zu ändern.
 
 Diese Funktionen konnten erfolgreich umgesetzt und in die Anwendung integriert werden.
 
-Ein weiteres angedachtes Feature war ein zusätzliches Feld, in dem Nutzer:innen nachträglich eintragen können, wenn sie sich auswärts die Zähne geputzt haben, damit ihr Streak nicht verloren geht. Dieses Feature wurde schlussendlich jedoch nicht umgesetzt. Einerseits hatten andere Funktionen eine höhere Priorität, weshalb im Rahmen der verfügbaren Zeit auf die Kernfunktionalität fokussiert wurde. Andererseits kamen wir nach weiterer Überlegung zum Schluss, dass ein solches Feature dem eigentlichen Grundgedanken widerspricht: Ein Streak soll dazu motivieren, die Zähne regelmässig zu Hause zu putzen, und nicht eine Möglichkeit bieten, einen verpassten Eintrag nachträglich auszugleichen.
+### Welche Features wurden nicht umgesetzt? (Warum)
+
+WebApp:
+Wir wollten anfangs die Funktion hinzufügen, dass jeder User eine separate Familie haben kann. Doch haben wir diese Funktion weggelassen, da sie zu einem Komplexerren DB aufbau geführt hätte und für einen Prototypen mit einem Gerät nicht wirklich sinn macht.
+
+Ein weiteres angedachtes Feature war ein zusätzliches Feld, in dem Nutzer:innen nachträglich eintragen können, wenn sie sich auswärts die Zähne geputzt haben, damit ihr Streak nicht verloren geht. Dieses Feature wurde schlussendlich jedoch nicht umgesetzt, da die Idee vom Projekt darin besteht, das Gerät zu benutzen. Andererseits könnte man so auch schummeln.
 
 ### Setup
 
@@ -61,11 +65,47 @@ Ein weiteres angedachtes Feature war ein zusätzliches Feld, in dem Nutzer:innen
 **\*verständliche** Schritt-für-Schritt-Anleitung für Aussenstehende, um das Projekt zu klonen und auf einem eigenen Server zu installieren\*
 
 1. _Was benötige ich an Infrastruktur?_
+Man benötigt:
+- Ein Webserver mit PHP-Unterstützung (Apache)
+- PHP 7.4+ (wegen PDO und json_encode/json_decode)
+- MariaDB Datenbank
+- einen Hosting-Anbieter der PHP + MySQL unterstützt (Infomaniak)
+
+Der Client benötigt ein moderner Browser. 
 2. _Was muss ich auf meinem Webserver installieren?_
-3. _Wie kann ich die Datenbank importieren?_
+- PHP (mit PDO und PDO_MySQL Extension aktiviert)
+- MariaDB
+
+Bereits im Code via CDN geladen (nichts installieren nötig):
+- Chart.js
+- Flatpickr
+- Tabler Icons
+- Google Fonts (Inter)
+
+3. _Wie kann ich die Datenbank importieren?_ (Spezifisch für Infomaniak!)
+- Öffne h2-phpmyadmin.infomaniak.com/
+- Logge dich ein
+- Erstelle eine neue Datenbank
+- Klicke auf die Datenbank
+- Oben auf "Importieren" klicken
+- Datei auswählen → deine .sql Datei
+- Unten auf "OK" klicken
 4. _Wo muss ich die DB-Credentials eintragen?_
+- Im config.php File. Dieses ist absichtlich nicht im Repository. Im config.php sollten folgende Werte eingetragen werden: 
+
+<?php
+define('DB_HOST', 'localhost');
+define('DB_NAME', 'dein_datenbankname');
+define('DB_USER', 'dein_benutzer');
+define('DB_PASS', 'dein_passwort');
+
 5. _…_
 6. _Wie nehme ich das physische Artefakt in Betrieb?_
+- Lade dir einen FTP-Client herunter, z.B. FileZilla (kostenlos)
+-Verbinde dich mit deinem Infomaniak-Server: Host: dein FTP-Hostname (im Infomaniak-Dashboard unter FTP/SSH), Benutzername + Passwort: FTP-Zugangsdaten von Infomaniak, Port: 21 (FTP) oder 22 (SFTP)
+- Navigiere auf dem Server in den Web-Root-Ordner (meist web/ oder public_html/)
+- Lade den gesamten Projektordner dort hoch
+- Öffne die Website im Browser und teste ob alles funktioniert
 
 #### Bauanleitung Physical Computing
 
@@ -79,24 +119,103 @@ Ein weiteres angedachtes Feature war ein zusätzliches Feld, in dem Nutzer:innen
   - _beachtet die [Fritzing Parts](https://github.com/Interaktive-Medien/im_physical_computing/tree/main/15_Intro_Projektdoku) extra für euch_
 - \*ggf. **Bildmaterial\***
 
+* **Komponentenplan** 
+
+* *die eingesetzten Komponenten*  
+  * *die eingesetzten Komponenten*  
+  * *die verbundenen Sensoren und Aktoren*  
+  * *die Programme (mit Dateinamen)*  
+  * *die Kommunikationswege*  
+
 ## technische Details
 
 // Hier sollte das Verständnis ersichtlich sein / Wie stehen die Dateien in Beziehung zueinander, Wie reden Die Dateien miteinander, Wie ist der Weg der Daten
 
 - **Projektstruktur / Code-Struktur:** \[_Hinweis: Der Code selbst muss im Repository liegen und im Kopfbereich jeder Datei eine kurze Zusammenfassung enthalten._\]
+
+IM4-Projekt/
+
+├── api/          # PHP-Endpunkte (brush_save.php, members_load.php, ...)
+
+├── css/          # Stylesheets (style.css)
+
+├── html/         # Alle HTML-Seiten (home, stats, familie, settings, ...)
+
+├── js/           # JavaScript-Dateien (stats.js, family_edit.js, ...)
+
+├── pages/        # Weitere Seiten
+
+├── resources/
+
+│   ├── assets/   # Bilder und Icons
+
+│   └── sql/      # Datenbankschema (.sql Datei)
+
+├── system/       # Konfiguration (config.php mit DB-Credentials)
+
+├── index.html    # Einstiegspunkt
+
+└── sender.html   # Arduino-Datenschnittstelle
 - **Datenschnittstelle: \[\***zwischen WebApp und Physical Computing\*\]
+WebApp ↔ Physical Computing
+
+Der Arduino misst die Putzdauer und sendet die Daten per HTTP-Request 
+an `brush_save.php`. Dort werden sie validiert und in der Tabelle 
+`brush_data` gespeichert. Die WebApp liest diese Daten anschliessend 
+aus und berechnet Punkte und Streak pro Mitglied.
+
+Arduino → HTTP POST → brush_save.php → brush_data (DB) → WebApp
+
 - **ERM:** \[_Erklärung und Schaubild_\]
+
+| Tabelle | Felder |
+|---|---|
+| **users** | id, email, password (bcrypt), username |
+| **members** | id, name, brush_nr, color |
+| **brush_data** | id, members_id (FK), position, datetime, duration, fulfilled |
+| **sensordata** | id, wert, zeit |
+
+- `brush_data.members_id` → referenziert `members.id`
+- `users` verwaltet den Login, `members` die Familienmitglieder
+
+### Authentifizierung
+
+Die Authentifizierung läuft über PHP-Sessions. Nach dem Login wird 
+eine Session gesetzt. Alle geschützten API-Endpunkte prüfen via 
+`protected.php` ob eine gültige Session vorhanden ist — andernfalls 
+wird der Benutzer auf `login.html` weitergeleitet. Passwörter werden 
+mit `bcrypt` gehasht gespeichert.
 - **Authentifizierung:** \[_Erklärung_\]
 
 ## Known bugs
 
 - Was funktioniert noch nicht einwandfrei?
+Grunsätzlich sind uns keine grossen Bugs im Endprodukt aufgefallen. Die grössten Probleme konnten wir im verlaufe der Entwicklung lösen.
 - Was ist uns aufgefallen bei der Entwicklung?
+Das wir viele Funktionen auslassen mussten, damit wir zu einem guten Endresultat kamen. Bei der Planung hatten wir viele Ideen, doch im verlaufe der Realisation mussten wir einige Ideen verfallen lassen. Dies aus komplexität und zeitlichen gründen.
 - Was könnte noch verbessert werden?
+Es gibt noch viele Dinge die man machen könnte. Zum Beispiel könnte das Design überarbeitet werden, damit es ein bisschen Übersichtlicher wirkt. Auch könnte man mehr Funktionen bei den Statistiken einbauen, damit man genauere Informationen über das Zähneputzen erhält. Auch ein 'Reward' System könnte Implementiert werden, wie wir in unseren ersten Konzepten angedacht hatten. Somit könnte man mit den gesammelten Punkten neue Features freischalten.
 
 ## Umsetzungsprozess
 
 - **Reflexion / Erfahrung / Lernfortschritt:** _Was haben wir gelernt? Würden wir es nochmal genauso machen? Was war gut, was war schlecht?_
+Wir haben gelernt wie man ein benutzerfreundliches Gerät baut, welches selbst funktioniert, Informationen sammelt und weiterleitet. Somit kann das Gerät als API Schnittstelle genutzt werden, wessen daten in einer Datenbank gesammelt und Systematisch angezeigt werden.
+Gut gelaufen ist der ganze Prozess der Umsetzung. Wir konnten schon früh entscheiden welche Funktionen wir wie implementieren wollten wodurch wir grosse probleme verhindern konnten. Schlechtes haben wir nicht wirklich etwas grosses erlebt.
 - **Herausforderungen & Lösungen:** \[_Verworfene Ansätze, Fehler, Umplanungen_\]
+-- WEB --
+Herausforderungen:
+Kleinigkeiten beim Layout und bei der anzeige der gesammelten Daten.
+
+Lösungen:
+Wir fanden meistens eine verbesserung oder änderten das Layout um, damit es mehr sinn ergab. Auch bei der Anzeige der Daten fanden wir einige workarounds.
+
+-- PHYSICAL --
+Herausforderungen:
+
+Lösungen:
+
 - **KI-Einsatz:** _Dokumentation der verwendeten KI-Tools und deren Nutzen (KI ist nicht verboten)_
+KI wurde verwendet um Verständnisfragen und Probleme zu lösen. Beim erarbeiten des Codes wurde KI auch spezifische Funktionen zu erweitern und zu verfeinern.
+
 - **Fazit:** …
+Insgesammt sind wir sehr zufrieden mit dem Prototyp für ZämeFägts. Die wichtigsten Funktionen wie das sammeln der Daten, das Punkte System, die Webseite fürs die Übersicht der Einträge und zum verwalten der Members und aller wichtigen Daten.
