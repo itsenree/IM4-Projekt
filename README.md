@@ -29,8 +29,7 @@ Unsere WebApp zusammen mit dem Physical Computing Teil soll die Kinder dazu moti
 
 Das Zähneputzen und dessen Dauer zu dokumentieren und im Haushalt vergleichbar zu machen. Durch Gamification-Elemente wie Punkte und Streaks wird das Zähneputzen für die ganze Familie zu einem spielerischen Wettbewerb.
 
-![Bild des Zahnputzgeräts](resources/assets/Bild_05.png)
-
+![Bild des Zahnputzgeräts](resources/assets/Bild_05.png) 
 \[_Bilder / GIFs (optional)_\]
 
 ### UX & Konzeption
@@ -40,6 +39,8 @@ _In diesem Teil werden die gemeinsamen Schritte aus der UX-Abgabe dokumentiert, 
 **Figma:** https://www.figma.com/design/7dbtS998A0MZJLCGunPM8A/IM4-Z%C3%A4hne-F%C3%A4gts?node-id=0-1&t=xPEeGgmB7Mtl2nYQ-1
 
 - **User Flow \+ Screen Flow** (Screenshot aus Figma)
+
+
 - ggf. weitere Ergänzungen
 
 ### Welche Features waren angedacht?
