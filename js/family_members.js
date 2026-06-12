@@ -1,5 +1,3 @@
-// THIS CODE DOES NOT WORK YET
-
 const addBtn = document.getElementById("addBtn");
 const memberForm = document.getElementById("memberForm");
 
