@@ -202,4 +202,4 @@ Wir fanden meistens eine Verbesserung oder änderten das Layout um, damit es meh
 KI wurde verwendet, um Verständnisfragen und Probleme zu lösen. Beim Erarbeiten des Codes wurde KI auch für spezifische Funktionen zum Erweitern und Verfeinern verwendet.
 
 - **Fazit:**
-Insgesammt sind wir sehr zufrieden mit dem Prototyp für Zähne Fägts. Die wichtigsten Funktionen wie das Sammeln der Daten, das Punktesystem, die Webseite für die Übersicht der Einträge und das Verwalten der Members sowie alle wichtigen Daten konnten wir erfolgreich implementieren.
+Insgesammt sind wir sehr zufrieden mit dem Prototyp für ZämeFägts. Die wichtigsten Funktionen wie das Sammeln der Daten, das Punktesystem, die Webseite für die Übersicht der Einträge und das Verwalten der Members sowie alle wichtigen Daten konnten wir erfolgreich implementieren.
