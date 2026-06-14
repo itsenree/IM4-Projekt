@@ -54,8 +54,8 @@ Ausserdem war geplant, die Verwaltung von Familienmitgliedern zu ermöglichen. N
 Diese Funktionen konnten erfolgreich umgesetzt und in die Anwendung integriert werden.
 
 #### Physical Computing: <br>
-????
-
+Ein OLED Screen mit Animationen welche auf verschiedene Arten die Kinder motivieren sollen (Auto, Dinos usw.). Zusätzlich sollte während der Dauer Songs abgespielt werden.
+Verschiedene Stationen für die Zahnbürsten. 
 ### Welche Features wurden nicht umgesetzt? (Warum)
 
 #### WebApp: <br>
@@ -64,7 +64,8 @@ Wir wollten anfangs die Funktion hinzufügen, dass jeder User eine separate Fami
 Ein weiteres angedachtes Feature war ein zusätzliches Feld, in dem Nutzer:innen nachträglich eintragen können, wenn sie sich auswärts die Zähne geputzt haben, damit ihr Streak nicht verloren geht. Dieses Feature wurde schlussendlich jedoch nicht umgesetzt, da die Idee vom Projekt darin besteht, das Gerät zu benutzen. Andererseits könnte man so auch schummeln.
 
 #### Physical Computing: <br>
-????
+MP3 Spieler wurde nicht umgesetzt aus Zeitlichen Grüdnen. 
+Mehrere Stationen wurden nicht umgesetzt, weil wir nur einen Waagesensor zur Verfügung hatten. 
 
 ### Setup
 
@@ -117,28 +118,69 @@ define('DB_PASS', 'dein_passwort');<br>
 - Familienmitglieder hinzufügen
 
 6. _Wie nehme ich das physische Artefakt in Betrieb?_
-  ? wie man den Arduino-Code aufspielt und das Gerät startet.
+- -Das ESP32-Gerät mit Strom versorgen und einschalten.
+- Sicherstellen, dass die WLAN-Zugangsdaten im Quellcode korrekt eingetragen sind:
+SSID (WLAN-Name)
+Passwort
+- Den Quellcode mit der Arduino IDE oder PlatformIO auf den ESP32 hochladen.
+- Nach dem Start verbindet sich das Gerät automatisch mit dem WLAN und synchronisiert die Uhrzeit über einen NTP-Server.
+- Das Zahnglas inklusive Zahnbürste auf die Waage stellen.
+- Das Gerät führt beim Start eine Kalibrierung (Tare) durch und speichert das aktuelle Gewicht von Zahnglas und Zahnbürste als Referenzwert.
+- Sobald die Zahnbürste aus dem Zahnglas entnommen wird, erkennt das System die Gewichtsänderung und startet den Zahnputzvorgang.
+- Nach Abschluss des Zahnputzvorgangs werden die aufgezeichneten Daten automatisch an den Server übertragen und in der Datenbank gespeichert.
+- Die aufgezeichneten Zahnputz-Sessions können anschliessend über die Webanwendung eingesehen und ausgewertet werden.
+
+Hinweis: Während der Kalibrierung beim Einschalten dürfen Zahnglas und Zahnbürste nicht bewegt werden, damit ein stabiler Referenzwert gespeichert werden kann.
 
 #### Bauanleitung Physical Computing
 
 - **_Was muss ich wie bauen, verbinden, installieren?_**
 - _ergänze: **Komponentenplan** (betrifft Physical Computing, vgl. Slides Kapitel 15): Schaubild enthält_
   - _die eingesetzten Komponenten_
+ - ESP32 Mikrocontroller
+- HX711 
+- OLED Display
+- Zahnglas
+- Zahnbürste
+- USB-C Kabel zur Stromversorgung und Programmierung
+- WLAN-Zugang
   - _die verbundenen Sensoren und Aktoren_
+  Sensoren
+Wägezelle (Gewichtserfassung)
+HX711 (Signalverstärkung und Digitalisierung)
+Aktoren
+OLED Display zur Anzeige des Spielstatus
+Webserver zur Speicherung der Zahnputzdaten
+
   - _die Programme (mit Dateinamen)_
+  Dateiname	Funktion
+toothbrush_device.ino	Steuerung des ESP32, Gewichtsmessung, Anzeige und Datenübertragung
+brush_save.php	Entgegennahme und Speicherung der Messdaten
+config.php	Datenbankverbindung
+index.php	Dashboard
+login.php	Benutzeranmeldung
+register.php	Registrierung
+
   - _die Kommunikationswege_
+  Wägezelle → HX711
+Analoges Gewichtssignal
+HX711 → ESP32
+Digitale Messwerte
+ESP32 → OLED
+I2C-Kommunikation
+ESP32 → WLAN
+WiFi
+ESP32 → PHP API
+HTTP POST Request mit JSON
+PHP API → MariaDB
+Speicherung der Zahnputzdaten
+Browser → Webserver
+HTTP/HTTPS
+
 - _ergänze: **Steckplan** (betrifft Physical Computing, vgl. Slides Kapitel 15): generiert z.B. mit Fritzing (empfohlen), Tinkercad, Wokwi_
   - _beachtet die [Fritzing Parts](https://github.com/Interaktive-Medien/im_physical_computing/tree/main/15_Intro_Projektdoku) extra für euch_
 - \*ggf. **Bildmaterial\***
-
-* **Komponentenplan** 
-
-* *die eingesetzten Komponenten*  
-  * *die eingesetzten Komponenten*  
-  * *die verbundenen Sensoren und Aktoren*  
-  * *die Programme (mit Dateinamen)*  
-  * *die Kommunikationswege*  
-
+![Bild vom Steckplan](resources/assets/Steckplan_PhysicalComputing.jpg) 
 ## Technische Details
 
 // Hier sollte das Verständnis ersichtlich sein / Wie stehen die Dateien in Beziehung zueinander, Wie reden Die Dateien miteinander, Wie ist der Weg der Daten
@@ -196,8 +238,9 @@ Kleinigkeiten beim Layout und bei der Anzeige der gesammelten Daten.<br>
 **WebApp Lösungen**:
 Wir fanden meistens eine Verbesserung oder änderten das Layout um, damit es mehr Sinn ergab. Auch bei der Anzeige der Daten fanden wir einige Workarounds. <br>
 **Physical Computing Herausforderungen** : <br>
+Die grösste Herausforderung hatten wir der kalibration des Waagesensor und dem verbinden von den erfassten Daten und der Datenbankstruktur. Diese musste zum Teil angepasst werden. 
 **Physical Computing Lösungen**:
-
+Dozis fragen, ChatGPT fragen, try and error.... 
 - **KI-Einsatz:** _Dokumentation der verwendeten KI-Tools und deren Nutzen (KI ist nicht verboten)_
 KI wurde verwendet, um Verständnisfragen und Probleme zu lösen. Beim Erarbeiten des Codes wurde KI auch für spezifische Funktionen zum Erweitern und Verfeinern verwendet.
 
