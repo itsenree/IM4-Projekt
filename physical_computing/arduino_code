@@ -1,0 +1,760 @@
+#include <Wire.h>
+#include "HX711.h"
+#include <Adafruit_GFX.h>
+#include <Adafruit_SH110X.h>
+
+#include <WiFi.h>
+#include <HTTPClient.h>
+#include <Arduino_JSON.h>
+
+#include "time.h"
+#include <math.h>
+
+// =====================================================
+// WLAN
+// =====================================================
+
+const char* ssid = "StellasiPhone";
+const char* password = "HalliHallo1";
+
+// =====================================================
+// SERVER
+// =====================================================
+
+const char* serverURL =
+"https://im4.enrico-fusaro.ch/api/brush_save.php";
+
+// =====================================================
+// NTP
+// =====================================================
+
+const char* ntpServer = "pool.ntp.org";
+
+const long gmtOffset_sec = 3600;
+const int daylightOffset_sec = 3600;
+
+// =====================================================
+// HX711
+// =====================================================
+
+const int HX_DT = 6;
+const int HX_SCK = 7;
+
+HX711 scale;
+
+float calFactor = -409.0f;
+
+const float GRENZE = 10.0;
+
+// =====================================================
+// POSITION
+// =====================================================
+
+const int POSITION = 1;
+
+// =====================================================
+// OLED
+// =====================================================
+
+#define I2C_SDA 4
+#define I2C_SCL 5
+#define I2C_ADDRESS 0x3C
+
+Adafruit_SH1106G display(128, 64, &Wire, -1);
+
+// =====================================================
+// STATES
+// =====================================================
+
+enum State {
+  WAITING,
+  COUNTDOWN,
+  SHOW_GO,
+  RACING,
+  PAUSED,
+  FINISHED
+};
+
+State currentState = WAITING;
+
+// =====================================================
+// TIMER
+// =====================================================
+
+unsigned long stateStart = 0;
+unsigned long raceStart = 0;
+unsigned long pausedAt = 0;
+unsigned long accumulatedPause = 0;
+
+// =====================================================
+// SESSION DATEN
+// =====================================================
+
+unsigned long brushingStart = 0;
+unsigned long brushingEnd = 0;
+
+bool hadPause = false;
+
+String brushingDateTime = "";
+
+// =====================================================
+// KONSTANTEN
+// =====================================================
+
+const unsigned long COUNTDOWN_TIME = 15000;
+const unsigned long GO_TIME        = 3000;
+const unsigned long RACE_TIME      = 120000;
+const unsigned long PAUSE_TIMEOUT  = 15000;
+
+// =====================================================
+// RENNSTRECKE
+// =====================================================
+
+const int centerX = 64;
+const int centerY = 32;
+
+const int trackRadius = 22;
+
+// =====================================================
+// SETUP
+// =====================================================
+
+void setup() {
+
+  Serial.begin(115200);
+
+  // ===================================================
+  // WLAN
+  // ===================================================
+
+  Serial.println();
+  Serial.println("Verbinde WLAN...");
+
+  WiFi.begin(ssid, password);
+
+  while (WiFi.status() != WL_CONNECTED) {
+
+    delay(500);
+    Serial.print(".");
+  }
+
+  Serial.println();
+  Serial.println("WLAN verbunden");
+
+  Serial.print("IP-Adresse: ");
+  Serial.println(WiFi.localIP());
+
+  // ===================================================
+  // NTP ZEIT
+  // ===================================================
+
+  configTime(
+    gmtOffset_sec,
+    daylightOffset_sec,
+    ntpServer
+  );
+
+  Serial.println("Zeit synchronisiert");
+
+  // ===================================================
+  // HX711
+  // ===================================================
+
+  scale.begin(HX_DT, HX_SCK);
+
+  delay(500);
+
+  scale.tare();
+
+  scale.set_scale(calFactor);
+
+  // ===================================================
+  // OLED
+  // ===================================================
+
+  Wire.begin(I2C_SDA, I2C_SCL);
+
+  display.begin(I2C_ADDRESS, true);
+
+  display.clearDisplay();
+
+  display.display();
+
+  showWaitingScreen();
+}
+
+// =====================================================
+// LOOP
+// =====================================================
+
+void loop() {
+
+  float grams = scale.get_units(30);
+  grams = abs(grams);
+Serial.print("Gewicht: ");
+Serial.println(grams);
+Serial.println(scale.read_average(20));
+delay(500);
+
+  switch (currentState) {
+
+    // =================================================
+    // WAITING
+    // =================================================
+
+    case WAITING:
+
+      if (grams < GRENZE) {
+
+        currentState = COUNTDOWN;
+
+        stateStart = millis();
+      }
+
+      break;
+
+    // =================================================
+    // COUNTDOWN
+    // =================================================
+
+    case COUNTDOWN:
+
+      showCountdown();
+
+      if (millis() - stateStart >= COUNTDOWN_TIME) {
+
+        currentState = SHOW_GO;
+
+        stateStart = millis();
+      }
+
+      break;
+
+    // =================================================
+    // GO
+    // =================================================
+
+    case SHOW_GO:
+
+      showGoScreen();
+
+      if (millis() - stateStart >= GO_TIME) {
+
+        currentState = RACING;
+
+        raceStart = millis();
+
+        brushingStart = millis();
+
+        brushingDateTime = getDateTime();
+
+        accumulatedPause = 0;
+
+        hadPause = false;
+      }
+
+      break;
+
+    // =================================================
+    // RACING
+    // =================================================
+
+    case RACING:
+
+      if (grams >= GRENZE) {
+
+        currentState = PAUSED;
+
+        pausedAt = millis();
+
+        hadPause = true;
+
+        break;
+      }
+
+      runRaceAnimation();
+
+      if ((millis() - raceStart - accumulatedPause)
+          >= RACE_TIME) {
+
+        brushingEnd = millis();
+
+        currentState = FINISHED;
+      }
+
+      break;
+
+    // =================================================
+    // PAUSED
+    // =================================================
+
+    case PAUSED:
+
+      showSadSmiley();
+
+      if (grams < GRENZE) {
+
+        accumulatedPause += millis() - pausedAt;
+
+        currentState = RACING;
+      }
+
+      if (millis() - pausedAt >= PAUSE_TIMEOUT) {
+
+        brushingEnd = millis();
+
+        sendSessionData();
+
+        showSchade();
+
+        delay(3000);
+
+        resetSystem();
+      }
+
+      break;
+
+    // =================================================
+    // FINISHED
+    // =================================================
+
+    case FINISHED:
+
+      sendSessionData();
+
+      showFinished();
+
+      delay(5000);
+
+      resetSystem();
+
+      break;
+  }
+
+  delay(50);
+}
+
+// =====================================================
+// DATETIME
+// =====================================================
+
+String getDateTime() {
+
+  struct tm timeinfo;
+
+  if (!getLocalTime(&timeinfo)) {
+
+    return "NO_TIME";
+  }
+
+  char buffer[30];
+
+  strftime(
+    buffer,
+    sizeof(buffer),
+    "%Y-%m-%d %H:%M:%S",
+    &timeinfo
+  );
+
+  return String(buffer);
+}
+
+// =====================================================
+// WAIT SCREEN
+// =====================================================
+
+void showWaitingScreen() {
+
+  display.clearDisplay();
+
+  display.setTextSize(2);
+
+  display.setCursor(18, 18);
+
+  display.println("READY?");
+
+  display.setTextSize(1);
+
+  display.setCursor(15, 45);
+
+  display.println("Nimm Zahnburste");
+
+  display.display();
+}
+
+// =====================================================
+// COUNTDOWN
+// =====================================================
+
+void showCountdown() {
+
+  unsigned long elapsed = millis() - stateStart;
+
+  int secondsLeft =
+      15 - (elapsed / 1000);
+
+  float progress =
+      (float)elapsed / (float)COUNTDOWN_TIME;
+
+  int barWidth = progress * 100;
+
+  display.clearDisplay();
+
+  display.setTextSize(1);
+
+  display.setCursor(38, 4);
+
+  display.println("START IN");
+
+  display.drawCircle(64, 30, 20, SH110X_WHITE);
+
+  display.setTextSize(4);
+
+  if (secondsLeft >= 10) {
+    display.setCursor(34, 18);
+  } else {
+    display.setCursor(48, 18);
+  }
+
+  display.println(secondsLeft);
+
+  display.drawRect(14, 56, 100, 6, SH110X_WHITE);
+
+  display.fillRect(14, 56, barWidth, 6, SH110X_WHITE);
+
+  display.display();
+}
+
+// =====================================================
+// GO SCREEN
+// =====================================================
+
+void showGoScreen() {
+
+  display.clearDisplay();
+
+  display.setTextSize(3);
+
+  display.setCursor(35, 25);
+
+  display.println("LOS!");
+
+  display.display();
+}
+
+// =====================================================
+// TRACK
+// =====================================================
+
+void drawTrack() {
+
+  display.fillCircle(
+    centerX,
+    centerY,
+    trackRadius + 10,
+    SH110X_WHITE
+  );
+
+  display.fillCircle(
+    centerX,
+    centerY,
+    trackRadius - 6,
+    SH110X_BLACK
+  );
+
+  for (int deg = 0; deg < 360; deg += 18) {
+
+    float a1 = deg * PI / 180.0;
+    float a2 = (deg + 8) * PI / 180.0;
+
+    int x1 =
+      centerX + trackRadius * cos(a1);
+
+    int y1 =
+      centerY + trackRadius * sin(a1);
+
+    int x2 =
+      centerX + trackRadius * cos(a2);
+
+    int y2 =
+      centerY + trackRadius * sin(a2);
+
+    display.drawLine(
+      x1,
+      y1,
+      x2,
+      y2,
+      SH110X_BLACK
+    );
+  }
+}
+
+// =====================================================
+// RACE CAR
+// =====================================================
+
+void drawRaceCar(int x, int y) {
+
+  display.fillRoundRect(
+    x - 4,
+    y - 7,
+    8,
+    14,
+    2,
+    SH110X_BLACK
+  );
+
+  display.fillRect(
+    x - 1,
+    y - 3,
+    2,
+    5,
+    SH110X_WHITE
+  );
+}
+
+// =====================================================
+// RACE
+// =====================================================
+
+void runRaceAnimation() {
+
+  unsigned long raceElapsed =
+      millis() - raceStart - accumulatedPause;
+
+  float progress =
+      (float)raceElapsed / (float)RACE_TIME;
+
+  float angle =
+      progress * 4.0 * PI;
+
+  int x =
+      centerX + trackRadius * cos(angle);
+
+  int y =
+      centerY + trackRadius * sin(angle);
+
+  display.clearDisplay();
+
+  drawTrack();
+
+  drawRaceCar(x, y);
+
+  int sec =
+      (RACE_TIME - raceElapsed) / 1000;
+
+  display.setTextSize(1);
+
+  display.setCursor(5, 5);
+
+  display.print(sec);
+
+  display.println("s");
+
+  display.display();
+}
+
+// =====================================================
+// SAD
+// =====================================================
+
+void showSadSmiley() {
+
+  display.clearDisplay();
+
+  display.drawCircle(64, 22, 20, SH110X_WHITE);
+
+  display.fillCircle(57, 18, 2, SH110X_WHITE);
+  display.fillCircle(71, 18, 2, SH110X_WHITE);
+
+  display.drawLine(55, 32, 73, 32, SH110X_WHITE);
+
+  display.setTextSize(1);
+
+  display.setCursor(14, 52);
+
+  display.println("Weiter putzen!");
+
+  display.display();
+}
+
+// =====================================================
+// FAILED
+// =====================================================
+
+void showSchade() {
+
+  display.clearDisplay();
+
+  display.setTextSize(2);
+
+  display.setCursor(25, 10);
+
+  display.println("SCHADE");
+
+  display.display();
+}
+
+// =====================================================
+// FINISHED
+// =====================================================
+
+void showFinished() {
+
+  display.clearDisplay();
+
+  display.setTextSize(2);
+
+  display.setCursor(20, 15);
+
+  display.println("SUPER!");
+
+  display.setTextSize(1);
+
+  display.setCursor(10, 45);
+
+  display.println("Zaehne sauber!");
+
+  display.display();
+}
+
+// =====================================================
+// DATEN SENDEN
+// =====================================================
+
+void sendSessionData() {
+
+  unsigned long duration =
+      brushingEnd
+      - brushingStart
+      - accumulatedPause;
+
+  int durationSec = duration / 1000;
+
+  int fulfilled = 0;
+
+  // ===================================================
+  // FULFILLED STATUS
+  // ===================================================
+
+  if (durationSec < 60) {
+
+    fulfilled = 0;
+
+  } else if (durationSec < 120) {
+
+    fulfilled = 1;
+
+  } else {
+
+    fulfilled = 2;
+  }
+
+  // ===================================================
+  // DEBUG
+  // ===================================================
+
+  Serial.println();
+  Serial.println("===== SESSION =====");
+
+  Serial.print("Position: ");
+  Serial.println(POSITION);
+
+  Serial.print("Datetime: ");
+  Serial.println(brushingDateTime);
+
+  Serial.print("Duration: ");
+  Serial.println(durationSec);
+
+  Serial.print("Fulfilled: ");
+  Serial.println(fulfilled);
+
+  Serial.println("===================");
+
+  // ===================================================
+  // JSON
+  // ===================================================
+
+  JSONVar dataObject;
+
+  dataObject["position"]  = POSITION;
+  dataObject["datetime"]  = brushingDateTime;
+  dataObject["duration"]  = durationSec;
+  dataObject["fulfilled"] = fulfilled;
+
+  String jsonString =
+      JSON.stringify(dataObject);
+
+  Serial.println("JSON:");
+  Serial.println(jsonString);
+
+  // ===================================================
+  // HTTP POST
+  // ===================================================
+
+  if (WiFi.status() == WL_CONNECTED) {
+
+    HTTPClient http;
+
+    http.begin(serverURL);
+
+    http.addHeader(
+      "Content-Type",
+      "application/json"
+    );
+
+    int httpResponseCode =
+        http.POST(jsonString);
+
+    if (httpResponseCode > 0) {
+
+      String response =
+          http.getString();
+
+      Serial.print("HTTP Response: ");
+
+      Serial.println(httpResponseCode);
+
+      Serial.println(response);
+
+    } else {
+
+      Serial.print("POST Error: ");
+
+      Serial.println(httpResponseCode);
+    }
+
+    http.end();
+
+  } else {
+
+    Serial.println("WiFi disconnected");
+  }
+}
+
+// =====================================================
+// RESET
+// =====================================================
+
+void resetSystem() {
+
+  currentState = WAITING;
+
+  stateStart = 0;
+
+  raceStart = 0;
+
+  pausedAt = 0;
+
+  accumulatedPause = 0;
+
+  brushingStart = 0;
+
+  brushingEnd = 0;
+
+  hadPause = false;
+
+  brushingDateTime = "";
+
+  showWaitingScreen();
+}
